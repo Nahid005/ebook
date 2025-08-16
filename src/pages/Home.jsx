@@ -1,6 +1,7 @@
 import MainSlider from "@/components/MainSlider";
 import Category from "@/features/category/Category";
 import Products from "@/features/product/Products";
+import Testimonial from "@/features/review/Testimonial";
 
 function Home() {
     return (
@@ -8,6 +9,7 @@ function Home() {
             <MainSlider />
             <Category />
             <Products />
+            <Testimonial />
         </>
     )
 }

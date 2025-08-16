@@ -8,7 +8,7 @@ import Copyright from "./Copyright";
 function Footer() {
     return (
         <div className="bg-orange-100 shadow">
-            <div className="py-8 px-4 md:px-0 grid grid-cols md:grid-cols-4 gap-4 md:gap-8 max-w-[1400px] mx-auto">
+            <div className="py-8 px-4 md:px-0 grid grid-cols md:grid-cols-4 gap-4 md:gap-8 max-w-[1300px] mx-auto">
                 <div className="flex flex-col gap-4">
                     <div className="">
                         <Link to="/" className="font-bold">

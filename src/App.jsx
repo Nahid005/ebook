@@ -6,9 +6,18 @@ import Checkout from "./pages/Checkout"
 import Genres from "./pages/Genres"
 import Authors from "./pages/Authors"
 import Publishers from "./pages/Publishers"
+import GenreWiseBooks from "./pages/GenreWiseBooks"
+import Signup from "./pages/Signup"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
+  {
+    path: '/signup',
+    element: <Signup />
+  },
   {
     element:  <AppLayout />,
     children: [
@@ -19,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/genres",
         element: <Genres />
+      },
+      {
+        path: "/genres/:genreId",
+        element: <GenreWiseBooks />
       },
       {
         path: "/authors",
@@ -43,7 +56,11 @@ const router = createBrowserRouter([
 function App() {
 
   return (
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+    
   )
 }
 

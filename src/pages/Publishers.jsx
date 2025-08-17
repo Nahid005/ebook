@@ -1,6 +1,8 @@
+import PublishersLists from "@/features/publisher/PublishersLists";
+
 function Publishers() {
     return (
-        <h1>Publisher</h1>
+        <PublishersLists />
     )
 }
 

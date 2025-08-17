@@ -1,5 +1,9 @@
+import GenresLists from "@/features/genres/GenresLists";
+
 function Genres() {
-    return <h1>Genres</h1>
+    return (
+        <GenresLists />
+    )
 }
 
 export default Genres;

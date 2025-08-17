@@ -1,15 +1,17 @@
 import MainSlider from "@/components/MainSlider";
 import Category from "@/features/category/Category";
 import Products from "@/features/product/Products";
-import Testimonial from "@/features/review/Testimonial";
+import { getBooks } from "@/services/booksAPI";
 
 function Home() {
+
+    console.log(getBooks())
+
     return (
         <>
             <MainSlider />
             <Category />
             <Products />
-            <Testimonial />
         </>
     )
 }

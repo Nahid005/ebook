@@ -1,6 +1,8 @@
+import AuthorsLists from "@/features/authors/AuthorsLists";
+
 function Authors() {
     return (
-        <p>Authors</p>
+        <AuthorsLists />
     )
 }
 

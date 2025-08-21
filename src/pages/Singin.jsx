@@ -1,11 +1,11 @@
-import SignupForm from "@/features/authentication/SignupForm";
+import SigninForm from "@/features/authentication/SigninForm";
 
-function Signup() {
+function Signin() {
     return (
         <div className="h-screen flex flex-col justify-center items-center max-w-sm mx-auto">
-            <SignupForm />
+            <SigninForm />
         </div>
     )
 }
 
-export default Signup;
+export default Signin;

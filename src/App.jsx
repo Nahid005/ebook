@@ -10,6 +10,7 @@ import GenreWiseBooks from "./pages/GenreWiseBooks"
 import Signup from "./pages/Signup"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import Signin from "./pages/Singin"
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: '/signup',
     element: <Signup />
+  },
+  {
+    path: '/signin',
+    element: <Signin />
   },
   {
     element:  <AppLayout />,

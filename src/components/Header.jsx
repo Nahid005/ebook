@@ -117,7 +117,9 @@ function Header() {
                                 </button>
                             </Link>
 
-                            <button className="w-fit px-6 py-2 rounded-full bg-orange-300 hover:bg-orange-400  md:text-base text-lg font-medium text-neutral-800 hover:text-neutral-800 ease-in-out duration-300 cursor-pointer"> Signin</button>
+                            <button className="w-fit px-6 py-2 rounded-full bg-orange-300 hover:bg-orange-400  md:text-base text-lg font-medium text-neutral-800 hover:text-neutral-800 ease-in-out duration-300 cursor-pointer">
+                                <Link to="/signin">Signin</Link>
+                            </button>
                         </div>
                     </div>
                 </div>

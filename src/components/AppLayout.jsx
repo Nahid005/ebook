@@ -8,7 +8,7 @@ function AppLayout() {
             <header>
                 <Header />
             </header>
-            <main className="min-h-full w-full px-4 md:px-0 max-w-[1300px] mx-auto">
+            <main className="h-full w-full px-4 md:px-0 max-w-[1300px] mx-auto grow">
                 <Outlet />
             </main>
             <footer>

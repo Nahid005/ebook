@@ -1,40 +1,12 @@
 import Slider from "react-slick";
-import CategoryItem from "./CategoryItem";
+import GenresItem from "./GenresItem";
+import { useGetGenres } from "./useGetGenres";
 
-const categoryItems = [
-    {
-        id: 1,
-        image: "/assets/recipe.jpg",
-        title: "Recipe",
-        stock: 150,
-    },
-    {
-        id: 2,
-        image: "/assets/selfdevelopment.jpg",
-        title: "Self Development",
-        stock: 150,
-    },
-    {
-        id: 3,
-        image: "/assets/sciencefiction.jpg",
-        title: "Science Fiction",
-        stock: 0,
-    },
-    {
-        id: 4,
-        image: "/assets/comic.jpg",
-        title: "Comic",
-        stock: 150,
-    },
-    {
-        id: 5,
-        image: "/assets/drama.jpg",
-        title: "Drama",
-        stock: 100,
-    }
-]
+function GenresSlider() {
+    const {genres, isError, isPending} = useGetGenres()
 
-function Category() {
+    if(isPending) return <p>Loadding...</p>
+    
     const settings = {
         dots: false,
         infinite: true,
@@ -68,14 +40,15 @@ function Category() {
         ]
     };
 
-
     return (
         <div className="py-10">
             <Slider {...settings}>
-                {categoryItems.map(item => <CategoryItem key={item.id} item={item} />)}
+                {
+                    genres?.map(genre => <GenresItem key={genre._id} genre={genre} />)
+                }
             </Slider>
         </div>
     )
 }
 
-export default Category;
+export default GenresSlider;

@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import AppLayout from "./components/AppLayout"
 import Home from "./pages/Home"
-import ProductDetails from "./pages/ProductDetails"
+import BooksDetails from "./pages/BooksDetails"
 import Checkout from "./pages/Checkout"
 import Genres from "./pages/Genres"
 import Authors from "./pages/Authors"
@@ -11,6 +11,8 @@ import Signup from "./pages/Signup"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import Signin from "./pages/Singin"
+import AuthorDetails from "./pages/AuthorDetails"
+import Books from "./pages/Books"
 
 const queryClient = new QueryClient();
 
@@ -31,6 +33,10 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
+        path: "/books",
+        element: <Books />
+      },
+      {
         path: "/genres",
         element: <Genres />
       },
@@ -43,12 +49,16 @@ const router = createBrowserRouter([
         element: <Authors />
       },
       {
+        path: "/authors/:authorId",
+        element: <AuthorDetails />
+      },
+      {
         path: "/publishers",
         element: <Publishers />
       },
       {
-        path: "/product/:productId",
-        element: <ProductDetails />
+        path: "/product/:bookId",
+        element: <BooksDetails />
       },
       {
         path: "/checkout",

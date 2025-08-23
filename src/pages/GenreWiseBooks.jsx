@@ -1,7 +1,9 @@
 import GenresWiseBooksLists from "@/features/genres/GenresWiseBooksLists";
 
 function GenreWiseBooks() {
-    return <GenresWiseBooksLists />
+    return (
+        <GenresWiseBooksLists />
+    )
 }
 
 export default GenreWiseBooks;

@@ -1,19 +1,18 @@
-import Products from "../product/Products";
-
-const genre = {
-    id: 1,
-    image: "/assets/recipe.jpg",
-    title: "Recipe",
-    stock: 150,
-}
-
+import Loading from "@/components/Loading";
+import { useGetGenreWiseBooks } from "./useGetGenreWiseBooks";
+import BookItem from "../book/BookItem";
 
 function GenresWiseBooksLists() {
-    const {image, title, stock} = genre;
+    const {genreWiseBooks, isPending, isError} = useGetGenreWiseBooks();
+
+    if(isPending) return <Loading />
+    if (isError) return <p>Something went wrong. Please try again.</p>;
+    if (!genreWiseBooks?.length) return <p>No books available in this genre.</p>;
 
     return (
         <div className="">
-            <div className="flex flex-col md:flex-row md:justify-start justify-center items-center gap-2 my-4 border-b border-b-neutral-200 pb-3">
+            <h4 className="font-bold text-neutral-600 text-2xl my-4">Genres wise books</h4>
+            {/* <div className="flex flex-col md:flex-row md:justify-start justify-center items-center gap-2 my-4 border-b border-b-neutral-200 pb-3">
                 <div className="">
                     <img className="rounded-md" src={image} alt={title} />
                 </div>
@@ -24,7 +23,12 @@ function GenresWiseBooksLists() {
             </div>
             <div className="">
                 <h4 className="font-bold text-neutral-600 text-2xl my-4">All books in Recipe</h4>
-                <Products />
+            </div> */}
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pb-10">
+                {
+                    genreWiseBooks.length > 0 && genreWiseBooks?.map(book => <BookItem key={book._id} book={book} />)
+                }
             </div>
         </div>
     )

@@ -1,8 +1,8 @@
 const baseURL = import.meta.env.VITE_BASE_URL;
 
-export async function getPopularBooks() {
+export async function getAuthors() {
     try {
-        const response = await fetch(`${baseURL}/api/getpopularbooks`, {
+        const response = await fetch(`${baseURL}/api/getauthors`, {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
@@ -13,45 +13,47 @@ export async function getPopularBooks() {
             throw new Error("Internal Server Error");
         }
 
-        const data = await response.json();
-
+        const data = response.json();
+        
         return data;
-    } catch (error) {
-        console.error(error.message);
+    } catch(error) {
+        console.log(error)
     }
 }
 
-export async function getTrandingBooks() {
+export async function getAuthorDetails(id) {
     try {
-        const response = await fetch(`${baseURL}/api/GetTrendingBooks`, {
+        const response = await fetch(`${baseURL}/api/getauthordetails`, {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
-            }
-        });
+            },
+            body: JSON.stringify({authorId: id})
+        })
+
         if(!response.ok) {
-            throw new Error("Internal Server Errr");
+            throw new Error("Author not found")
         }
 
         const data = await response.json();
         return data;
     } catch(error) {
-        console.log(error.message)
+        console.log(error);
     }
 }
 
-export async function getBookDetails(id) {
+export async function getBooksByAuthor(id) {
     try {
-        const response = await fetch(`${baseURL}/api/getbookdetails`, {
+        const response = await fetch(`${baseURL}/api/getbookbyauthor`, {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
             },
-            body: JSON.stringify({bookId: id})
+            body: JSON.stringify({authorId: id})
         })
 
         if(!response.ok) {
-            throw new Error("Book details not found")
+            throw new Error("Books not found")
         }
 
         const data = await response.json();

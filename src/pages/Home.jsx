@@ -1,17 +1,16 @@
 import MainSlider from "@/components/MainSlider";
-import Category from "@/features/category/Category";
-import Products from "@/features/product/Products";
-import { getBooks } from "@/services/booksAPI";
+import GenresSlider from "@/features/genres/GenresSlider";
+import PopularBooks from "@/features/book/PopularBooks";
+import TrandingBooks from "@/features/book/TrandingBooks";
 
 function Home() {
-
-    console.log(getBooks())
 
     return (
         <>
             <MainSlider />
-            <Category />
-            <Products />
+            <GenresSlider />
+            <PopularBooks />
+            <TrandingBooks />
         </>
     )
 }

@@ -1,47 +1,53 @@
 import { HiBuildingOffice2, HiCalendarDays, HiMiniDocumentText, HiOutlineGlobeAsiaAustralia } from "react-icons/hi2";
 
-import ProductGallery from "@/features/product/ProductGallery"
-import Rating from "@/features/product/Rating";
-import Genres from "@/features/product/Genres";
+import ProductGallery from "@/features/book/ProductGallery"
+import Rating from "@/features/book/Rating";
+import Genres from "@/features/book/Genres";
 import { currencyFormator } from "@/lib/halper";
 import { Button } from "@/components/ui/button";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { HiOutlineShare } from "react-icons/hi";
-import ProductReviews from "@/features/product/ProductReviews";
+import ProductReviews from "@/features/book/ProductReviews";
+import { useBookDetails } from "./useBookDetails";
+import Loading from "@/components/Loading";
 
-const product = {
-    id: 5,
-    image: "/assets/product-image.jpg",
-    title: "বিহঙ্গিনীর পিঞ্জিরা",
-    author: "লামিয়া রহমান মেঘলা",
-    ratings: 5,
-    genres: ["ফ্যান্টাসি", "রোমান্স", "ই-বুক মেলা", "ই-বুক মেলা ২০২৫"],
-    publishDate: "August 7, 2025",
-    language: "বাংলা",
-    pages: 172,
-    publishBy: "Boiaro",
-    price: 50,
-    description: "একটা বদ অভ্যাস ছাড়াতে অন্য একটা বদ অভ্যাসে জড়াতে হয় বিহঙ্গিনী। শুধু তোমাতে অভ্যস্ত করে দেওয়ার কথা দিচ্ছি, সব বদ অভ্যাস ছেড়ে দেব। প্রিয় পদ্মা হৃদি।"
-}
+function BookDetailsInfo() {
+    const {bookDetails, isPending, isError} = useBookDetails();
 
-function ProductDetails() {
+    if(isPending) return <Loading />
+    if (isError) return <div>Something went wrong!</div>;
+    if (!bookDetails) return <div>No book found</div>;
 
-    const {image, title, author, publishBy, publishDate, pages, price, description, language, genres, ratings} = product;
+    const {
+        image, 
+        name, 
+        author, 
+        access_type, 
+        language,  
+        reviews, 
+        category, 
+        subcategory, 
+        description, 
+        averageRating,
+        publishBy = "Boiaro",
+        pages = 100,
+        publishDate = "12-12-12"
+    } = bookDetails ?? {};
 
     return (
         <div className="grid gap-2 md:grid-cols-2 md:gap-8">
-            <ProductGallery galleryImage={image} title={title} />
+            <ProductGallery galleryImage={image} title={name} />
             <div className="md:my-4">
-                <h2 className="text-2xl font-bold text-neutral-600">{title}</h2>
-                <p className="text-base font-bold text-neutral-600">{author}</p>
+                <h2 className="text-2xl font-bold text-neutral-600">{name}</h2>
+                <p className="text-base font-bold text-neutral-600">{author.name}</p>
                 <div className="flex items-center justify-start gap-2 my-2">
                     <div className="flex items-center justify-start">
-                        <Rating rating={ratings} />
+                        <Rating rating={averageRating} />
                     </div>
-                    <span className="text-neutral-600">{ratings} </span>
+                    <span className="text-neutral-600">{averageRating} </span>
                     <span className="text-neutral-500">(103 ratings)</span>
                 </div>
-                <Genres genres={genres} />
+                {/* <Genres genres={category} /> */}
                 <div className="bg-orange-100 p-4 grid grid-cols-2 md:grid-cols-4 gap-8 rounded-lg">
                     <div className="flex flex-col justify-center items-center">
                         <HiCalendarDays className="text-2xl text-neutral-700" />
@@ -66,7 +72,7 @@ function ProductDetails() {
                 </div>
 
                 <div className="flex justify-between items-center gap-8 py-8">
-                    <h2 className="font-bold text-2xl text-neutral-700">{currencyFormator(price)}</h2>
+                    <h2 className="font-bold text-2xl text-neutral-700">{currencyFormator(120)}</h2>
                     <div className="flex justify-end gap-2">
                         <Button className="cursor-pointer bg-neutral-600 rounded py-5 px-4 font-bold text-md hover:bg-neutral-700"><HiOutlineShare /> <span>Share</span></Button>
 
@@ -88,4 +94,4 @@ function ProductDetails() {
     )
 }
 
-export default ProductDetails
+export default BookDetailsInfo;

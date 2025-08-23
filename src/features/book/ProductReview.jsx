@@ -3,8 +3,6 @@ import Rating from "./Rating";
 function ProductReview({reviewItem}) {
     const {name, image, rating, review, date} = reviewItem;
 
-    console.log()
-
     return (
         <div className="flex justify-between gap-4">
             <div className="flex justify-start gap-2 items-start">

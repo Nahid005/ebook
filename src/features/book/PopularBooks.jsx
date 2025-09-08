@@ -1,13 +1,14 @@
 import Error from "@/components/Error";
 import BookItem from "./BookItem";
 import { useGetPopularBooks } from "./useGetPopularBooks";
+import Loading from "@/components/Loading";
 
 function PopularBooks() {
     const {popularBooks, isError, isPending} = useGetPopularBooks();
 
     
 
-    if(isPending) return <p>Loading..</p>
+    if(isPending) return <Loading />
     if(isError) return <Error message={"Internal Server Error"} />
 
     return (

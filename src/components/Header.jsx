@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import NavItems from "./NavItems";
+import { useSelector } from "react-redux";
 
 const menus = [
     {
@@ -31,6 +32,7 @@ const menus = [
 function Header() {
     const [open, setOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const cartItems = useSelector(state => state.cart.cartItems)
 
     function toggleNavbar() {
         setOpen((open) => !open)
@@ -75,8 +77,11 @@ function Header() {
                     <button className="w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer">
                         <HiOutlineSearch />
                     </button>
-                    <button className="w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer">
+                    <button className="relative w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer">
                         <MdOutlineShoppingCart />
+                        {
+                            cartItems.length > 0 && <span className=" absolute right-0 top-0 bg-orange-400 text-sm w-5 h-5 rounded-full font-bold text-white">{cartItems.length}</span>
+                        }
                     </button>
 
                     <button onClick={toggleNavbar} className="text-neutral-600 focus:outline-none cursor-pointer">
@@ -84,7 +89,7 @@ function Header() {
                     </button>
                 </div>
                 {/* Navbar items and buttons */}
-                <div className={`fixed md:static top-0 right-0 h-screen md:h-auto w-full md:w-auto bg-sky-50 border-1 md:border-none border-neutral-300 md:bg-transparent shadow-lg md:shadow-none  ease-in-out duration-300 transition-transform md:translate-x-0 flex-1 ${open ? 'translate-x-0' : 'translate-x-full'} z-100`}>
+                <div className={`fixed md:static top-0 right-0 h-screen md:h-auto w-full md:w-auto bg-sky-50 border-1 md:border-none border-neutral-300 md:bg-transparent shadow-lg md:shadow-none  ease-in-out duration-300 transition-transform md:translate-x-0 flex-1 ${open ? 'translate-x-0' : 'translate-x-full'} z-50`}>
 
                     {/* Logo and close icon */}
                     <div className="w-full md:hidden flex items-center justify-between px-4">
@@ -112,8 +117,11 @@ function Header() {
                             </button>
 
                             <Link to="/checkout">
-                                <button className="w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer hidden md:block">
+                                <button className="relative w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer hidden md:block">
                                     <MdOutlineShoppingCart />
+                                    {
+                                        cartItems.length > 0 && <span className=" absolute right-0 top-0 bg-orange-400 text-sm w-5 h-5 rounded-full font-bold text-white">{cartItems.length}</span>
+                                    }
                                 </button>
                             </Link>
 

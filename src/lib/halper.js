@@ -1,4 +1,4 @@
-export const baseURL = "https://ebook.boiaro.com";
+export const baseURL = import.meta.env.VITE_BASE_URL;
 
 export function currencyFormator(value) {
     const result = new Intl.NumberFormat("en-BD", 
@@ -7,4 +7,3 @@ export function currencyFormator(value) {
 
     return result;
 }
-

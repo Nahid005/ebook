@@ -1,9 +1,10 @@
-import { RiDownload2Line, RiFacebookFill, RiInstagramLine, RiLinkedinFill, RiTwitterXFill } from "react-icons/ri";
+import { RiFacebookFill, RiInstagramLine, RiLinkedinFill, RiTwitterXFill } from "react-icons/ri";
 
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import Copyright from "./Copyright";
+import ExploreApps from "./ExploreApps";
 
 function Footer() {
     return (
@@ -16,22 +17,7 @@ function Footer() {
                         </Link>
                     </div>
                     <h4 className="font-bold text-md text-neutral-600">Download Our Apps</h4>
-                    <ul className="flex items-center gap-3">
-                        <li className="flex items-center gap-2 bg-orange-200 px-4 py-2 rounded shadow cursor-pointer">
-                            <RiDownload2Line className="text-xl" />
-                            <div className="flex flex-col">
-                                <p className="text-base text-neutral-700">Get it on</p>
-                                <h5 className="text-sm font-bold text-neutral-800">Google play</h5>
-                            </div>
-                        </li>
-                        <li className="flex items-center gap-2 bg-orange-200 px-4 py-2 rounded shadow cursor-pointer">
-                            <RiDownload2Line  className="text-xl"/>
-                            <div className="flex flex-col">
-                                <p className="text-base text-neutral-700">Get it on</p>
-                                <h5 className="text-sm font-bold text-neutral-800">App Store</h5>
-                            </div>
-                        </li>
-                    </ul>
+                    <ExploreApps />
                 </div>
                 <div className="flex flex-col gap-4">
                     <h4 className="font-bold text-md text-neutral-600">Quick Links</h4>

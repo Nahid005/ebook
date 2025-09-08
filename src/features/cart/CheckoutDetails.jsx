@@ -4,90 +4,23 @@ import { Button } from "@/components/ui/button";
 import CartItem from "./CartItem";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
-
-const productsList = [
-    {
-        id: 1,
-        image: "/assets/product-image.jpg",
-        title: "বিহঙ্গিনীর পিঞ্জিরা",
-        author: "লামিয়া রহমান মেঘলা",
-        ratings: 5,
-        genres: ["ফ্যান্টাসি", "রোমান্স", "ই-বুক মেলা", "ই-বুক মেলা ২০২৫"],
-        publishDate: "August 7, 2025",
-        language: "বাংলা",
-        pages: 172,
-        publishBy: "Boiaro",
-        price: 50,
-        description: "একটা বদ অভ্যাস ছাড়াতে অন্য একটা বদ অভ্যাসে জড়াতে হয় বিহঙ্গিনী। শুধু তোমাতে অভ্যস্ত করে দেওয়ার কথা দিচ্ছি, সব বদ অভ্যাস ছেড়ে দেব। প্রিয় পদ্মা হৃদি।"
-    },
-    {
-        id: 2,
-        image: "/assets/product-image.jpg",
-        title: "বিহঙ্গিনীর পিঞ্জিরা",
-        author: "লামিয়া রহমান মেঘলা",
-        ratings: 4,
-        genres: ["ফ্যান্টাসি", "রোমান্স", "ই-বুক মেলা", "ই-বুক মেলা ২০২৫"],
-        publishDate: "August 7, 2025",
-        language: "বাংলা",
-        pages: 172,
-        publishBy: "Boiaro",
-        price: 50,
-        description: "একটা বদ অভ্যাস ছাড়াতে অন্য একটা বদ অভ্যাসে জড়াতে হয় বিহঙ্গিনী। শুধু তোমাতে অভ্যস্ত করে দেওয়ার কথা দিচ্ছি, সব বদ অভ্যাস ছেড়ে দেব। প্রিয় পদ্মা হৃদি।"
-    },
-    {
-        id: 3,
-        image: "/assets/product-image.jpg",
-        title: "বিহঙ্গিনীর পিঞ্জিরা",
-        author: "লামিয়া রহমান মেঘলা",
-        ratings: 5,
-        genres: ["ফ্যান্টাসি", "রোমান্স", "ই-বুক মেলা", "ই-বুক মেলা ২০২৫"],
-        publishDate: "August 7, 2025",
-        language: "বাংলা",
-        pages: 172,
-        publishBy: "Boiaro",
-        price: 50,
-        description: "একটা বদ অভ্যাস ছাড়াতে অন্য একটা বদ অভ্যাসে জড়াতে হয় বিহঙ্গিনী। শুধু তোমাতে অভ্যস্ত করে দেওয়ার কথা দিচ্ছি, সব বদ অভ্যাস ছেড়ে দেব। প্রিয় পদ্মা হৃদি।"
-    },
-    {
-        id: 4,
-        image: "/assets/product-image.jpg",
-        title: "বিহঙ্গিনীর পিঞ্জিরা",
-        author: "লামিয়া রহমান মেঘলা",
-        ratings: 3,
-        genres: ["ফ্যান্টাসি", "রোমান্স", "ই-বুক মেলা", "ই-বুক মেলা ২০২৫"],
-        publishDate: "August 7, 2025",
-        language: "বাংলা",
-        pages: 172,
-        publishBy: "Boiaro",
-        price: 50,
-        description: "একটা বদ অভ্যাস ছাড়াতে অন্য একটা বদ অভ্যাসে জড়াতে হয় বিহঙ্গিনী। শুধু তোমাতে অভ্যস্ত করে দেওয়ার কথা দিচ্ছি, সব বদ অভ্যাস ছেড়ে দেব। প্রিয় পদ্মা হৃদি।"
-    },
-    {
-        id: 5,
-        image: "/assets/product-image.jpg",
-        title: "বিহঙ্গিনীর পিঞ্জিরা",
-        author: "লামিয়া রহমান মেঘলা",
-        ratings: 5,
-        genres: ["ফ্যান্টাসি", "রোমান্স", "ই-বুক মেলা", "ই-বুক মেলা ২০২৫"],
-        publishDate: "August 7, 2025",
-        language: "বাংলা",
-        pages: 172,
-        publishBy: "Boiaro",
-        price: 50,
-        description: "একটা বদ অভ্যাস ছাড়াতে অন্য একটা বদ অভ্যাসে জড়াতে হয় বিহঙ্গিনী। শুধু তোমাতে অভ্যস্ত করে দেওয়ার কথা দিচ্ছি, সব বদ অভ্যাস ছেড়ে দেব। প্রিয় পদ্মা হৃদি।"
-    }
-]
-
+import { useSelector } from "react-redux";
+import { totalPrice } from "./cartSlice";
+import { currencyFormator } from "@/lib/halper";
 
 function CheckoutDetails() {
+    const cartItems = useSelector(state => state.cart.cartItems)
+    const cartTotalPrice = useSelector(totalPrice)
+
     return (
         <div className="my-10 flex flex-col gap-2">
             <h4 className="text-2xl font-bold text-neutral-700 mb-4">Checkout</h4>
             <h5 className="text-lg font-medium text-neutral-700 mb-2">Your Shops Items</h5>
 
-            <div className="grid md:grid-cols-4 xl:grid-cols-5 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-3">
+
                 {
-                    productsList.map(product => <CartItem key={product.id} product={product} />)
+                    cartItems.length > 0 && cartItems.map(book => <CartItem key={book.id} book={book} />)
                 }
             </div>
 
@@ -125,7 +58,7 @@ function CheckoutDetails() {
                     </div>
                     <div className="flex justify-between gap-2 px-4 py-2">
                         <p className="text-xl font-bold text-neutral-600">Total</p>
-                        <p className="text-xl font-bold text-neutral-600">150</p>
+                        <p className="text-xl font-bold text-neutral-600">{currencyFormator(cartTotalPrice)}</p>
                     </div>
                 </div>
             </div>
@@ -139,7 +72,7 @@ function CheckoutDetails() {
                 <input className="text-neutral-600" type="checkbox" name="tramsCondition" id="tramsCondition" />
                 <label className="text-base font-medium text-neutral-600" htmlFor="tramsCondition">I agree to the <Link>Terms of Service</Link> and <Link>Privacy Policy</Link></label>
             </div>
-            <Button className="bg-green-600 font-bold text-base p-5 rounded hover:bg-green-700">Complete Purchase BDT 123</Button>
+            <Button className="bg-green-600 font-bold text-base p-5 rounded hover:bg-green-700">Complete Purchase {currencyFormator(cartTotalPrice)}</Button>
         </div>
     )
 }

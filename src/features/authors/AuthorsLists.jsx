@@ -11,7 +11,7 @@ function AuthorsLists() {
     if(isError) return <Error message={"Internal Server Error"} />
 
     return (
-        <div className="py-10 grid md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="py-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {
                 authors?.map(author => <AuthorsList key={author._id} author={author} />)
             }

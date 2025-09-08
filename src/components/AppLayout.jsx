@@ -1,8 +1,12 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import { useState } from "react";
+import BookSearchModal from "@/features/book/BookSearchModal";
 
 function AppLayout() {
+    const [isSearch, setIsSearch] = useState(false);
+
     return (
         <div className="flex flex-col grow min-h-screen">
             <header>
@@ -10,6 +14,9 @@ function AppLayout() {
             </header>
             <main className="h-full w-full px-4 md:px-0 max-w-[1300px] mx-auto grow">
                 <Outlet />
+                {
+                    isSearch && <BookSearchModal />
+                }
             </main>
             <footer>
                 <Footer />

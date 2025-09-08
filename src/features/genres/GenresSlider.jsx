@@ -1,53 +1,61 @@
-import Slider from "react-slick";
 import GenresItem from "./GenresItem";
 import { useGetGenres } from "./useGetGenres";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import Loading from "@/components/Loading";
 
 function GenresSlider() {
     const {genres, isError, isPending} = useGetGenres()
 
-    if(isPending) return <p>Loadding...</p>
+    if(isPending) return <Loading />
     
-    const settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 5,
-        slidesToScroll: 1,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                infinite: true,
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-                initialSlide: 2
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-                }
-            }
-        ]
-    };
-
     return (
-        <div className="py-10">
-            <Slider {...settings}>
-                {
-                    genres?.map(genre => <GenresItem key={genre._id} genre={genre} />)
-                }
-            </Slider>
-        </div>
+        <Swiper
+      modules={[Navigation, Autoplay]}
+      spaceBetween={5}
+      slidesPerView={2}
+      navigation
+      autoplay={{ delay: 2500, disableOnInteraction: false }}
+      style={{ margin: "40px 0" }}
+      breakpoints={{
+        // When window width is >= 640px
+        640: {
+            slidesPerView: 2,
+        },
+        // When window width is >= 768px
+        768: {
+            slidesPerView: 3,
+        },
+        // When window width is >= 1024px
+        1024: {
+            slidesPerView: 4,
+        },
+        // When window width is >= 1424px
+        1424: {
+            slidesPerView: 6,
+        },
+    }}
+    >
+      {genres?.map((item) => (
+        <SwiperSlide key={item.id}>
+          <div
+            style={{
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: "auto"
+            }}
+          >
+            <GenresItem genre={item} />
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
     )
 }
 

@@ -13,6 +13,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import Signin from "./pages/Singin"
 import AuthorDetails from "./pages/AuthorDetails"
 import Books from "./pages/Books"
+import TermsAndCondition from "./pages/TermsAndCondition"
+import Privacy from "./pages/Privacy"
 
 const queryClient = new QueryClient();
 
@@ -63,6 +65,14 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />
+      },
+      {
+        path: "/terms",
+        element: <TermsAndCondition />
+      },
+      {
+        path: "/privacy",
+        element: <Privacy />
       }
     ]
   }

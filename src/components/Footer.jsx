@@ -37,10 +37,16 @@ function Footer() {
                     <h4 className="font-bold text-md text-neutral-600">Our Policy</h4>
                     <ul className="flex flex-col gap-1">
                         <li>
-                            <Link className="text-neutral-700 hover:text-neutral-900">Trams and Conditions</Link>
+                            <Link 
+                                className="text-neutral-700 hover:text-neutral-900"
+                                to="/terms"
+                                >Trams and Conditions</Link>
                         </li>
                         <li>
-                            <Link className="text-neutral-700 hover:text-neutral-900">Privacy Policy</Link>
+                            <Link 
+                                className="text-neutral-700 hover:text-neutral-900"
+                                to="/privacy"
+                                >Privacy Policy</Link>
                         </li>
                         <li>
                             <Link className="text-neutral-700 hover:text-neutral-900">Return and Refund Policy</Link>

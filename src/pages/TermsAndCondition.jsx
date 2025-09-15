@@ -1,30 +1,20 @@
-import { getPages } from "@/services/pagesApi";
-import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import Loading from "@/components/Loading";
+import { usePages } from "@/hooks/usePages";
+
 
 function TermsAndCondition() {
+    const {pages, isError, isPending} = usePages()
 
-    const [pages, setPages] = useState(null);
+    if(isPending) return <Loading />;
+    if(isError) return;
 
-    const {mutate, isError, isPending} = useMutation({
-        mutationFn: getPages,
-        onSuccess: (data) => {
-            setPages(data)
-        },
-        onError: (error) => {
-            console.log(error.message)
-        }
-    })
-
-    useEffect(() => {
-        mutate()
-    }, [])
-
-
-    console.log(pages)
+    const terms = pages?.terms_of_use?.replace(/<[^>]+>/g, '');
 
     return (
-        <h1> Terms and Condition</h1>
+        <article className="py-8">
+            <h4 className="font-bold text-xl text-neutral-600 mb-5">Terms And Conditions</h4>
+            <p>{terms}</p>
+        </article>
     )
 }
 

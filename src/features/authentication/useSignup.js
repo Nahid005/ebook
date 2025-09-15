@@ -1,27 +1,24 @@
-import { auth } from "@/services/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signUp } from "@/services/authenticationApi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 export function useSignup() {
     const [user, setUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(null);
- 
-    const signUp = async (email, password) => {
-        setIsLoading(true);
-        setIsError(null);
+    const queryClient = useQueryClient();
 
-        try {
-            const userCredentail = await createUserWithEmailAndPassword(auth, email, password);
-            const userInfo = userCredentail.user;
-            setUser(userInfo);
-        } catch(error) {
-            console.log(error.message)
-            setIsError(error.message);
-        } finally {
-            setIsLoading(false)
-        }
-    }
+    const {mutate: userMutation, isError, isPending}  = useMutation({
+        mutationFn: (newUser) => signUp(newUser),
+        onSuccess: (user) => {
+            setUser(user)
+            console.log(user.data)
+            queryClient.invalidateQueries({queryKey: ["user"]})
+        },
+        onError: (error)=> {
+            console.log(error);
+        } 
+    })
 
-    return {signUp, user, isError, isLoading}
+    
+
+    return {userMutation, isError, isPending}
 }

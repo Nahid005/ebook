@@ -10,14 +10,19 @@ function SignupForm() {
     const {register, reset, handleSubmit, formState, getValues} = useForm();
     const {errors} = formState;
     const {passwordTextToggle, isShow} = usePasswordTypeToggled();
-    const {signUp, user, isError, isLoading} = useSignup();
-
-    console.log(user);
+    const {userMutation, isError, isLoading} = useSignup();
 
     function onSubmit(data) {
-        const {email, password} = data;
-        signUp(email, password)
-
+        const {username, firstname, lastname, email, password} = data;
+        const newUser = {
+            firstname,
+            lastname, 
+            username,
+            email,
+            password
+        }
+        
+        userMutation(newUser)
         reset();
     }
 
@@ -25,9 +30,54 @@ function SignupForm() {
         <div className="w-full bg-neutral-100 p-8 shadow rounded-md">
             <h4 className="font-bold text-neutral-600 text-xl w-full text-center mb-8 uppercase">Sign Up</h4>
             <form 
-                className="flex flex-col gap-4 justify-start items-start"
+                className="grid gap-4 grid-cols-1 md:grid-cols-2  justify-start items-start"
                 onSubmit={handleSubmit(onSubmit)}
             >
+                <div className="flex flex-col w-full gap-2">
+                    <label className="text-neutral-600" htmlFor="username">Username</label>
+                    <input 
+                        className="border border-neutral-300 px-2 py-1 text-sm h-10 rounded"
+                        type="text" 
+                        name="username" 
+                        id="username"
+                        placeholder="User Name"
+                        {...register("username", {
+                            required: "Username is required"
+                        })}
+                        disabled={isLoading}
+                    />
+                    <FormValidationError error={errors?.username} />
+                </div>
+                <div className="flex flex-col w-full gap-2">
+                    <label className="text-neutral-600" htmlFor="firstname">First Name</label>
+                    <input 
+                        className="border border-neutral-300 px-2 py-1 text-sm h-10 rounded"
+                        type="text" 
+                        name="firstname" 
+                        id="firstname"
+                        placeholder="Enter First Name"
+                        {...register("firstname", {
+                            required: "Firstname is required"
+                        })}
+                        disabled={isLoading}
+                    />
+                    <FormValidationError error={errors?.firstname} />
+                </div>
+                <div className="flex flex-col w-full gap-2">
+                    <label className="text-neutral-600" htmlFor="lastname">Last Name</label>
+                    <input 
+                        className="border border-neutral-300 px-2 py-1 text-sm h-10 rounded"
+                        type="text" 
+                        name="lastname" 
+                        id="lastname"
+                        placeholder="Enter Last Name"
+                        {...register("lastname", {
+                            required: "Lastname is required"
+                        })}
+                        disabled={isLoading}
+                    />
+                    <FormValidationError error={errors?.lastname} />
+                </div>
                 <div className="flex flex-col w-full gap-2">
                     <label className="text-neutral-600" htmlFor="email">Email</label>
                     <input 

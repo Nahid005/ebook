@@ -15,6 +15,7 @@ import AuthorDetails from "./pages/AuthorDetails"
 import Books from "./pages/Books"
 import TermsAndCondition from "./pages/TermsAndCondition"
 import Privacy from "./pages/Privacy"
+import { Toaster } from "react-hot-toast"
 
 const queryClient = new QueryClient();
 
@@ -84,6 +85,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <RouterProvider router={router} />
+      <Toaster />
     </QueryClientProvider>
     
   )

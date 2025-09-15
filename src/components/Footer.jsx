@@ -40,7 +40,7 @@ function Footer() {
                             <Link 
                                 className="text-neutral-700 hover:text-neutral-900"
                                 to="/terms"
-                                >Trams and Conditions</Link>
+                                >Terms And Conditions</Link>
                         </li>
                         <li>
                             <Link 

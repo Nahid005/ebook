@@ -2,6 +2,7 @@ import { baseURL } from "@/lib/halper";
 import { Link } from "react-router-dom";
 
 function AuthorsList({author}) {
+
     const {_id: id, name, image, stock} = author;
     
     return (

@@ -16,6 +16,7 @@ import Books from "./pages/Books"
 import TermsAndCondition from "./pages/TermsAndCondition"
 import Privacy from "./pages/Privacy"
 import { Toaster } from "react-hot-toast"
+import PublisherDetails from "./pages/PublisherDetails"
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/publishers",
         element: <Publishers />
+      },
+      {
+        path: "/publisherdetails/:publisherId",
+        element: <PublisherDetails />
       },
       {
         path: "/product/:bookId",

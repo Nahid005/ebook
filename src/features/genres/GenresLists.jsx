@@ -4,11 +4,10 @@ import { useGetGenres } from "./useGetGenres";
 import Error from "@/components/Error";
 
 function GenresLists() {
-    const {genres, isError, isPending} = useGetGenres()
+    const {genres, isError, isLoading} = useGetGenres()
 
-
-    if(isPending) return <Loading />
-    if(isError) return <Error message={"Internal Server Error"} />
+    if(isLoading) return <Loading />
+    if(isError) return <Error message="Data not found" />
 
     return (
         <div className="py-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">

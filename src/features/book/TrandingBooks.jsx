@@ -1,12 +1,12 @@
 import Error from "@/components/Error";
 import { useGetTrandingBooks } from "./useGetTrandingBooks"
 import BookItem from "./BookItem";
-import Loading from "@/components/Loading";
+import MiniLoading from "@/components/MiniLoading";
 
 function TrandingBooks() {
     const {trandingBooks, isError, isPending} = useGetTrandingBooks();
 
-    if(isPending) return <Loading />
+    if(isPending) return <MiniLoading />
     if(isError) return <Error message={"Internal Server Error"} />
 
     return (

@@ -7,7 +7,7 @@ function Privacy() {
     if(isPending) return <Loading />;
     if(isError) return;
 
-    const privacy = pages?.privacy_policy?.replace(/<[^>]+>/g, '');
+    const privacy = pages.at(0)?.privacy_policy?.replace(/<[^>]+>/g, '');
 
     return (
         <article className="py-8">

@@ -1,43 +1,35 @@
-const baseURL = import.meta.env.VITE_BASE_URL;
+import { baseURL } from "@/lib/halper";
 
 export async function getPopularBooks() {
-    try {
-        const response = await fetch(`${baseURL}/api/getpopularbooks`, {
-            method: "POST",
-            headers: {
-                "Content-Type" : "application/json"
-            }
-        });
-
-        if(!response.ok) {
-            throw new Error("Internal Server Error");
+    const response = await fetch(`${baseURL}/api/getpopularbooks`, {
+        method: "POST",
+        headers: {
+            "Content-Type" : "application/json"
         }
+    });
 
-        const data = await response.json();
-
-        return data;
-    } catch (error) {
-        console.error(error.message);
+    if(!response.ok) {
+        throw new Error(`Failed to fetch popular books: ${response.statusText}`);
     }
+
+    const data = await response.json();
+    return data;
 }
 
 export async function getTrandingBooks() {
-    try {
-        const response = await fetch(`${baseURL}/api/GetTrendingBooks`, {
-            method: "POST",
-            headers: {
-                "Content-Type" : "application/json"
-            }
-        });
-        if(!response.ok) {
-            throw new Error("Internal Server Errr");
+    const response = await fetch(`${baseURL}/api/gettrendingbooks`, {
+        method: "POST",
+        headers: {
+            "Content-Type" : "application/json"
         }
-
-        const data = await response.json();
-        return data;
-    } catch(error) {
-        console.log(error.message)
+    });
+    
+    if(!response.ok) {
+        throw new Error(`Failed to fetch tranding books: ${response.statusText}`);
     }
+
+    const data = await response.json();
+    return data;
 }
 
 export async function getBookDetails(id) {

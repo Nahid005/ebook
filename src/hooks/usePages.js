@@ -1,23 +1,12 @@
 import { getPages } from "@/services/pagesApi";
-import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export function usePages() {
-    const [pages, setPages] = useState({});
-
-    const {mutate, isError, isPending} = useMutation({
-        mutationFn: getPages,
-        onSuccess: (data) => {
-            setPages(data.data.pagesDetails[0])
-        },
-        onError: (error) => {
-            console.log(error.message)
-        }
+    const {data, isError, isLoading} = useQuery({
+        queryKey: ['pages'],
+        queryFn: getPages,
+        select: (res) => res.data.pagesDetails
     })
 
-    useEffect(() => {
-        mutate()
-    }, [])
-
-    return {pages, isError, isPending}
+    return {pages: data ?? [], isError, isLoading}
 }

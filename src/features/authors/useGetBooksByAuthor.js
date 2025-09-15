@@ -1,29 +1,15 @@
 import { getBooksByAuthor } from "@/services/authorsApi";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
 export function useGetBooksByAuthor() {
-    const [authorWiseBooks, setAuthorWiseBooks] = useState([]);
-    const queryClient = useQueryClient();
     const {authorId} = useParams();
 
-    const {mutate, isPending, isError} = useMutation({
-        mutationFn: () => getBooksByAuthor(authorId),
-        onSuccess: (data) => {
-            setAuthorWiseBooks(data.data.bookDetails)
-            queryClient.invalidateQueries({
-                queryKey: ["authorWiseBooks"]
-            })
-        },
-        onError: (error => {
-            console.log(error.message)
-        })
+    const {data, isLoading, isError} = useQuery({
+        queryKey: ['authorwisebooks'],
+        queryFn: () => getBooksByAuthor(authorId),
+        select: (res) => res.data.bookDetails,
     })
 
-    useEffect(() => {
-        mutate();
-    }, [])
-
-    return {authorWiseBooks, isPending, isError}
+    return {authorWiseBooks: data ?? [], isLoading, isError}
 }

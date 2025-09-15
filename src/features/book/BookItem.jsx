@@ -7,8 +7,9 @@ import { addCartItem } from "../cart/cartSlice";
 const baseURL = import.meta.env.VITE_BASE_URL;
 
 function BookItem({book}) {
+
     const dispatch = useDispatch();
-    const {_id: id, name, image, price = 10, averageRating, author} = book;
+    const {_id: id, name, image, price, averageRating, author} = book;
 
     function handleCartItem() {
         const cartItem = {
@@ -50,7 +51,7 @@ function BookItem({book}) {
                         </div>
                         <div className="flex gap-1">
                             <h4 className="text-sm font-bold text-neutral-600">{currencyFormator(price)}</h4>
-                            <p className="text-sm font-medium text-red-500"><del>200</del></p>
+                            {/* <p className="text-sm font-medium text-red-500"><del>200</del></p> */}
                         </div>
                     </div>
                 </div>

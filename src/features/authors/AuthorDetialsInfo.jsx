@@ -5,9 +5,10 @@ import BookItem from "../book/BookItem";
 import AuthorInfo from "./AuthorInfo";
 
 function AuthorDetailsInfo() {
-    const {authorWiseBooks, isPending: isAuthorWiseBooks} = useGetBooksByAuthor()
+    const {authorWiseBooks, isLoading: isAuthorWiseBooks} = useGetBooksByAuthor()
     
     if(isAuthorWiseBooks) return <Loading />
+    
     if (!authorWiseBooks?.length) return <p>No books available in this genre.</p>;
     const stock = authorWiseBooks.length;
 

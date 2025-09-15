@@ -5,10 +5,10 @@ import Error from "@/components/Error";
 
 
 function AuthorsLists() {
-    const {authors, isPending, isError} = useGetAuthors();
+    const {authors, isLoading, isError} = useGetAuthors();
 
-    if(isPending) return <Loading />
-    if(isError) return <Error message={"Internal Server Error"} />
+    if(isLoading) return <Loading />
+    if(isError) return <Error message={"data not found"} />
 
     return (
         <div className="py-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">

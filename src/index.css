@@ -118,3 +118,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+@keyframes dotPulse {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+.dot {
+  @apply w-3 h-3 bg-orange-400 rounded-full;
+  animation: dotPulse 1.4s infinite ease-in-out both;
+}
+.dot:nth-child(2) {
+  animation-delay: -0.32s;
+}
+.dot:nth-child(3) {
+  animation-delay: -0.16s;
+}

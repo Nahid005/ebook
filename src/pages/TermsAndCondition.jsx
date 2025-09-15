@@ -3,12 +3,12 @@ import { usePages } from "@/hooks/usePages";
 
 
 function TermsAndCondition() {
-    const {pages, isError, isPending} = usePages()
+    const {pages, isError, isLoading} = usePages()
 
-    if(isPending) return <Loading />;
+    if(isLoading) return <Loading />;
     if(isError) return;
 
-    const terms = pages?.terms_of_use?.replace(/<[^>]+>/g, '');
+    const terms = pages.at(0)?.terms_of_use?.replace(/<[^>]+>/g, '');
 
     return (
         <article className="py-8">

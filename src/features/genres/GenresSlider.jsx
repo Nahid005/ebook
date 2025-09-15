@@ -6,12 +6,12 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Loading from "@/components/Loading";
+import MiniLoading from "@/components/MiniLoading";
 
 function GenresSlider() {
     const {genres, isError, isPending} = useGetGenres()
 
-    if(isPending) return <Loading />
+    if(isPending) return <MiniLoading />
     
     return (
         <Swiper

@@ -1,4 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { Toaster } from "react-hot-toast"
+
 import AppLayout from "./components/AppLayout"
 import Home from "./pages/Home"
 import BooksDetails from "./pages/BooksDetails"
@@ -8,14 +12,11 @@ import Authors from "./pages/Authors"
 import Publishers from "./pages/Publishers"
 import GenreWiseBooks from "./pages/GenreWiseBooks"
 import Signup from "./pages/Signup"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import Signin from "./pages/Singin"
 import AuthorDetails from "./pages/AuthorDetails"
 import Books from "./pages/Books"
 import TermsAndCondition from "./pages/TermsAndCondition"
 import Privacy from "./pages/Privacy"
-import { Toaster } from "react-hot-toast"
 import PublisherDetails from "./pages/PublisherDetails"
 
 const queryClient = new QueryClient();

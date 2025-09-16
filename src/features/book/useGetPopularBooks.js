@@ -1,29 +1,13 @@
 import { getPopularBooks } from "@/services/booksAPI";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export function useGetPopularBooks() {
-    const [popularBooks, setPopularBooks] = useState([]);
-
-    const queryclient = useQueryClient();
-
-    const {mutate, isError, isPending} = useMutation({
-        mutationFn: getPopularBooks,
-        onSuccess: (data) =>{
-            setPopularBooks(data.data.bookDetails);
-            queryclient.invalidateQueries({
-                queryKey: ["popularBooks"]
-            })
-        },
-        onError: (error => {
-            console.log(error.message)
-        })
+    const {data, isError, isLoading} = useQuery({
+        queryKey: ['popularbooks'],
+        queryFn: getPopularBooks,
+        select: (res) => res.data.bookDetails
     })
-
-    useEffect(() => {
-        mutate();
-    }, [])
-
-    return {popularBooks, isError, isPending}
+    
+    return {popularBooks: data ?? [], isError, isLoading}
 }
 

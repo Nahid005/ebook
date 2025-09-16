@@ -17,7 +17,6 @@ export async function getPublisher() {
 }
 
 export async function getPublisherDetails(id) {
-
     const response = await fetch(`${baseURL}/api/getpublisherdetails`, {
         method: "POST",
         headers: {

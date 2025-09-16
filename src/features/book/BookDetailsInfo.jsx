@@ -12,11 +12,10 @@ import { useBookDetails } from "./useBookDetails";
 import Loading from "@/components/Loading";
 
 function BookDetailsInfo() {
-    const {bookDetails, isPending, isError} = useBookDetails();
-
-    if(isPending) return <Loading />
+    const {bookDetails, isLoading, isError} = useBookDetails();
+    
+    if(isLoading) return <Loading />
     if (isError) return <div>Something went wrong!</div>;
-    if (!bookDetails) return <div>No book found</div>;
 
     const {
         image, 
@@ -32,7 +31,7 @@ function BookDetailsInfo() {
         publishBy = "Boiaro",
         pages = 100,
         publishDate = "12-12-12"
-    } = bookDetails ?? {};
+    } = bookDetails.at(0)
 
     return (
         <div className="grid gap-2 md:grid-cols-2 md:gap-8">

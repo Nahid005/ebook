@@ -4,10 +4,10 @@ import BookItem from "./BookItem";
 import MiniLoading from "@/components/MiniLoading";
 
 function TrandingBooks() {
-    const {trandingBooks, isError, isPending} = useGetTrandingBooks();
+    const {trandingBooks, isError, isLoading} = useGetTrandingBooks();
 
-    if(isPending) return <MiniLoading />
-    if(isError) return <Error message={"Internal Server Error"} />
+    if(isLoading) return <MiniLoading />
+    if(isError) return <Error message={"Tranding books not found"} />
 
     return (
         <div className="">

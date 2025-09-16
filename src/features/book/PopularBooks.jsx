@@ -4,10 +4,10 @@ import { useGetPopularBooks } from "./useGetPopularBooks";
 import MiniLoading from "@/components/MiniLoading";
 
 function PopularBooks() {
-    const {popularBooks, isError, isPending} = useGetPopularBooks();
+    const {popularBooks, isError, isLoading} = useGetPopularBooks();
 
-    if(isPending) return <MiniLoading />
-    if(isError) return <Error message={"Internal Server Error"} />
+    if(isLoading) return <MiniLoading />
+    if(isError) return <Error message={"Books not found"} />
 
     return (
         <div className="">

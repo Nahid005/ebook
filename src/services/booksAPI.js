@@ -1,5 +1,26 @@
 import { baseURL } from "@/lib/halper";
 
+export async function getBooks() {
+    try {
+        const response = await fetch(`${baseURL}/api/getbooks`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            }
+        })
+
+        if(!response.ok) {
+            throw new Error(`Failed to fetch books: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }catch(error) {
+        console.log("getbooks error", error.message);
+        throw error;
+    }
+}
+
 export async function getPopularBooks() {
     const response = await fetch(`${baseURL}/api/getpopularbooks`, {
         method: "POST",

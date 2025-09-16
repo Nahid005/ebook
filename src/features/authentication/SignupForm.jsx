@@ -5,13 +5,21 @@ import PasswordTypeChange from "./PasswordTypeChange";
 import SocialLogin from "./SocialLogin";
 import FormValidationError from "@/components/FormValidationError";
 import { useSignup } from "./useSignup";
+import { useCheckRegisterUser } from "./useCheckRegisterUser";
+import Loading from "@/components/Loading";
+import Error from "@/components/Error";
 
 function SignupForm() {
+    const {verifyUserEmail, isError: isChekRegError, isPending: isCheckRegLoading} = useCheckRegisterUser();
+    const {createUser, isError: isCreateUserError, isLoading: isCreateUserLoading} = useSignup();
+
     const {register, reset, handleSubmit, formState, getValues} = useForm();
     const {errors} = formState;
     const {passwordTextToggle, isShow} = usePasswordTypeToggled();
-    const {userMutation, isError, isLoading} = useSignup();
 
+    if(isCreateUserLoading) return <Loading />
+    if(isCreateUserError) return <Error message="Something went wrong" />
+    
     function onSubmit(data) {
         const {username, firstname, lastname, email, password} = data;
         const newUser = {
@@ -22,8 +30,12 @@ function SignupForm() {
             password
         }
         
-        userMutation(newUser)
-        reset();
+        createUser(newUser, {
+            onSuccess: () => {
+                reset();
+            }
+        })
+        
     }
 
     return (
@@ -37,6 +49,7 @@ function SignupForm() {
                     <label className="text-neutral-600" htmlFor="username">Username</label>
                     <input 
                         className="border border-neutral-300 px-2 py-1 text-sm h-10 rounded"
+                        aria-invalid={!!errors.username}
                         type="text" 
                         name="username" 
                         id="username"
@@ -44,7 +57,7 @@ function SignupForm() {
                         {...register("username", {
                             required: "Username is required"
                         })}
-                        disabled={isLoading}
+                        disabled={isCreateUserLoading}
                     />
                     <FormValidationError error={errors?.username} />
                 </div>
@@ -59,7 +72,7 @@ function SignupForm() {
                         {...register("firstname", {
                             required: "Firstname is required"
                         })}
-                        disabled={isLoading}
+                        disabled={isCreateUserLoading}
                     />
                     <FormValidationError error={errors?.firstname} />
                 </div>
@@ -74,7 +87,7 @@ function SignupForm() {
                         {...register("lastname", {
                             required: "Lastname is required"
                         })}
-                        disabled={isLoading}
+                        disabled={isCreateUserLoading}
                     />
                     <FormValidationError error={errors?.lastname} />
                 </div>
@@ -85,12 +98,12 @@ function SignupForm() {
                         type="email" 
                         name="email" 
                         id="email"
-                        defaultValue="example@gmail.com"
                         placeholder="Enter your email"
                         {...register("email", {
                             required: "Email is required"
                         })}
-                        disabled={isLoading}
+                        onBlur={() => verifyUserEmail(getValues('email'))}
+                        disabled={isCheckRegLoading || isChekRegError}
                     />
                     <FormValidationError error={errors?.email} />
                 </div>
@@ -109,10 +122,11 @@ function SignupForm() {
                                 message: "Password must be at least 8 characters"
                             }
                         })}
-                        disabled={isLoading}
+                        disabled={isCreateUserLoading}
                     />
                     <FormValidationError error={errors?.password} />
                     <div 
+                        role="button"
                         onClick={() => passwordTextToggle("password")}
                     >
                         <PasswordTypeChange isShow={isShow} />
@@ -125,25 +139,26 @@ function SignupForm() {
                         type={`${isShow.confirmPassword ? "text" : "password"}`} 
                         name="confirmPassword" 
                         id="confirm-password" 
-                        placeholder="Comfirm password"
+                        placeholder="Confirm password"
                         {...register("confirmPassword", {
                             required: "Confirm password is required",
                             validate: (value) => value === getValues("password") || "Passwords do not match"
                         })}
-                        disabled={isLoading}
+                        disabled={isCreateUserLoading}
                     />
                     <FormValidationError error={errors?.confirmPassword} />
                     <div 
+                        role="button"
                         onClick={() => passwordTextToggle("confirmPassword") }
                     >
                         <PasswordTypeChange isShow={isShow} />
                     </div>
                 </div>
 
-                <input disabled={isLoading} className="bg-green-600 w-full py-2 text-md font-bold text-neutral-100 rounded cursor-pointer mt-4" type="submit" value="Sign Up" />
+                <input disabled={isCreateUserLoading} className="bg-green-600 w-full py-2 text-md font-bold text-neutral-100 rounded cursor-pointer mt-4" type="submit" value="Sign Up" />
             </form>
 
-            <p className="text-sm font-normal text-neutral-600 my-4">If you have an account plese <Link className="font-medium underline" to="/signin">Signin</Link></p>
+            <p className="text-sm font-normal text-neutral-600 my-4">If you have an account please <Link className="font-medium underline" to="/signin">Sign In</Link></p>
 
             <hr />
             <SocialLogin />

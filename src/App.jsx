@@ -18,6 +18,7 @@ import Books from "./pages/Books"
 import TermsAndCondition from "./pages/TermsAndCondition"
 import Privacy from "./pages/Privacy"
 import PublisherDetails from "./pages/PublisherDetails"
+import Verifyotp from "./pages/Verifyotp"
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: '/signin',
     element: <Signin />
+  },
+  {
+    path: '/verifyotp',
+    element: <Verifyotp />
   },
   {
     element:  <AppLayout />,

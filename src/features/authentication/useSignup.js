@@ -1,17 +1,17 @@
 import { signUp } from "@/services/authenticationApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function useSignup() {
-    const [user, setUser] = useState(null);
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
-    const {mutate: userMutation, isError, isPending}  = useMutation({
+    const {mutate: createUser, isError, isPending}  = useMutation({
         mutationFn: (newUser) => signUp(newUser),
-        onSuccess: (user) => {
-            setUser(user)
-            console.log(user.data)
-            queryClient.invalidateQueries({queryKey: ["user"]})
+        onSuccess: (data) => {
+            navigate('/verifyotp')
+
+            queryClient.invalidateQueries({queryKey: ["users"]})
         },
         onError: (error)=> {
             console.log(error);
@@ -20,5 +20,5 @@ export function useSignup() {
 
     
 
-    return {userMutation, isError, isPending}
+    return {createUser, isError, isPending}
 }

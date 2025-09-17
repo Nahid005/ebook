@@ -9,9 +9,12 @@ export function useSignup() {
     const {mutate: createUser, isError, isPending}  = useMutation({
         mutationFn: (newUser) => signUp(newUser),
         onSuccess: (data) => {
-            navigate('/verifyotp')
+
+            console.log("user Info", data)
 
             queryClient.invalidateQueries({queryKey: ["users"]})
+
+            navigate('/verifyotp')
         },
         onError: (error)=> {
             console.log(error);

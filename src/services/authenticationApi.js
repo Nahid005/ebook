@@ -1,3 +1,5 @@
+import { storage } from "@/lib/storage";
+
 const baseURL = import.meta.env.VITE_BASE_URL;
 
 //existing user checking
@@ -38,6 +40,7 @@ export async function signUp(newUser) {
         }
 
         const data = await response.json();
+        storage.setUser(newUser.email);
         return data;
     }catch (error) {
         console.log("Create new user error", error.message);
@@ -46,6 +49,10 @@ export async function signUp(newUser) {
 }
 
 export async function verifyOtp(otpObj) {
+
+    console.log(otpObj)
+
+
     try {
         const response = await fetch(`${baseURL}/api/otp_verification`, {
             method: "POST",

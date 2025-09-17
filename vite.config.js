@@ -13,10 +13,10 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api": {
-        target: "https://api.boiaro.com",
+      '/api': {
+        target: 'https://api.boiaro.com',
         changeOrigin: true,
-        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, '/api')
       }
     }
   }

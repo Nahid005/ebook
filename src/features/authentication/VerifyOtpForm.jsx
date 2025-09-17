@@ -2,26 +2,28 @@ import FormValidationError from "@/components/FormValidationError";
 import { useForm } from "react-hook-form";
 import { useOtpVerify } from "./useOtpVerify";
 import Error from "@/components/Error";
+import { storage } from "@/lib/storage";
 
 function VerifyOtpForm() {
     const {otpVerify, isError, isPending} = useOtpVerify();
+    const email = storage.getUser();
 
     if(isError) return <Error message="Something went wrong" />
 
     const {register, reset, handleSubmit, formState} = useForm();
-        const {errors} = formState;
-    
-        function onSubmit({email, password}) {
-            const otpObj = {
-                email,
-                password
-            }
-            otpVerify(otpObj, {
-                onSuccess: () => {
-                    reset();
-                }
-            })
+    const {errors} = formState;
+
+    function onSubmit({otp}) {
+        const otpObj = {
+            email,
+            otp
         }
+        otpVerify(otpObj, {
+            onSuccess: () => {
+                reset();
+            }
+        })
+    }
     
     return (
         <div className="w-full bg-neutral-100 p-8 shadow rounded-md">
@@ -30,20 +32,6 @@ function VerifyOtpForm() {
                 className="flex flex-col gap-4 justify-start items-start"
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <div className="flex flex-col w-full gap-2">
-                    <label className="text-neutral-600" htmlFor="email">Email</label>
-                    <input 
-                        className="border border-neutral-300 px-2 py-1 text-sm h-10 rounded"
-                        type="email" 
-                        name="email" 
-                        id="email"
-                        placeholder="Enter your email"
-                        {...register("email", {
-                            required: "Email is required"
-                        })}
-                    />
-                    <FormValidationError error={errors?.email} />
-                </div>
                 <div className="flex flex-col w-full gap-2 relative">
                     <label className="text-neutral-600" htmlFor="otp">OTP</label>
                     <input 

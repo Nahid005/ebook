@@ -9,9 +9,6 @@ export function useOtpVerify() {
     const {mutate: otpVerify, isPending, isError} = useMutation({
         mutationFn: (otpObj) => verifyOtp(otpObj),
         onSuccess: (data) => {
-
-            console.log(data.data.success)
-
             if(data.data.success === 1) {
                 storage.setUser(data.data.userDetails);
                 storage.setToken(data.data.token)

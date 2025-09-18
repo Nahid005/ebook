@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import Copyright from "./Copyright";
 import ExploreApps from "./ExploreApps";
+import Logo from "./Logo";
 
 function Footer() {
     return (
@@ -13,7 +14,7 @@ function Footer() {
                 <div className="flex flex-col gap-4">
                     <div className="">
                         <Link to="/" className="font-bold">
-                            #BOIARO
+                            <Logo />
                         </Link>
                     </div>
                     <h4 className="font-bold text-md text-neutral-600">Download Our Apps</h4>
@@ -23,10 +24,16 @@ function Footer() {
                     <h4 className="font-bold text-md text-neutral-600">Quick Links</h4>
                     <ul className="flex flex-col gap-1">
                         <li>
-                            <Link className="text-neutral-700 hover:text-neutral-900">Recharge Balance</Link>
+                            <Link 
+                            className="text-neutral-700 hover:text-neutral-900"
+                            to="/aboutus"
+                            >About us</Link>
                         </li>
                         <li>
-                            <Link className="text-neutral-700 hover:text-neutral-900">Help & Support</Link>
+                            <Link 
+                            className="text-neutral-700 hover:text-neutral-900"
+                            to="/contactus"
+                            >Contact Us</Link>
                         </li>
                         <li>
                             <Link className="text-neutral-700 hover:text-neutral-900">Publish on Boiaro</Link>
@@ -49,7 +56,16 @@ function Footer() {
                                 >Privacy Policy</Link>
                         </li>
                         <li>
-                            <Link className="text-neutral-700 hover:text-neutral-900">Return and Refund Policy</Link>
+                            <Link 
+                            className="text-neutral-700 hover:text-neutral-900"
+                            to="/refundpolicy"
+                            >Return and Refund Policy</Link>
+                        </li>
+                        <li>
+                            <Link 
+                            className="text-neutral-700 hover:text-neutral-900"
+                            to="/deleteaccountinstruction"
+                            >Delete account instruction</Link>
                         </li>
                     </ul>
                 </div>
@@ -79,6 +95,9 @@ function Footer() {
                         </li>
                     </ul>
                 </div>
+            </div>
+            <div className="">
+                <img className="max-w-full" src="/Payment Banner_Jul24.png"/>
             </div>
 
             <Copyright />

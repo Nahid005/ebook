@@ -2,24 +2,23 @@ import DOMPurify from "dompurify";
 import Loading from "@/components/Loading";
 import { usePages } from "@/hooks/usePages";
 
-
-function TermsAndCondition() {
+function DeleteAccountInstruction() {
     const {pages, isError, isLoading} = usePages()
 
     if(isLoading) return <Loading />;
     if(isError) return;
 
-    const terms = DOMPurify.sanitize(pages.at(0)?.terms_of_use || "");
+    const deleteAccount = DOMPurify.sanitize(pages.at(0)?.delete_account_instruction || "");
 
     return (
         <article className="py-8">
-            <h4 className="font-bold text-xl text-neutral-600 mb-5">Terms And Conditions</h4>
+            <h4 className="font-bold text-xl text-neutral-600 mb-5">Delete Account Instruction</h4>
             <div 
                 className="prose prose-neutral max-w-none"
-                dangerouslySetInnerHTML={{ __html: terms }}
+                dangerouslySetInnerHTML={{ __html: deleteAccount }}
             />
         </article>
     )
 }
 
-export default TermsAndCondition;
+export default DeleteAccountInstruction;

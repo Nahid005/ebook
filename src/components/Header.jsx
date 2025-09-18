@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import NavItems from "./NavItems";
 import { useSelector } from "react-redux";
+import Logo from "./Logo";
 
 const menus = [
     {
@@ -65,10 +66,9 @@ function Header() {
             <div className={` w-full h-[8ch] backdrop-blur-sm flex items-center justify-between px-4 md:px-0 fixed top-0 transition-all ease-in-out duration-300 z-50 max-w-[1300px] mx-auto`}>
 
                 {/* Logo section */}
-
                 <div className="flex items-center gap-2 md:pr-16 pr-0">
                     <Link to="/" className="font-bold">
-                    #BOIARO
+                        <Logo />
                     </Link>
                 </div>
 

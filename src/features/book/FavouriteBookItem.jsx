@@ -1,17 +1,17 @@
 import { baseURL, currencyFormator, userId } from "@/lib/halper";
-import { MdFavoriteBorder, MdOutlineShoppingCart } from "react-icons/md";
+import { MdFavorite, MdOutlineShoppingCart } from "react-icons/md";
 import Rating from "./Rating";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addCartItem } from "../cart/cartSlice";
 import toast from "react-hot-toast";
-import { useAddFavBook } from "./useAddFavBook";
+import { useRemoveFevBook } from "./useRemoveFevBook";
 
-function BookItem({book}) {
-    const {mutateFavBook, isError, isPending} = useAddFavBook()
+function FavouriteBookItem({book}) {
+    const {mutateRemoveFavBook, isPending} = useRemoveFevBook();
     const dispatch = useDispatch();
+    const {_id: id, name, image, price, averageRating, author} = book?.bookDetails;
 
-    const {_id: id, name, image, price, averageRating, author} = book;
 
     function handleCartItem() {
         const cartItem = {
@@ -28,14 +28,13 @@ function BookItem({book}) {
         toast.success(`${name} The book has been carted.`)
     }
 
-    function handleAddFavBook() {
+    function handleRemoveFavBook() {
         const favObj = {
             userId: userId,
             bookId: id
         }
-
-        mutateFavBook(favObj);
-        toast.success(`${name} The book has been added.`)
+        mutateRemoveFavBook(favObj);
+        toast.success(`${name} The book has been Removed.`)
     }
 
     return (
@@ -46,9 +45,10 @@ function BookItem({book}) {
                 </Link>
                 <button 
                     className=" absolute top-2 right-2 cursor-pointer"
-                    onClick={() => handleAddFavBook()}
+                    onClick={() => handleRemoveFavBook()}
+                    disabled={isPending}
                     >
-                    <MdFavoriteBorder className="text-2xl text-orange-500" />
+                    <MdFavorite className="text-2xl text-orange-500" />
                 </button>
                 <div className="bg-neutral-600/50 text-center py-5 px-2 absolute w-full bottom-0 rounded-b-lg transition-all duration-300 translate-y-10 opacity-0 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 flex justify-center">
                     <button 
@@ -79,4 +79,4 @@ function BookItem({book}) {
     )
 }
 
-export default BookItem;
+export default FavouriteBookItem

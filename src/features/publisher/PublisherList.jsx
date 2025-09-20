@@ -1,3 +1,4 @@
+import { baseURL } from "@/lib/halper";
 import { Link } from "react-router-dom";
 
 function PublisherList({publisher}) {
@@ -7,7 +8,7 @@ function PublisherList({publisher}) {
     return (
         <Link to={`/publisherdetails/${_id}`}>
             <div className="flex gap-2 justify-start items-center bg-orange-100 py-3 px-4 rounded mx-2 shadow">
-                <img className="w-20 h-20 rounded-full" src={image} alt={name} />
+                <img className="w-20 h-20 rounded-full" src={`${baseURL}/assets/userImages/${image}`} alt={name} />
                 <div className="flex flex-col gap-1">
                     <h4 className="font-bold text-neutral-600 text-md">{name}</h4>
                     {/* <p>

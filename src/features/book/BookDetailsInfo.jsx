@@ -2,20 +2,22 @@ import { HiBuildingOffice2, HiCalendarDays, HiMiniDocumentText, HiOutlineGlobeAs
 
 import ProductGallery from "@/features/book/ProductGallery"
 import Rating from "@/features/book/Rating";
-import Genres from "@/features/book/Genres";
-import { currencyFormator } from "@/lib/halper";
+import { currencyFormator, token } from "@/lib/halper";
 import { Button } from "@/components/ui/button";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { HiOutlineShare } from "react-icons/hi";
 import ProductReviews from "@/features/book/ProductReviews";
 import { useBookDetails } from "./useBookDetails";
 import Loading from "@/components/Loading";
+import { useBookReview } from "./useBookReview";
+import DOMPurify from "dompurify";
 
 function BookDetailsInfo() {
     const {bookDetails, isLoading, isError} = useBookDetails();
+    const {bookReview, isError: reviewError, isLoading: reviewLoading} = useBookReview();
     
-    if(isLoading) return <Loading />
-    if (isError) return <div>Something went wrong!</div>;
+    if(isLoading || reviewLoading) return <Loading />
+    if (isError || reviewError) return <div>Something went wrong!</div>;
 
     const {
         image, 
@@ -33,6 +35,8 @@ function BookDetailsInfo() {
         publishDate = "12-12-12"
     } = bookDetails.at(0)
 
+    const bookDescription = DOMPurify.sanitize(description || "");
+
     return (
         <div className="grid gap-2 md:grid-cols-2 md:gap-8">
             <ProductGallery galleryImage={image} title={name} />
@@ -44,7 +48,7 @@ function BookDetailsInfo() {
                         <Rating rating={averageRating} />
                     </div>
                     <span className="text-neutral-600">{averageRating} </span>
-                    <span className="text-neutral-500">(103 ratings)</span>
+                    <span className="text-neutral-500">({bookReview?.length} ratings)</span>
                 </div>
                 {/* <Genres genres={category} /> */}
                 <div className="bg-orange-100 p-4 grid grid-cols-2 md:grid-cols-4 gap-8 rounded-lg">
@@ -80,13 +84,14 @@ function BookDetailsInfo() {
                 </div>
                 <div className="flex gap-2 flex-col">
                     <h4 className="font-bold text-xl text-neutral-600">About this book</h4>
-                    <article className="mb-10">
-                        {description}
+                    <article className="mb-10" dangerouslySetInnerHTML={{ __html: bookDescription }}>
                     </article>
                 </div>
                 <div className="">
-                    <h4 className="font-bold text-xl text-neutral-700 mb-5">Reviews (70)</h4>
-                    <ProductReviews />
+                    <h4 className="font-bold text-xl text-neutral-700 mb-5">Reviews ({bookReview?.length})</h4>
+                    {
+                        token ? <ProductReviews bookReview={bookReview} /> : ""
+                    }
                 </div>
             </div>
         </div>

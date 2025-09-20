@@ -45,22 +45,7 @@ function SignupForm() {
                 className="grid gap-4 grid-cols-1 md:grid-cols-2  justify-start items-start"
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <div className="flex flex-col w-full gap-2">
-                    <label className="text-neutral-600" htmlFor="username">Username</label>
-                    <input 
-                        className="border border-neutral-300 px-2 py-1 text-sm h-10 rounded"
-                        aria-invalid={!!errors.username}
-                        type="text" 
-                        name="username" 
-                        id="username"
-                        placeholder="User Name"
-                        {...register("username", {
-                            required: "Username is required"
-                        })}
-                        disabled={isCreateUserLoading}
-                    />
-                    <FormValidationError error={errors?.username} />
-                </div>
+                
                 <div className="flex flex-col w-full gap-2">
                     <label className="text-neutral-600" htmlFor="firstname">First Name</label>
                     <input 
@@ -90,6 +75,22 @@ function SignupForm() {
                         disabled={isCreateUserLoading}
                     />
                     <FormValidationError error={errors?.lastname} />
+                </div>
+                <div className="flex flex-col w-full gap-2">
+                    <label className="text-neutral-600" htmlFor="username">Username</label>
+                    <input 
+                        className="border border-neutral-300 px-2 py-1 text-sm h-10 rounded"
+                        aria-invalid={!!errors.username}
+                        type="text" 
+                        name="username" 
+                        id="username"
+                        placeholder="User Name"
+                        {...register("username", {
+                            required: "Username is required"
+                        })}
+                        disabled={isCreateUserLoading}
+                    />
+                    <FormValidationError error={errors?.username} />
                 </div>
                 <div className="flex flex-col w-full gap-2">
                     <label className="text-neutral-600" htmlFor="email">Email</label>

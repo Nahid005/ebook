@@ -1,28 +1,27 @@
-import { auth } from "@/services/firebase"
-import { signInWithEmailAndPassword } from "firebase/auth"
-import { useState } from "react"
+import { storage } from "@/lib/storage";
+import { signIn } from "@/services/authenticationApi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 export function useSignin() {
-    const [user, setUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(null);
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
-    const signIn = async (email, password) => {
-        setIsLoading(true);
-        setIsError(null);
+    const {mutate: signinUser, isError, isPending}  = useMutation({
+        mutationFn: (userCredentials) => signIn(userCredentials),
+        onSuccess: (data) => {
 
-        try {
-            const userCredentail = await signInWithEmailAndPassword(auth, email, password)
-            const userInfo = userCredentail.user;
-            setUser(userInfo);
+            console.log(data)
 
-        }catch(error) {
-            console.log(error.message);
-            setIsError(error.message);
-        }finally {
-            setIsLoading(false);
-        }
-    }
+            storage.setUser(data.data.userDetails);
+            storage.setToken(data.data.token)
+            queryClient.invalidateQueries({queryKey: ["signin"]})
+            navigate('/')
+        },
+        onError: (error)=> {
+            console.log(error);
+        } 
+    })
 
-    return {signIn, user, isLoading, isError}
+    return {signinUser, isError, isPending}
 }

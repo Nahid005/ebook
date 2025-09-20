@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "http://api.boiaro.com",
+  "proxy": "https://api.boiaro.com",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -23,6 +23,7 @@
     "firebase": "^12.1.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.539.0",
+    "nanoid": "^5.1.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.62.0",

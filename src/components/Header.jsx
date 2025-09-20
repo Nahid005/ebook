@@ -1,11 +1,13 @@
 import { HiMenu, HiOutlineSearch, HiOutlineX } from "react-icons/hi";
-import { MdOutlineShoppingCart } from "react-icons/md";
+import { MdFavoriteBorder, MdOutlineShoppingCart } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import NavItems from "./NavItems";
 import { useSelector } from "react-redux";
 import Logo from "./Logo";
+import { token } from "@/lib/halper";
+import { storage } from "@/lib/storage";
 
 const menus = [
     {
@@ -51,6 +53,11 @@ function Header() {
         }
     }
 
+    function handleSignOut() {
+        storage.clearAll()
+    }
+
+
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
 
@@ -77,13 +84,22 @@ function Header() {
                     <button className="w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer">
                         <HiOutlineSearch />
                     </button>
-                    <button className="relative w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer">
-                        <MdOutlineShoppingCart />
-                        {
-                            cartItems.length > 0 && <span className=" absolute right-0 top-0 bg-orange-400 text-sm w-5 h-5 rounded-full font-bold text-white">{cartItems.length}</span>
-                        }
-                    </button>
 
+                    <Link to={"/favouritebooks"}>
+                        <button className="w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer">
+                            <MdFavoriteBorder />
+                        </button>
+                    </Link>
+
+                    <Link to="/checkout">
+                        <button className="relative w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer">
+                            <MdOutlineShoppingCart />
+                            {
+                                cartItems.length > 0 && <span className=" absolute right-0 top-0 bg-orange-400 text-sm w-5 h-5 rounded-full font-bold text-white">{cartItems.length}</span>
+                            }
+                        </button>
+                    </Link>
+                    
                     <button onClick={toggleNavbar} className="text-neutral-600 focus:outline-none cursor-pointer">
                         <HiMenu className="font-bold text-2xl text-neutral-600" />
                     </button>
@@ -116,6 +132,12 @@ function Header() {
                                 <HiOutlineSearch />
                             </button>
 
+                            <Link to={"/favouritebooks"}>
+                                <button className="w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer hidden md:block">
+                                    <MdFavoriteBorder />
+                                </button>
+                            </Link>
+                            
                             <Link to="/checkout">
                                 <button className="relative w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer hidden md:block">
                                     <MdOutlineShoppingCart />
@@ -125,9 +147,19 @@ function Header() {
                                 </button>
                             </Link>
 
-                            <button className="w-fit px-6 py-2 rounded-full bg-orange-300 hover:bg-orange-400  md:text-base text-lg font-medium text-neutral-800 hover:text-neutral-800 ease-in-out duration-300 cursor-pointer">
-                                <Link to="/signin">Signin</Link>
-                            </button>
+                            {
+                                token ?
+                                <button 
+                                    className="w-fit px-6 py-2 rounded-full bg-orange-300 hover:bg-orange-400  md:text-base text-lg font-medium text-neutral-800 hover:text-neutral-800 ease-in-out duration-300 cursor-pointer"
+                                    onClick={handleSignOut}
+                                    >
+                                    Signout
+                                </button>
+                                :
+                                <button className="w-fit px-6 py-2 rounded-full bg-orange-300 hover:bg-orange-400  md:text-base text-lg font-medium text-neutral-800 hover:text-neutral-800 ease-in-out duration-300 cursor-pointer">
+                                    <Link to="/signin">Signin</Link>
+                                </button>
+                            }
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import { baseURL } from "@/lib/halper";
+import { baseURL, token } from "@/lib/halper";
 
 export async function getBooks() {
     try {
@@ -22,51 +22,158 @@ export async function getBooks() {
 }
 
 export async function getPopularBooks() {
-    const response = await fetch(`${baseURL}/api/getpopularbooks`, {
-        method: "POST",
-        headers: {
-            "Content-Type" : "application/json"
+    try {
+        const response = await fetch(`${baseURL}/api/getpopularbooks`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            }
+        });
+
+        if(!response.ok) {
+            throw new Error(`Failed to fetch popular books: ${response.statusText}`);
         }
-    });
 
-    if(!response.ok) {
-        throw new Error(`Failed to fetch popular books: ${response.statusText}`);
+        const data = await response.json();
+        return data;
+    }catch(error) {
+        console.log("getpopular books error", error.message);
+        throw error;
     }
-
-    const data = await response.json();
-    return data;
 }
 
 export async function getTrandingBooks() {
-    const response = await fetch(`${baseURL}/api/gettrendingbooks`, {
-        method: "POST",
-        headers: {
-            "Content-Type" : "application/json"
+    try {
+        const response = await fetch(`${baseURL}/api/gettrendingbooks`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            }
+        });
+        
+        if(!response.ok) {
+            throw new Error(`Failed to fetch tranding books: ${response.statusText}`);
         }
-    });
-    
-    if(!response.ok) {
-        throw new Error(`Failed to fetch tranding books: ${response.statusText}`);
-    }
 
-    const data = await response.json();
-    return data;
+        const data = await response.json();
+        return data;
+    }catch(error) {
+        console.log("gettranding books error", error.message);
+        throw error;
+    }
 }
 
 export async function getBookDetails(id) {
-    const response = await fetch(`${baseURL}/api/getbookdetails`, {
-        method: "POST",
-        headers: {
-            "Content-Type" : "application/json"
-        },
-        
-        body: JSON.stringify({bookId: id})
-    })
+    try {
+        const response = await fetch(`${baseURL}/api/getbookdetails`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            
+            body: JSON.stringify({bookId: id})
+        })
 
-    if(!response.ok) {
-        throw new Error(`Failed to fetch book details: ${response.statusText}`);
+        if(!response.ok) {
+            throw new Error(`Failed to fetch book details: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }catch(error) {
+        console.log("getbook details error", error.message);
+        throw error;
     }
+}
 
-    const data = await response.json();
-    return data;
+export async function getBookReview(bookId) {
+    try {
+        const response = await fetch(`${baseURL}/api/getreview`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify({bookId})
+        })
+
+        if(!response.ok) {
+            throw new Error(`Failed to fetch book review: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }catch(error) {
+        console.log("getbookreview error", error.message);
+        throw error;
+    }
+}
+
+export async function addFavouriteBook(favObj) {
+    try {
+        const response = await fetch(`${baseURL}/api/addfavouritebook`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify(favObj)
+        })
+
+        if(!response.ok) {
+            throw new Error(`Failed to fetch book review: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }catch(error) {
+        console.log("getbookreview error", error.message);
+        throw error;
+    }
+}
+
+export async function getFavouriteBook(userId) {
+    try {
+        const response = await fetch(`${baseURL}/api/getfavouritebook`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify({userId})
+        })
+
+        if(!response.ok) {
+            throw new Error(`Failed to fetch book review: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }catch(error) {
+        console.log("getbookreview error", error.message);
+        throw error;
+    }
+}
+
+export async function removeFavouriteBook(favObj) {
+    try {
+        const response = await fetch(`${baseURL}/api/removefavouritebook`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify(favObj)
+        })
+
+        if(!response.ok) {
+            throw new Error(`Failed to fetch book review: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }catch(error) {
+        console.log("getbookreview error", error.message);
+        throw error;
+    }
 }

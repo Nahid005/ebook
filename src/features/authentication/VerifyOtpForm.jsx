@@ -47,7 +47,10 @@ function VerifyOtpForm() {
                     <FormValidationError error={errors?.otp} />
                 </div>
 
-                <input className="bg-green-600 w-full py-2 text-md font-bold text-neutral-100 rounded cursor-pointer mt-4" type="submit" value="Verify OTP" />
+                <input 
+                    className={`bg-green-600 w-full py-2 text-md font-bold text-neutral-100 rounded ${isPending ? 'cursor-not-allowed' : 'cursor-pointer'} mt-4`} 
+                    disabled={isPending}
+                    type="submit" value="Verify OTP" />
             </form>
         </div>
     )

@@ -1,3 +1,4 @@
+import { token } from "@/lib/halper";
 import { storage } from "@/lib/storage";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
@@ -74,3 +75,47 @@ export async function verifyOtp(otpObj) {
     }
 }
 
+export async function signIn(userCredentials) {
+    try {
+        const response = await fetch(`${baseURL}/api/signin`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(userCredentials)
+        })
+
+        if(!response.ok) {
+            throw new Error(`Failed to login user: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }catch (error) {
+        console.log("Create new user error", error.message);
+        throw error;
+    }
+}
+
+// export async function signOut(userCredentials) {
+//     try {
+//         const response = await fetch(`${baseURL}/api/signout`, {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type" : "application/json",
+//                 "Authorization": `Bearer ${token}`,
+//             },
+//             body: JSON.stringify(userCredentials)
+//         })
+
+//         if(!response.ok) {
+//             throw new Error(`Failed to signout user: ${response.statusText}`);
+//         }
+
+//         const data = await response.json();
+//         return data;
+//     }catch (error) {
+//         console.log("Signout user error", error.message);
+//         throw error;
+//     }
+// }

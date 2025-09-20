@@ -6,11 +6,24 @@ import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { useSelector } from "react-redux";
 import { totalPrice } from "./cartSlice";
-import { currencyFormator } from "@/lib/halper";
+import { currencyFormator, userId } from "@/lib/halper";
+import { useInitializePayment } from "./useInitializePayment";
 
 function CheckoutDetails() {
     const cartItems = useSelector(state => state.cart.cartItems)
     const cartTotalPrice = useSelector(totalPrice)
+    const {initializePayment, isPending} = useInitializePayment();
+    const bookIds = cartItems?.length > 0 && cartItems.map(book => book.id);
+
+    function handlePurchase() {
+        const paymentInfo = {
+            userId: userId, 
+            books: bookIds, 
+            paymentmode: "SSLCOMMERZ"
+        }
+
+        initializePayment(paymentInfo);
+    }
 
     return (
         <div className="my-10 flex flex-col gap-2">
@@ -49,12 +62,12 @@ function CheckoutDetails() {
 
                 <div className="flex flex-col gap-3">
                     <div className="flex justify-between gap-2 border-b border-b-neutral-200 p-4">
-                        <p className="text-lg font-medium text-neutral-600">Discount()</p>
-                        <p className="text-lg font-medium text-neutral-600">150</p>
+                        <p className="text-lg font-medium text-neutral-600">Discount</p>
+                        <p className="text-lg font-medium text-neutral-600"></p>
                     </div>
                     <div className="flex justify-between gap-2 border-b border-b-neutral-200 p-4">
-                        <p className="text-lg font-medium text-neutral-600">Subtotal()</p>
-                        <p className="text-lg font-medium text-neutral-600">150</p>
+                        <p className="text-lg font-medium text-neutral-600">Subtotal</p>
+                        <p className="text-lg font-medium text-neutral-600">{currencyFormator(cartTotalPrice)}</p>
                     </div>
                     <div className="flex justify-between gap-2 px-4 py-2">
                         <p className="text-xl font-bold text-neutral-600">Total</p>
@@ -72,7 +85,11 @@ function CheckoutDetails() {
                 <input className="text-neutral-600" type="checkbox" name="tramsCondition" id="tramsCondition" />
                 <label className="text-base font-medium text-neutral-600" htmlFor="tramsCondition">I agree to the <Link>Terms of Service</Link> and <Link>Privacy Policy</Link></label>
             </div>
-            <Button className="bg-green-600 font-bold text-base p-5 rounded hover:bg-green-700">Complete Purchase {currencyFormator(cartTotalPrice)}</Button>
+            <button 
+                className="bg-green-600 font-bold text-base p-5 rounded hover:bg-green-700"
+                onClick={handlePurchase}
+                disabled={isPending}
+            >Complete Purchase {currencyFormator(cartTotalPrice)}</button>
         </div>
     )
 }

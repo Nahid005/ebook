@@ -10,15 +10,21 @@ function SigninForm() {
     const {register, reset, handleSubmit, formState} = useForm();
     const {errors} = formState;
     const {passwordTextToggle, isShow} = usePasswordTypeToggled();
-    const {signIn, user, isError, isLoading} = useSignin();
-
-    console.log(user);
+    const {signinUser, isPending} = useSignin();
 
     function onSubmit(data) {
         const {email, password} = data;
-        signIn(email, password)
-
-        reset();
+        const userCredentials = {
+            email: email, 
+            password: password,
+            registrationToken: "web", 
+            deviceId: "abcd"
+        }
+        signinUser(userCredentials, {
+            onSuccess: () => {
+                reset();
+            }
+        })
     }
 
     return (
@@ -35,12 +41,11 @@ function SigninForm() {
                         type="email" 
                         name="email" 
                         id="email"
-                        defaultValue="example@gmail.com"
                         placeholder="Enter your email"
                         {...register("email", {
                             required: "Email is required"
                         })}
-                        disabled={isLoading}
+                        disabled={isPending}
                     />
                     <FormValidationError error={errors?.email} />
                 </div>
@@ -59,7 +64,7 @@ function SigninForm() {
                                 message: "Password must be at least 8 characters"
                             }
                         })}
-                        disabled={isLoading}
+                        disabled={isPending}
                     />
                     <FormValidationError error={errors?.password} />
                     <div 
@@ -69,7 +74,7 @@ function SigninForm() {
                     </div>
                 </div>
 
-                <input disabled={isLoading} className="bg-green-600 w-full py-2 text-md font-bold text-neutral-100 rounded cursor-pointer mt-4" type="submit" value="Sign In" />
+                <input disabled={isPending} className="bg-green-600 w-full py-2 text-md font-bold text-neutral-100 rounded cursor-pointer mt-4" type="submit" value="Sign In" />
             </form>
 
             <p className="text-sm font-normal text-neutral-600 my-4">If you don't have an account plese <Link className="font-medium underline" to="/signup">Signup</Link></p>

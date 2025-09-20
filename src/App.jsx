@@ -4,6 +4,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { Toaster } from "react-hot-toast"
 import { lazy, Suspense } from "react"
 import 'leaflet/dist/leaflet.css';
+import PrivateRoute from "./components/PrivateRoute"
+
 
 const AppLayout = lazy(() => import("./components/AppLayout")) 
 const Home = lazy(() => import("./pages/Home")) 
@@ -27,6 +29,8 @@ const Loading = lazy(() => import("./components/Loading"))
 const DeleteAccountInstruction = lazy(() => import("./pages/DeleteAccountInstruction"))
 const Aboutus = lazy(() => import("./pages/Aboutus"))
 const Contactus = lazy(() => import("./pages/Contactus"))
+const FavouriteBook = lazy(() => import("./pages/FavouriteBook"))
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -64,6 +68,12 @@ const router = createBrowserRouter([
       {
         path: "/books",
         element: <Books />
+      },
+      {
+        path: "/favouritebooks",
+        element: <PrivateRoute>
+          <FavouriteBook />
+        </PrivateRoute>
       },
       {
         path: "/genres",

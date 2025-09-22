@@ -50,10 +50,6 @@ export async function signUp(newUser) {
 }
 
 export async function verifyOtp(otpObj) {
-
-    console.log(otpObj)
-
-
     try {
         const response = await fetch(`${baseURL}/api/otp_verification`, {
             method: "POST",

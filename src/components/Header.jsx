@@ -57,15 +57,13 @@ function Header() {
         storage.clearAll()
     }
 
-
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
 
         return () => {
             window.removeEventListener('scroll', handleScroll)
         }
-    }, [])
-
+    }, [handleScroll])
 
     return (
         <div className={` w-full h-[8ch] backdrop-blur-sm md:static top-0 z-50 ${isScrolled ? 'fixed bg-sky-50/30 border-b border-neutral-200': 'bg-orange-100'} flex justify-center text-center`}>
@@ -149,12 +147,14 @@ function Header() {
 
                             {
                                 token ?
-                                <button 
-                                    className="w-fit px-6 py-2 rounded-full bg-orange-300 hover:bg-orange-400  md:text-base text-lg font-medium text-neutral-800 hover:text-neutral-800 ease-in-out duration-300 cursor-pointer"
-                                    onClick={handleSignOut}
-                                    >
-                                    Signout
-                                </button>
+                                <Link to="/profile">
+                                    <button 
+                                        className="w-fit px-6 py-2 rounded-full bg-orange-300 hover:bg-orange-400  md:text-base text-lg font-medium text-neutral-800 hover:text-neutral-800 ease-in-out duration-300 cursor-pointer"
+                                        
+                                        >
+                                        Profile
+                                    </button>
+                                </Link>
                                 :
                                 <button className="w-fit px-6 py-2 rounded-full bg-orange-300 hover:bg-orange-400  md:text-base text-lg font-medium text-neutral-800 hover:text-neutral-800 ease-in-out duration-300 cursor-pointer">
                                     <Link to="/signin">Signin</Link>

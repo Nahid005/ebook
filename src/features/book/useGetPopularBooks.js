@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useGetPopularBooks() {
     const {data, isError, isLoading} = useQuery({
-        queryKey: ['popularbooks'],
+        queryKey: ['book'],
         queryFn: getPopularBooks,
         select: (res) => res.data.bookDetails
     })

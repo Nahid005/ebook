@@ -4,7 +4,7 @@ import {useQuery } from "@tanstack/react-query";
 
 export function useGetFavBooks() {
     const {data: getFavBook, isLoading, isError} = useQuery({
-        queryKey: ['favouriteBooks', userId],
+        queryKey: ['book', userId],
         queryFn: () => getFavouriteBook(userId),
         select: (res) => res.data.favouriteBookDetails ?? []
     })

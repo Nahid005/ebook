@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useBooksList() {
     const {data, isLoading, isError} = useQuery({
-        queryKey: ['bookslist'],
+        queryKey: ['book'],
         queryFn: getBooks,
         select: (res) => res.data.bookDetails
     })

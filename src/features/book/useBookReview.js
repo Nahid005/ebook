@@ -6,9 +6,9 @@ export function useBookReview() {
     const {bookId} = useParams();
 
     const {data: bookReview, isLoading, isError} = useQuery({
-        queryKey: ['review'],
+        queryKey: ['book', bookId],
         queryFn: () => getBookReview(bookId),
-        select: (res) => res.data.bookReviewDetails
+        select: (res) => res.data.bookReviewDetails ?? []
     })
 
     return {bookReview, isLoading, isError}

@@ -11,5 +11,4 @@ export function usePasswordTypeToggled() {
     }
 
     return {isShow, setIsShow, passwordTextToggle}
-
 }

@@ -1,30 +1,21 @@
 import React from "react";
+import { useSliders } from "@/hooks/useSliders";
+import Loading from "./Loading";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
-const sliders = [
-    {
-        id: 1,
-        image: "/assets/slider-1.png",
-        name: "Slider One"
-    },
-    {
-        id: 2,
-        image: "/assets/slider-2.png",
-        name: "Slider Two"
-    },
-    {
-        id: 3,
-        image: "/assets/slider-3.png",
-        name: "Slider Three"
-    },
-]
+import { baseURL } from "@/lib/halper";
+import Error from "./Error";
 
 function MainSlider() {
+  const {sliders, isError, isLoading} = useSliders();
+
+  if(isLoading) return <Loading />
+  if(isError) return <Error />
+
   return (
     <Swiper
       modules={[Navigation, Pagination, Autoplay]}
@@ -32,11 +23,11 @@ function MainSlider() {
       slidesPerView={1}
       navigation
       pagination={{ clickable: true }}
-      autoplay={{ delay: 2500, disableOnInteraction: false }}
+      // autoplay={{ delay: 2500, disableOnInteraction: false }}
       style={{ marginTop: "20px" }}
     >
-      {sliders.map((item) => (
-        <SwiperSlide key={item.id}>
+      {sliders?.map((item) => (
+        <SwiperSlide key={item._id}>
           <div
             style={{
               height: "100%",
@@ -46,7 +37,7 @@ function MainSlider() {
               zIndex: "auto"
             }}
           >
-            <img src={item.image} alt={item.name} />
+            <img className="w-full" src={`${baseURL}/assets/sliderImages/${item.image}`} alt={item.name} />
           </div>
         </SwiperSlide>
       ))}

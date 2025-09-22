@@ -9,7 +9,7 @@ export function useSignout() {
     const {mutate: signoutUser, isError, isPending}  = useMutation({
         mutationFn: (userCredentials) => signOut(userCredentials),
         onSuccess: (data) => {
-            queryClient.invalidateQueries({queryKey: ["signout"]})
+            queryClient.invalidateQueries({queryKey: ["user"]})
             navigate('/')
         },
         onError: (error)=> {

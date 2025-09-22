@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export function useCheckRegisterUser() {
     const navigate = useNavigate();
-    const queryClient = useQueryClient()
+    const queryClient = useQueryClient();
 
     const {mutate: verifyUserEmail, isPending, isError} = useMutation({
         mutationFn: (email) => checkRegisterUser(email),
@@ -15,7 +15,7 @@ export function useCheckRegisterUser() {
                 navigate('/signin')
             }
 
-            queryClient.invalidateQueries({queryKey: ['users']})
+            queryClient.invalidateQueries({queryKey: ['user']})
         },
         onError: (error) => {
             console.log(error)

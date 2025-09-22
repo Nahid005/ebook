@@ -134,3 +134,12 @@
 .dot:nth-child(3) {
   animation-delay: -0.16s;
 }
+
+.swiper-button-prev, .swiper-button-next {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.swiper-button-prev:after, .swiper-button-next:after {
+  font-size: 20px !important;
+}

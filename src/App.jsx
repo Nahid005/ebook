@@ -4,7 +4,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { Toaster } from "react-hot-toast"
 import { lazy, Suspense } from "react"
 import 'leaflet/dist/leaflet.css';
-import PrivateRoute from "./components/PrivateRoute"
 
 
 const AppLayout = lazy(() => import("./components/AppLayout")) 
@@ -30,6 +29,11 @@ const DeleteAccountInstruction = lazy(() => import("./pages/DeleteAccountInstruc
 const Aboutus = lazy(() => import("./pages/Aboutus"))
 const Contactus = lazy(() => import("./pages/Contactus"))
 const FavouriteBook = lazy(() => import("./pages/FavouriteBook"))
+const PrivateRoute = lazy(() => import("./components/PrivateRoute"))
+const Profile = lazy(() => import("./pages/Profile"))
+const ProfileLayout = lazy(() => import("./components/ProfileLayout"))
+const ChangePassword = lazy(() => import("./pages/ChangePassword"))
+const Setting = lazy(() => import("./pages/Setting"))
 
 
 const queryClient = new QueryClient({
@@ -64,6 +68,27 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />
+      },
+      {
+        element: <ProfileLayout />,
+        children: [
+          {
+            path: '/profile',
+            element: <Profile />
+          },
+          {
+            path: '/changepassword',
+            element: <ChangePassword />
+          },
+          {
+            path: '/setting',
+            element: <Setting />
+          },
+          {
+            path: '/signout',
+            element: <h1>Sign out</h1>
+          }
+        ]
       },
       {
         path: "/books",

@@ -8,7 +8,7 @@ export function useRemoveFevBook() {
     const {mutate: mutateRemoveFavBook, isError, isPending} = useMutation({
         mutationFn: (favObj) => removeFavouriteBook(favObj),
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['favouriteBooks']});
+            queryClient.invalidateQueries({queryKey: ['book']});
         },
         onError: (error) => {
             toast.error(error.message)

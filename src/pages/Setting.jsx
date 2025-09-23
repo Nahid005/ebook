@@ -1,6 +1,8 @@
+import SettingUpdateForm from "@/features/profile/SettingUpdateForm";
+
 function Setting() {
     return (
-        <h1>Hello</h1>
+        <SettingUpdateForm />
     )
 }
 

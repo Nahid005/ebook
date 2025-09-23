@@ -1,8 +1,8 @@
-import ProfileLayout from "@/components/ProfileLayout"
+import ProfileUpdateForm from "@/features/profile/ProfileUpdateForm"
 
 function Profile() {
     return (
-       <h1>Hello</h1>
+       <ProfileUpdateForm />
     )
 }
 

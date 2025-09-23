@@ -1,4 +1,9 @@
-import { HiBuildingOffice2, HiCalendarDays, HiMiniDocumentText, HiOutlineGlobeAsiaAustralia } from "react-icons/hi2";
+import { 
+    HiBuildingOffice2, 
+    HiCalendarDays, 
+    HiMiniDocumentText, 
+    HiOutlineGlobeAsiaAustralia 
+} from "react-icons/hi2";
 
 import ProductGallery from "@/features/book/ProductGallery"
 import Rating from "@/features/book/Rating";
@@ -11,6 +16,7 @@ import { useBookDetails } from "./useBookDetails";
 import Loading from "@/components/Loading";
 import { useBookReview } from "./useBookReview";
 import DOMPurify from "dompurify";
+import PdfPreview from "./PdfPreview";
 
 function BookDetailsInfo() {
     const {bookDetails, isLoading, isError} = useBookDetails();
@@ -28,7 +34,8 @@ function BookDetailsInfo() {
         reviews, 
         category, 
         subcategory, 
-        description, 
+        description,
+        pdf,
         averageRating,
         publishBy = "Boiaro",
         pages = 100,
@@ -41,6 +48,7 @@ function BookDetailsInfo() {
         <div className="grid gap-2 md:grid-cols-2 md:gap-8">
             <ProductGallery galleryImage={image} title={name} />
             <div className="md:my-4">
+                <PdfPreview fileUrl={pdf} />
                 <h2 className="text-2xl font-bold text-neutral-600">{name}</h2>
                 <p className="text-base font-bold text-neutral-600">{author.name}</p>
                 <div className="flex items-center justify-start gap-2 my-2">
@@ -50,7 +58,7 @@ function BookDetailsInfo() {
                     <span className="text-neutral-600">{averageRating} </span>
                     <span className="text-neutral-500">({bookReview?.length} ratings)</span>
                 </div>
-                {/* <Genres genres={category} /> */}
+                
                 <div className="bg-orange-100 p-4 grid grid-cols-2 md:grid-cols-4 gap-8 rounded-lg">
                     <div className="flex flex-col justify-center items-center">
                         <HiCalendarDays className="text-2xl text-neutral-700" />
@@ -78,7 +86,6 @@ function BookDetailsInfo() {
                     <h2 className="font-bold text-2xl text-neutral-700">{currencyFormator(120)}</h2>
                     <div className="flex justify-end gap-2">
                         <Button className="cursor-pointer bg-neutral-600 rounded py-5 px-4 font-bold text-md hover:bg-neutral-700"><HiOutlineShare /> <span>Share</span></Button>
-
                         <Button className="cursor-pointer bg-green-500 rounded py-5 px-4 font-bold text-md hover:bg-green-600"><MdOutlineShoppingCart /> <span>Add to cart</span></Button>
                     </div>
                 </div>

@@ -11,19 +11,20 @@ import { currencyFormator, token } from "@/lib/halper";
 import { Button } from "@/components/ui/button";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { HiOutlineShare } from "react-icons/hi";
-import ProductReviews from "@/features/book/ProductReviews";
+import ProductReviews from "@/features/book/BookReviews";
 import { useBookDetails } from "./useBookDetails";
 import Loading from "@/components/Loading";
-import { useBookReview } from "./useBookReview";
 import DOMPurify from "dompurify";
 import PdfPreview from "./PdfPreview";
+import BookReviews from "@/features/book/BookReviews";
 
 function BookDetailsInfo() {
     const {bookDetails, isLoading, isError} = useBookDetails();
-    const {bookReview, isError: reviewError, isLoading: reviewLoading} = useBookReview();
     
-    if(isLoading || reviewLoading) return <Loading />
-    if (isError || reviewError) return <div>Something went wrong!</div>;
+    if (isLoading) return <Loading />
+    if (isError) return <div>Something went wrong!</div>;
+
+    console.log(bookDetails)
 
     const {
         image, 
@@ -40,15 +41,18 @@ function BookDetailsInfo() {
         publishBy = "Boiaro",
         pages = 100,
         publishDate = "12-12-12"
-    } = bookDetails.at(0)
+    } = bookDetails?.at(0)
 
     const bookDescription = DOMPurify.sanitize(description || "");
 
     return (
         <div className="grid gap-2 md:grid-cols-2 md:gap-8">
             <ProductGallery galleryImage={image} title={name} />
+
             <div className="md:my-4">
-                <PdfPreview fileUrl={pdf} />
+                {
+                    pdf && <PdfPreview fileUrl={pdf} />
+                }
                 <h2 className="text-2xl font-bold text-neutral-600">{name}</h2>
                 <p className="text-base font-bold text-neutral-600">{author.name}</p>
                 <div className="flex items-center justify-start gap-2 my-2">
@@ -56,7 +60,7 @@ function BookDetailsInfo() {
                         <Rating rating={averageRating} />
                     </div>
                     <span className="text-neutral-600">{averageRating} </span>
-                    <span className="text-neutral-500">({bookReview?.length} ratings)</span>
+                    <span className="text-neutral-500">({reviews?.length} ratings)</span>
                 </div>
                 
                 <div className="bg-orange-100 p-4 grid grid-cols-2 md:grid-cols-4 gap-8 rounded-lg">
@@ -95,10 +99,8 @@ function BookDetailsInfo() {
                     </article>
                 </div>
                 <div className="">
-                    <h4 className="font-bold text-xl text-neutral-700 mb-5">Reviews ({bookReview?.length})</h4>
-                    {
-                        token ? <ProductReviews bookReview={bookReview} /> : ""
-                    }
+                    <h4 className="font-bold text-xl text-neutral-700 mb-5">Reviews ({reviews?.length})</h4>
+                    <BookReviews bookReview={reviews} />
                 </div>
             </div>
         </div>

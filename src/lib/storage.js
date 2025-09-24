@@ -20,7 +20,7 @@ export const storage = {
     },
 
     getToken() {
-        return localStorage.getItem(TOKEN_KEY);
+        return JSON.parse(localStorage.getItem(TOKEN_KEY))
     },
 
     clearToken() {

@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import Logo from "./Logo";
 import { token } from "@/lib/halper";
 import { storage } from "@/lib/storage";
+import { useGetFavBooks } from "@/features/book/useGetFavBooks";
 
 const menus = [
     {
@@ -35,7 +36,8 @@ const menus = [
 function Header() {
     const [open, setOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-    const cartItems = useSelector(state => state.cart.cartItems)
+    const cartItems = useSelector(state => state.cart.cartItems);
+    const {getFavBook} = useGetFavBooks();
 
     function toggleNavbar() {
         setOpen((open) => !open)
@@ -51,10 +53,6 @@ function Header() {
         }else {
             setIsScrolled(false);
         }
-    }
-
-    function handleSignOut() {
-        storage.clearAll()
     }
 
     useEffect(() => {
@@ -84,8 +82,11 @@ function Header() {
                     </button>
 
                     <Link to={"/favouritebooks"}>
-                        <button className="w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer">
+                        <button className="relative w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer">
                             <MdFavoriteBorder />
+                            {
+                                getFavBook?.length > 0 && <span className=" absolute right-0 top-0 bg-orange-400 text-sm w-5 h-5 rounded-full font-bold text-white">{getFavBook?.length}</span>
+                            }
                         </button>
                     </Link>
 
@@ -131,8 +132,11 @@ function Header() {
                             </button>
 
                             <Link to={"/favouritebooks"}>
-                                <button className="w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer hidden md:block">
+                                <button className="relative w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer hidden md:block">
                                     <MdFavoriteBorder />
+                                    {
+                                        getFavBook?.length > 0 && <span className=" absolute right-0 top-0 bg-orange-400 text-sm w-5 h-5 rounded-full font-bold text-white">{getFavBook?.length}</span>
+                                    }
                                 </button>
                             </Link>
                             

@@ -4,6 +4,9 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { Toaster } from "react-hot-toast"
 import { lazy, Suspense } from "react"
 import 'leaflet/dist/leaflet.css';
+import PaymentSuccess from "./pages/PaymentSuccess"
+import PaymentFail from "./pages/PaymentFail"
+import PaymentCancel from "./pages/PaymentCancel"
 
 
 const AppLayout = lazy(() => import("./components/AppLayout")) 
@@ -155,12 +158,25 @@ const router = createBrowserRouter([
       {
         path: "/deleteaccountinstruction",
         element: <DeleteAccountInstruction />
+      },
+      {
+        path: "/payment-success",
+        element: <PaymentSuccess />
+      },
+      {
+        path: "/payment-fail",
+        element: <PaymentFail />
+      },
+      {
+        path: "/payment-cancel",
+        element: <PaymentCancel />
       }
     ]
   }
 ])
 
 function App() {
+  
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />

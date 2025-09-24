@@ -1,16 +1,16 @@
 import { baseURL } from "@/lib/halper";
 
-export async function getPages() {
+export async function getSetting() {
     try {
-        const response = await fetch(`${baseURL}/api/getpages`, {
+        const response = await fetch(`${baseURL}/api/getsettings`, {
             method: "POST",
             headers: {
-                "Content-Type" : "application/json"
+                "Content-Type": "application/json",
             }
-        });
+        })
 
         if(!response.ok) {
-            throw new Error(`Failed to fetch pages: ${response.statusText}`);
+            throw new Error(`Failed to fetch setting: ${response.statusText}`);
         }
 
         const data = await response.json();

@@ -1,4 +1,4 @@
-import { baseURL, currencyFormator, userId } from "@/lib/halper";
+import { baseURL, currencyFormator, token, user } from "@/lib/halper";
 import { MdFavoriteBorder, MdOutlineShoppingCart } from "react-icons/md";
 import Rating from "./Rating";
 import { Link } from "react-router-dom";
@@ -30,9 +30,11 @@ function BookItem({book}) {
 
     function handleAddFavBook() {
         const favObj = {
-            userId: userId,
+            userId: user?.id,
             bookId: id
         }
+
+        if(!token) return toast.error(`Please login first`)
 
         mutateFavBook(favObj);
         toast.success(`${name} The book has been added.`)

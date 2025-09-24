@@ -87,6 +87,11 @@ export async function getBookDetails(id) {
 }
 
 export async function getBookReview(bookId) {
+
+    if (!token) {
+        throw new Error("No token found in localStorage");
+    }
+
     try {
         const response = await fetch(`${baseURL}/api/getreview`, {
             method: "POST",
@@ -110,6 +115,11 @@ export async function getBookReview(bookId) {
 }
 
 export async function addFavouriteBook(favObj) {
+
+    if (!token) {
+        throw new Error("No token found in localStorage");
+    }
+
     try {
         const response = await fetch(`${baseURL}/api/addfavouritebook`, {
             method: "POST",
@@ -133,6 +143,11 @@ export async function addFavouriteBook(favObj) {
 }
 
 export async function getFavouriteBook(userId) {
+
+    if (!token) {
+        throw new Error("No token found in localStorage");
+    }
+
     try {
         const response = await fetch(`${baseURL}/api/getfavouritebook`, {
             method: "POST",
@@ -140,7 +155,7 @@ export async function getFavouriteBook(userId) {
                 "Content-Type" : "application/json",
                 "Authorization": `Bearer ${token}`,
             },
-            body: JSON.stringify({userId})
+            body: JSON.stringify({userId: userId})
         })
 
         if(!response.ok) {
@@ -156,6 +171,11 @@ export async function getFavouriteBook(userId) {
 }
 
 export async function removeFavouriteBook(favObj) {
+
+    if (!token) {
+        throw new Error("No token found in localStorage");
+    }
+
     try {
         const response = await fetch(`${baseURL}/api/removefavouritebook`, {
             method: "POST",

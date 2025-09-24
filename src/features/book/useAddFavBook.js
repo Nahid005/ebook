@@ -8,7 +8,7 @@ export function useAddFavBook() {
     const {mutate: mutateFavBook, isPending, isError} = useMutation({
         mutationFn: (favObj) => addFavouriteBook(favObj),
         onSuccess: (data) => {
-            queryClient.invalidateQueries({queryKey: ['favouriteBooks']})
+            queryClient.invalidateQueries({queryKey: ['favouritebook']})
         },
         onError: (error) => {
             console.log(error)

@@ -6,7 +6,7 @@ export function useGetAuthorDetails() {
     const {authorId} = useParams();
 
     const {data, isLoading, isError} = useQuery({
-        queryKey: ['authordetails'],
+        queryKey: ['authordetails', authorId],
         queryFn: () => getAuthorDetails(authorId),
         select: (res) => res.data.authorDetails
     })

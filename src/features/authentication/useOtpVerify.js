@@ -16,7 +16,7 @@ export function useOtpVerify() {
                 storage.setToken(data.data.token)
                 toast.success("User successfully created")
 
-                queryClient.invalidateQueries({queryKey: ['user']})
+                queryClient.invalidateQueries({queryKey: ['otp']})
                 navigate('/')
             }
         },

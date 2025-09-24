@@ -1,4 +1,4 @@
-import { baseURL, currencyFormator, userId } from "@/lib/halper";
+import { baseURL, currencyFormator, user } from "@/lib/halper";
 import { MdFavorite, MdOutlineShoppingCart } from "react-icons/md";
 import Rating from "./Rating";
 import { Link } from "react-router-dom";
@@ -30,7 +30,7 @@ function FavouriteBookItem({book}) {
 
     function handleRemoveFavBook() {
         const favObj = {
-            userId: userId,
+            userId: user?.id,
             bookId: id
         }
         mutateRemoveFavBook(favObj);

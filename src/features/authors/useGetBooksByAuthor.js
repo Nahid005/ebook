@@ -6,7 +6,7 @@ export function useGetBooksByAuthor() {
     const {authorId} = useParams();
 
     const {data, isLoading, isError} = useQuery({
-        queryKey: ['authorwisebooks'],
+        queryKey: ['authorwisebooks', authorId],
         queryFn: () => getBooksByAuthor(authorId),
         select: (res) => res.data.bookDetails,
     })

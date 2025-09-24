@@ -13,7 +13,7 @@ export function useSignin() {
         onSuccess: (data) => {
             storage.setUser(data.data.userDetails);
             storage.setToken(data.data.token);
-            queryClient.invalidateQueries({queryKey: ["user"]});
+            queryClient.invalidateQueries({queryKey: ["signin"]});
 
             toast.success("User signin successfully");
             navigate('/')

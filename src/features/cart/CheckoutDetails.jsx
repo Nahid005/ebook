@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { useSelector } from "react-redux";
 import { totalPrice } from "./cartSlice";
-import { currencyFormator, userId } from "@/lib/halper";
+import { currencyFormator, user } from "@/lib/halper";
 import { useInitializePayment } from "./useInitializePayment";
 
 function CheckoutDetails() {
@@ -17,7 +17,7 @@ function CheckoutDetails() {
 
     function handlePurchase() {
         const paymentInfo = {
-            userId: userId, 
+            userId: user?.id, 
             books: bookIds, 
             paymentmode: "SSLCOMMERZ"
         }

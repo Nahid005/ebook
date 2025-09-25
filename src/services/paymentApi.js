@@ -1,6 +1,11 @@
-import { baseURL, token } from "@/lib/halper";
+import { baseURL } from "@/lib/halper";
 
-export async function PurchaseBooks(paymentInfo) {
+export async function PurchaseBooks(paymentInfo, token) {
+
+    if (!token) {
+        throw new Error("No token found in localStorage");
+    }
+
     try {
         const response = await fetch(`${baseURL}/api/purchasebooks`, {
             method: "POST",

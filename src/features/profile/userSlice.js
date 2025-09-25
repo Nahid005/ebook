@@ -2,38 +2,36 @@ import { storage } from "@/lib/storage";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    token: "",
-    user: {},
-}
+    email: storage.getEmail() || "",
+    token: storage.getToken() || "",
+    user: storage.getUser() || {},
+};
 
 const userSlice = createSlice({
     name: "user",
     initialState: initialState,
     reducers: {
-        checkUser(state, action) {
-
+        signupUsers(state, action) {
+            state.email = action.payload;
         },
-        signUp() {
-            
-        },
-        veryfyOtp(state, action) {
+        verifyOtpUsers(state, action) {
             const {user, token} = action.payload;
 
-            state.user = storage.setUser(user)
-            state.token = storage.setToken(token);
+            state.user = user
+            state.token = token
         },
-        signIn(state, action) {
+        signinUsers(state, action) {
             const {user, token} = action.payload;
 
-            state.user = storage.setUser(user)
-            state.token = storage.setToken(token);
+            state.user = user
+            state.token = token
         },
-        signOut(state) {
+        signoutUsers(state) {
             state.user = {}
             state.token = ""
         }
     }
 })
 
-export const {checkUser, signIn, veryfyOtp, signOut} = userSlice.actions;
+export const {signupUsers, signinUsers, verifyOtpUsers, signoutUsers} = userSlice.actions;
 export default userSlice.reducer;

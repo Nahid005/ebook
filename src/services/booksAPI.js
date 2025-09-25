@@ -1,4 +1,4 @@
-import { baseURL, token } from "@/lib/halper";
+import { baseURL } from "@/lib/halper";
 
 export async function getBooks() {
     try {
@@ -86,7 +86,7 @@ export async function getBookDetails(id) {
     }
 }
 
-export async function getBookReview(bookId) {
+export async function getBookReview(bookId, token) {
 
     if (!token) {
         throw new Error("No token found in localStorage");
@@ -114,7 +114,7 @@ export async function getBookReview(bookId) {
     }
 }
 
-export async function addFavouriteBook(favObj) {
+export async function addFavouriteBook(favObj, token) {
 
     if (!token) {
         throw new Error("No token found in localStorage");
@@ -142,7 +142,7 @@ export async function addFavouriteBook(favObj) {
     }
 }
 
-export async function getFavouriteBook(userId) {
+export async function getFavouriteBook(userId, token) {
 
     if (!token) {
         throw new Error("No token found in localStorage");
@@ -170,7 +170,7 @@ export async function getFavouriteBook(userId) {
     }
 }
 
-export async function removeFavouriteBook(favObj) {
+export async function removeFavouriteBook(favObj, token) {
 
     if (!token) {
         throw new Error("No token found in localStorage");

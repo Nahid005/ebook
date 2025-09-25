@@ -10,7 +10,6 @@ import MiniLoading from "@/components/MiniLoading";
 
 function GenresSlider() {
     const {genres, isError, isPending} = useGetGenres()
-
     if(isPending) return <MiniLoading />
     
     return (

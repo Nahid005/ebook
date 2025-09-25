@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 import NavItems from "./NavItems";
 import { useSelector } from "react-redux";
 import Logo from "./Logo";
-import { token } from "@/lib/halper";
-import { storage } from "@/lib/storage";
 import { useGetFavBooks } from "@/features/book/useGetFavBooks";
 
 const menus = [
@@ -38,6 +36,7 @@ function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const cartItems = useSelector(state => state.cart.cartItems);
     const {getFavBook} = useGetFavBooks();
+    const token = useSelector(state => state.user.token);
 
     function toggleNavbar() {
         setOpen((open) => !open)

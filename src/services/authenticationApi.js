@@ -1,6 +1,3 @@
-import { token } from "@/lib/halper";
-import { storage } from "@/lib/storage";
-
 const baseURL = import.meta.env.VITE_BASE_URL;
 
 //existing user checking
@@ -27,6 +24,9 @@ export async function checkRegisterUser(email) {
 }
 
 export async function signUp(newUser) {
+
+    console.log(newUser)
+
     try {
         const response = await fetch(`${baseURL}/api/signup`, {
             method: "POST",
@@ -41,7 +41,6 @@ export async function signUp(newUser) {
         }
 
         const data = await response.json();
-        storage.setUser(newUser.email);
         return data;
     }catch (error) {
         console.log("Create new user error", error.message);
@@ -93,7 +92,7 @@ export async function signIn(userCredentials) {
     }
 }
 
-export async function signOut(userCredentials) {
+export async function signOut(userCredentials, token) {
 
     if (!token) {
         throw new Error("No token found in localStorage");

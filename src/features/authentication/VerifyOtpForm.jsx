@@ -2,11 +2,11 @@ import FormValidationError from "@/components/FormValidationError";
 import { useForm } from "react-hook-form";
 import { useOtpVerify } from "./useOtpVerify";
 import Error from "@/components/Error";
-import { storage } from "@/lib/storage";
+import { useSelector } from "react-redux";
 
 function VerifyOtpForm() {
     const {otpVerify, isError, isPending} = useOtpVerify();
-    const email = storage.getUser();
+    const email = useSelector(state => state.user.email)
 
     if(isError) return <Error message="Something went wrong" />
 

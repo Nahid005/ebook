@@ -8,8 +8,13 @@ import { useSignup } from "./useSignup";
 import { useCheckRegisterUser } from "./useCheckRegisterUser";
 import Loading from "@/components/Loading";
 import Error from "@/components/Error";
+import { useDispatch } from "react-redux";
+import { signupUsers } from "../profile/userSlice";
+import { storage } from "@/lib/storage";
 
 function SignupForm() {
+    const dispatch = useDispatch();
+
     const {verifyUserEmail, isError: isChekRegError, isPending: isCheckRegLoading} = useCheckRegisterUser();
     const {createUser, isError: isCreateUserError, isLoading: isCreateUserLoading} = useSignup();
 
@@ -32,6 +37,9 @@ function SignupForm() {
         
         createUser(newUser, {
             onSuccess: () => {
+                dispatch(signupUsers(email))
+                storage.setEmail(email);
+                
                 reset();
             }
         })

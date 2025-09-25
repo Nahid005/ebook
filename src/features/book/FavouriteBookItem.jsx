@@ -1,8 +1,8 @@
-import { baseURL, currencyFormator, user } from "@/lib/halper";
+import { baseURL, currencyFormator } from "@/lib/halper";
 import { MdFavorite, MdOutlineShoppingCart } from "react-icons/md";
 import Rating from "./Rating";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addCartItem } from "../cart/cartSlice";
 import toast from "react-hot-toast";
 import { useRemoveFevBook } from "./useRemoveFevBook";
@@ -10,8 +10,9 @@ import { useRemoveFevBook } from "./useRemoveFevBook";
 function FavouriteBookItem({book}) {
     const {mutateRemoveFavBook, isPending} = useRemoveFevBook();
     const dispatch = useDispatch();
-    const {_id: id, name, image, price, averageRating, author} = book?.bookDetails;
+    const user = useSelector(state => state.user.user)
 
+    const {_id: id, name, image, price, averageRating, author} = book?.bookDetails;
 
     function handleCartItem() {
         const cartItem = {

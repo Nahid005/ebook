@@ -10,6 +10,7 @@ export function useSignup() {
     const {mutate: createUser, isError, isPending}  = useMutation({
         mutationFn: (newUser) => signUp(newUser),
         onSuccess: (data) => {
+            
             queryClient.invalidateQueries({queryKey: ["signup"]});
             toast.success("User signup success");
 

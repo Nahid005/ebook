@@ -1,33 +1,42 @@
-import { baseURL } from "@/lib/halper";
-import { useState } from "react";
-import { Document, Page } from "react-pdf";
+import { baseURL } from '@/lib/halper';
+import React, { useState } from 'react';
+import { Document, Page } from 'react-pdf';
+import 'pdfjs-dist/web/pdf_viewer.css';
 
-function PdfPreview({ fileUrl }) {
+
+function PdfPreview({previewPdf}) {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
+  // Handle successful PDF load
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
 
+  // Handle navigation
+  const goToPrevPage = () => setPageNumber(pageNumber - 1);
+  const goToNextPage = () => setPageNumber(pageNumber + 1);
+
   return (
     <div>
-      {/* <Document
-        file={`${baseURL}/assets/bookImages/${fileUrl}`} // Path to your PDF (from public/ folder)
+      <Document
+        file={`${baseURL}/assets/bookImages/${previewPdf}`} // Replace with your PDF file path or URL
         onLoadSuccess={onDocumentLoadSuccess}
       >
-        {Array.from({ length: Math.min(numPages || 0, 2) }, (_, index) => (
-           <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-        ))}
+        <Page pageNumber={pageNumber} renderTextLayer={false} // Disable text layer
+          renderAnnotationLayer={false} />
       </Document>
-      <button onClick={() => setPageNumber(pageNumber - 1)} disabled={pageNumber <= 1}>
-        Previous
-      </button>
-      <button onClick={() => setPageNumber(pageNumber + 1)} disabled={pageNumber >= numPages}>
-        Next
-      </button> */}
-
-          <iframe id="pdfViewer" src={`${baseURL}/assets/bookImages/${fileUrl}`} width="100%" height="600px"></iframe>
+      <div>
+        <p>
+          Page {pageNumber} of {numPages}
+        </p>
+        <button onClick={goToPrevPage} disabled={pageNumber <= 1}>
+          Previous
+        </button>
+        <button onClick={goToNextPage} disabled={pageNumber >= numPages}>
+          Next
+        </button>
+      </div>
     </div>
   );
 }

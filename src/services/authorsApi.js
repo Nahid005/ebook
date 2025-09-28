@@ -1,5 +1,6 @@
 import { baseURL } from "@/lib/halper";
 
+//Get all authors
 export async function getAuthors() {
     try {
         const response = await fetch(`${baseURL}/api/getauthors`, {
@@ -16,11 +17,12 @@ export async function getAuthors() {
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log(error);
+        console.log("Get all authors error: ", error.message);
         throw error;
     }
 }
 
+//Get author details
 export async function getAuthorDetails(id) {
     try {
         const response = await fetch(`${baseURL}/api/getauthordetails`, {
@@ -38,11 +40,12 @@ export async function getAuthorDetails(id) {
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log(error);
+        console.log("Get author details error: ", error.message);
         throw error;
     }
 }
 
+//Get author wise books
 export async function getBooksByAuthor(id) {
     try {
         const response = await fetch(`${baseURL}/api/getbookbyauthor`, {
@@ -60,7 +63,7 @@ export async function getBooksByAuthor(id) {
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log(error);
+        console.log("Get author wise books error: ", error.message);
         throw error;
     }
 }

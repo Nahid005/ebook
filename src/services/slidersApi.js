@@ -1,5 +1,6 @@
 import { baseURL } from "@/lib/halper";
 
+//Get slider images
 export async function getSliders() {
     try {
         const response = await fetch(`${baseURL}/api/getsliders`, {

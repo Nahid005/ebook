@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { usePasswordTypeToggled } from "./usePasswordTypeToggled";
 import PasswordTypeChange from "./PasswordTypeChange";
-import SocialLogin from "./SocialLogin";
 import FormValidationError from "@/components/FormValidationError";
 import { useSignup } from "./useSignup";
 import { useCheckRegisterUser } from "./useCheckRegisterUser";
@@ -11,6 +10,7 @@ import Error from "@/components/Error";
 import { useDispatch } from "react-redux";
 import { signupUsers } from "../profile/userSlice";
 import { storage } from "@/lib/storage";
+import Logo from "@/components/Logo";
 
 function SignupForm() {
     const dispatch = useDispatch();
@@ -48,7 +48,10 @@ function SignupForm() {
 
     return (
         <div className="w-full bg-neutral-100 p-8 shadow rounded-md">
-            <h4 className="font-bold text-neutral-600 text-xl w-full text-center mb-8 uppercase">Sign Up</h4>
+            <div className="text-center flex justify-center flex-col gap-4 items-center">
+                <Logo />
+                <h4 className="font-bold text-neutral-600 text-xl w-full text-center mb-4 uppercase">Sign Up</h4>
+            </div>
             <form 
                 className="grid gap-4 grid-cols-1 md:grid-cols-2  justify-start items-start"
                 onSubmit={handleSubmit(onSubmit)}
@@ -164,13 +167,13 @@ function SignupForm() {
                     </div>
                 </div>
 
-                <input disabled={isCreateUserLoading} className="bg-green-600 w-full py-2 text-md font-bold text-neutral-100 rounded cursor-pointer mt-4" type="submit" value="Sign Up" />
+                <input disabled={isCreateUserLoading} className="bg-green-600 w-full col-span-2 py-2 text-md font-bold text-neutral-100 rounded cursor-pointer mt-4" type="submit" value="Sign Up" />
             </form>
 
             <p className="text-sm font-normal text-neutral-600 my-4">If you have an account please <Link className="font-medium underline" to="/signin">Sign In</Link></p>
 
-            <hr />
-            <SocialLogin />
+            {/* <hr />
+            <SocialLogin /> */}
         </div>
     )
 }

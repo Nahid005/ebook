@@ -1,5 +1,6 @@
 import { baseURL } from "@/lib/halper";
 
+//Get settings
 export async function getSetting() {
     try {
         const response = await fetch(`${baseURL}/api/getsettings`, {
@@ -16,7 +17,7 @@ export async function getSetting() {
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log(error);
+        console.log("Get setting error", error.message);
         throw error;
     }
 }

@@ -2,7 +2,7 @@ import { HiCheck, HiOutlineDeviceMobile } from "react-icons/hi";
 
 import { Button } from "@/components/ui/button";
 import CartItem from "./CartItem";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { useSelector } from "react-redux";
 import { totalPrice } from "./cartSlice";
@@ -16,148 +16,15 @@ function CheckoutDetails() {
     const {initializePayment, isPending} = useInitializePayment();
     const bookIds = cartItems?.length > 0 && cartItems.map(book => book.id);
 
-
-
-
-
-    const [paymentMethods, setPaymentMethods] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [sslcommerzScriptLoaded, setSslcommerzScriptLoaded] = useState(false);
-    const [tranId, setTranId] = useState('');
-    const navigate = useNavigate();
-
-    // Fetch payment methods
-    useEffect(() => {
-        const fetchPaymentMethods = async () => {
-        try {
-            const response = await fetch('http://localhost:5000/api/payment_gateway', {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-            });
-            const { data } = await response.json();
-            if (data.success && data.paymentMethod[0]?.sslcommerz?.sslcommerz_is_enable) {
-            setPaymentMethods(data.paymentMethod[0].sslcommerz);
-            } else {
-            onError('SSLCOMMERZ is not enabled');
-            }
-        } catch (error) {
-            console.error('Error fetching payment methods:', error);
-            onError('Failed to load payment methods');
-        }
-        };
-        fetchPaymentMethods();
-    }, [onError]);
-
-    // Load SSLCOMMERZ script
-    useEffect(() => {
-        if (paymentMethods && !sslcommerzScriptLoaded) {
-        const script = document.createElement('script');
-        script.src =
-            paymentMethods.sslcommerz_mode === 'liveMode'
-            ? `https://seamless-epay.sslcommerz.com/embed.min.js?${Math.random()
-                .toString(36)
-                .substring(7)}`
-            : `https://sandbox.sslcommerz.com/embed.min.js?${Math.random()
-                .toString(36)
-                .substring(7)}`;
-        script.async = true;
-        script.onload = () => setSslcommerzScriptLoaded(true);
-        script.onerror = () => onError('Failed to load SSLCOMMERZ script');
-        document.body.appendChild(script);
-        return () => {
-            document.body.removeChild(script);
-            setSslcommerzScriptLoaded(false);
-        };
-        }
-    }, [paymentMethods, sslcommerzScriptLoaded, onError]);
-
-    // Open SSLCOMMERZ popup
-    const openSslcommerzPopup = useCallback(
-        (gatewayPageURL, tranId) => {
-        if (!window.SSLCommerz || !sslcommerzScriptLoaded) {
-            onError('SSLCOMMERZ script not loaded. Please try again.');
-            return;
+    function handlePurchase() {
+        const paymentInfo = {
+            userId: user?.id, 
+            books: bookIds, 
+            paymentmode: "SSLCOMMERZ"
         }
 
-        const popup = window.open(
-            gatewayPageURL,
-            'SSLCOMMERZ',
-            'width=500,height=600,scrollbars=yes,resizable=yes'
-        );
-
-        if (!popup) {
-            alert('Please allow popups for this site to proceed with payment.');
-            navigate(`/payment-fallback?tran_id=${tranId}&gateway=${gatewayPageURL}`);
-            return;
-        }
-
-        const checkPopupClosed = setInterval(() => {
-            if (popup.closed) {
-            clearInterval(checkPopupClosed);
-            console.log('SSLCOMMERZ popup closed');
-            }
-        }, 500);
-        },
-        [sslcommerzScriptLoaded, onError, navigate]
-    );
-
-    // Handle Payment
-    const handlePayment = async () => {
-        setLoading(true);
-        try {
-        const endpoint = paymentType === 'BOOK' ? '/purchasebooks' : '/usersubscription';
-        const body =
-            paymentType === 'BOOK'
-            ? { user.id, books: items, paymentmode: 'SSLCOMMERZ' }
-            : { user.id, subscriptionplanId: items, paymentmode: 'SSLCOMMERZ' };
-
-        const response = await fetch(`http://localhost:5000/api${endpoint}`, {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify(body),
-        });
-
-        const { data } = await response.json();
-        if (data.success) {
-            setTranId(data.tran_id);
-            openSslcommerzPopup(data.GatewayPageURL, data.tran_id);
-            onSuccess(data.tran_id);
-        } else {
-            onError(data.message);
-        }
-        } catch (error) {
-        onError('Payment initiation failed');
-        }
-        setLoading(false);
-    };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // function handlePurchase() {
-    //     const paymentInfo = {
-    //         userId: user?.id, 
-    //         books: bookIds, 
-    //         paymentmode: "SSLCOMMERZ"
-    //     }
-
-        
-    // }
+        initializePayment(paymentInfo)
+    }
 
     return (
         <div className="my-10 flex flex-col gap-2">
@@ -222,10 +89,10 @@ function CheckoutDetails() {
 
             <button
             className="bg-green-600 font-bold text-base p-5 rounded hover:bg-green-700"
-                onClick={handlePayment}
-                disabled={loading || !sslcommerzScriptLoaded}
+                onClick={handlePurchase}
+                disabled={isPending || !cartItems?.length > 0}
             >
-                {loading ? 'Processing...' : 'Pay Now'} {currencyFormator(cartTotalPrice)}
+                {isPending ? 'Processing...' : 'Pay Now'} {currencyFormator(cartTotalPrice)}
             </button>
         </div>
     )

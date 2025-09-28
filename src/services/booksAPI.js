@@ -1,5 +1,6 @@
 import { baseURL } from "@/lib/halper";
 
+//Get all books
 export async function getBooks() {
     try {
         const response = await fetch(`${baseURL}/api/getbooks`, {
@@ -16,11 +17,12 @@ export async function getBooks() {
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log("getbooks error", error.message);
+        console.log("Get books error", error.message);
         throw error;
     }
 }
 
+//Get popular books
 export async function getPopularBooks() {
     try {
         const response = await fetch(`${baseURL}/api/getpopularbooks`, {
@@ -37,11 +39,12 @@ export async function getPopularBooks() {
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log("getpopular books error", error.message);
+        console.log("Get popular books error", error.message);
         throw error;
     }
 }
 
+//Get Tranding books
 export async function getTrandingBooks() {
     try {
         const response = await fetch(`${baseURL}/api/gettrendingbooks`, {
@@ -58,11 +61,12 @@ export async function getTrandingBooks() {
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log("gettranding books error", error.message);
+        console.log("Get tranding books error", error.message);
         throw error;
     }
 }
 
+//Get book details
 export async function getBookDetails(id) {
     try {
         const response = await fetch(`${baseURL}/api/getbookdetails`, {
@@ -81,41 +85,15 @@ export async function getBookDetails(id) {
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log("getbook details error", error.message);
+        console.log("Get book details error", error.message);
         throw error;
     }
 }
 
-export async function getBookReview(bookId, token) {
-
-    if (!token) {
-        throw new Error("No token found in localStorage");
-    }
-
-    try {
-        const response = await fetch(`${baseURL}/api/getreview`, {
-            method: "POST",
-            headers: {
-                "Content-Type" : "application/json",
-                "Authorization": `Bearer ${token}`,
-            },
-            body: JSON.stringify({bookId})
-        })
-
-        if(!response.ok) {
-            throw new Error(`Failed to fetch book review: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        return data;
-    }catch(error) {
-        console.log("getbookreview error", error.message);
-        throw error;
-    }
-}
-
+//Add favourite book
 export async function addFavouriteBook(favObj, token) {
 
+    //Authentication token
     if (!token) {
         throw new Error("No token found in localStorage");
     }
@@ -131,19 +109,21 @@ export async function addFavouriteBook(favObj, token) {
         })
 
         if(!response.ok) {
-            throw new Error(`Failed to fetch book review: ${response.statusText}`);
+            throw new Error(`Failed to add favourite book: ${response.statusText}`);
         }
 
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log("getbookreview error", error.message);
+        console.log("Add favourite book error", error.message);
         throw error;
     }
 }
 
+//Get favourite book
 export async function getFavouriteBook(userId, token) {
 
+    //Authentication token
     if (!token) {
         throw new Error("No token found in localStorage");
     }
@@ -159,19 +139,21 @@ export async function getFavouriteBook(userId, token) {
         })
 
         if(!response.ok) {
-            throw new Error(`Failed to fetch book review: ${response.statusText}`);
+            throw new Error(`Failed to fetch get favourite book: ${response.statusText}`);
         }
 
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log("getbookreview error", error.message);
+        console.log("Get favourite book error: ", error.message);
         throw error;
     }
 }
 
+//Remove favourite book
 export async function removeFavouriteBook(favObj, token) {
 
+    //Authentication token
     if (!token) {
         throw new Error("No token found in localStorage");
     }
@@ -187,13 +169,13 @@ export async function removeFavouriteBook(favObj, token) {
         })
 
         if(!response.ok) {
-            throw new Error(`Failed to fetch book review: ${response.statusText}`);
+            throw new Error(`Failed to fetch remove favourite book: ${response.statusText}`);
         }
 
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log("getbookreview error", error.message);
+        console.log("Remove favourite book error", error.message);
         throw error;
     }
 }

@@ -1,9 +1,10 @@
 import { baseURL } from "@/lib/halper"
 
+//Get all publishers
 export async function getPublisher() {
   try {
     const response = await fetch(`${baseURL}/api/getpublishers`, {
-      method: "POST", // ideally GET if your backend allows
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       }
@@ -16,11 +17,12 @@ export async function getPublisher() {
     const data = await response.json();
     return data;
   }catch(error) {
-    console.log(error);
+    console.log("Get all publisher error: ", error.message);
     throw error;
   }
 }
 
+//Get publisher details
 export async function getPublisherDetails(id) {
     try {
       const response = await fetch(`${baseURL}/api/getpublisherdetails`, {
@@ -38,11 +40,12 @@ export async function getPublisherDetails(id) {
       const data = await response.json();
       return data;
     }catch(error) {
-      console.log(error);
+      console.log("Get publisher details error: ", error.message);
       throw error;
     }
 }
 
+//Get publisher wise books
 export async function getBooksByPublisher(id) {
   try {
     const response = await fetch(`${baseURL}/api/getbookbypublisher`, {
@@ -60,7 +63,7 @@ export async function getBooksByPublisher(id) {
     const data = await response.json();
     return data;
   } catch(error) {
-    console.log(error);
+    console.log("Get publisher wise books error: ", error.message);
     throw error;
   }
 }

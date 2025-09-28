@@ -35,7 +35,6 @@ const FavouriteBook = lazy(() => import("./pages/FavouriteBook"))
 const PrivateRoute = lazy(() => import("./components/PrivateRoute"))
 const Profile = lazy(() => import("./pages/Profile"))
 const ProfileLayout = lazy(() => import("./components/ProfileLayout"))
-const ChangePassword = lazy(() => import("./pages/ChangePassword"))
 const Setting = lazy(() => import("./pages/Setting"))
 
 
@@ -80,8 +79,10 @@ const router = createBrowserRouter([
             element: <Profile />
           },
           {
-            path: '/changepassword',
-            element: <ChangePassword />
+            path: "/favouritebooks",
+            element: <PrivateRoute>
+              <FavouriteBook />
+            </PrivateRoute>
           },
           {
             path: '/setting',
@@ -96,12 +97,6 @@ const router = createBrowserRouter([
       {
         path: "/books",
         element: <Books />
-      },
-      {
-        path: "/favouritebooks",
-        element: <PrivateRoute>
-          <FavouriteBook />
-        </PrivateRoute>
       },
       {
         path: "/genres",

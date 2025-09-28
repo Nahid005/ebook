@@ -1,5 +1,6 @@
 import { baseURL } from "@/lib/halper";
 
+//Get pages
 export async function getPages() {
     try {
         const response = await fetch(`${baseURL}/api/getpages`, {
@@ -16,7 +17,7 @@ export async function getPages() {
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log(error);
+        console.log("Get page error: ", error.message);
         throw error;
     }
 }

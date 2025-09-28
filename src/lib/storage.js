@@ -1,6 +1,7 @@
 const USER_EMAIL = "user_email";
 const USER_KEY = "app_user";
 const TOKEN_KEY = "app_token";
+const CART_ITEMS = "app_cartItems";
 
 export const storage = {
     setEmail(email) {
@@ -39,6 +40,19 @@ export const storage = {
 
     clearToken() {
         return localStorage.removeItem(TOKEN_KEY);
+    },
+
+    setCartItems(cartItem) {
+        if(cartItem) localStorage.setItem(CART_ITEMS, JSON.stringify(cartItem));
+    },
+
+    getCartItems() {
+        const cartItems = localStorage.getItem(CART_ITEMS);
+        return cartItems ? JSON.parse(cartItems) : null;
+    },
+
+    clearCartItems() {
+        localStorage.removeItem(CART_ITEMS);
     },
     
     clearAll() {

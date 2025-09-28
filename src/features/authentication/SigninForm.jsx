@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import SocialLogin from "./SocialLogin";
 import { usePasswordTypeToggled } from "./usePasswordTypeToggled";
 import FormValidationError from "@/components/FormValidationError";
 import PasswordTypeChange from "./PasswordTypeChange";
 import { useForm } from "react-hook-form";
 import { useSignin } from "./useSignin";
+import Logo from "@/components/Logo";
 
 function SigninForm() {
     const {register, reset, handleSubmit, formState} = useForm();
@@ -29,7 +29,10 @@ function SigninForm() {
 
     return (
         <div className="w-full bg-neutral-100 p-8 shadow rounded-md">
-            <h4 className="font-bold text-neutral-600 text-xl w-full text-center mb-8 uppercase">Sign In</h4>
+            <div className="text-center flex justify-center flex-col gap-4 items-center">
+                <Logo />
+                <h4 className="font-bold text-neutral-600 text-xl w-full text-center mb-4 uppercase">Sign In</h4>
+            </div>
             <form 
                 className="flex flex-col gap-4 justify-start items-start"
                 onSubmit={handleSubmit(onSubmit)}
@@ -79,8 +82,8 @@ function SigninForm() {
 
             <p className="text-sm font-normal text-neutral-600 my-4">If you don't have an account plese <Link className="font-medium underline" to="/signup">Signup</Link></p>
 
-            <hr />
-            <SocialLogin />
+            {/* <hr />
+            <SocialLogin /> */}
         </div>
     )
 }

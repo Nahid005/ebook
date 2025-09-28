@@ -1,13 +1,14 @@
 import { useSetting } from "@/hooks/useSetting";
 import { baseURL } from "@/lib/halper";
+import { Link } from "react-router-dom";
 
 function Logo() {
     const {setting} = useSetting();
     
     return (
-        <div className="">
+        <Link to="/">
             <img className="w-full max-w-[150px]" src={`${baseURL}/assets/settings/${setting?.site_logo}`} alt="" />
-        </div>
+        </Link>
     )
 }
 

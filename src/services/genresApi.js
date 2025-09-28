@@ -1,5 +1,6 @@
 import { baseURL } from "@/lib/halper";
 
+//Get Genres
 export async function getGenres() {
     try {
         const response = await fetch(`${baseURL}/api/getcategories`, {
@@ -16,11 +17,12 @@ export async function getGenres() {
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log(error);
+        console.log("Get genres error: ", error.message);
         throw error;
     }
 }
 
+//Get genre wise books
 export async function getBooksGenreWise(id) {
     try {
         const response = await fetch(`${baseURL}/api/getbookbycategory`, {
@@ -38,7 +40,7 @@ export async function getBooksGenreWise(id) {
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log(error);
+        console.log("Get genre wise books error: ", error.message);
         throw error;
     }
 }

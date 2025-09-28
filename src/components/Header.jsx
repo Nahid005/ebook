@@ -31,7 +31,7 @@ const menus = [
     }
 ]
 
-function Header() {
+function Header({setIsSearch, isSearch}) {
     const [open, setOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const cartItems = useSelector(state => state.cart.cartItems);
@@ -54,6 +54,10 @@ function Header() {
         }
     }
 
+    function toggleSearch() {
+        setIsSearch(!isSearch)
+    }
+
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
 
@@ -69,14 +73,15 @@ function Header() {
 
                 {/* Logo section */}
                 <div className="flex items-center gap-2 md:pr-16 pr-0">
-                    <Link to="/" className="font-bold">
-                        <Logo />
-                    </Link>
+                    <Logo />
                 </div>
 
                 {/* Hamburger Menu for mobile / toggle menu */}
                 <div className="md:hidden flex gap-2">
-                    <button className="w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer">
+                    <button 
+                        className="w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer"
+                        onClick={toggleSearch}
+                        >
                         <HiOutlineSearch />
                     </button>
 
@@ -126,7 +131,10 @@ function Header() {
 
                         {/* navbar bottom */}
                         <div className="flex flex-row justify-left md:flex-row items-center gap-4">
-                            <button className="w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer hidden md:block">
+                            <button 
+                                className="w-fit px-4 py-2 rounded hover:bg-orange-200 md:text-base text-2xl text-neutral-800 hover:text-orange-700 ease-in-out duration-300 cursor-pointer hidden md:block"
+                                onClick={toggleSearch}
+                                >
                                 <HiOutlineSearch />
                             </button>
 

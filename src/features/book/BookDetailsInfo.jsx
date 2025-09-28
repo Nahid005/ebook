@@ -27,8 +27,6 @@ function BookDetailsInfo() {
     if (isLoading) return <Loading />;
     if (isError) return <div>Something went wrong!</div>;
 
-    console.log(bookDetails)
-
     const {
         image, 
         name, 
@@ -37,15 +35,13 @@ function BookDetailsInfo() {
         preview_pdf,
         language,  
         reviews, 
-        category, 
-        subcategory, 
         description,
         pdf,
         averageRating,
         publishBy = "Boiaro",
         pages = 100,
         publishDate = "12-12-12",
-        price = 120
+        price
     } = bookDetails?.[0] || {};
 
     const bookDescription = DOMPurify.sanitize(description || "");

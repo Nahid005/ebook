@@ -14,6 +14,7 @@ export function useOtpVerify() {
     const {mutate: otpVerify, isPending, isError} = useMutation({
         mutationFn: (otpObj) => verifyOtp(otpObj),
         onSuccess: (data) => {
+            console.log(data)
             if(data.data.success === 1) {
                 const {userDetails, token} = data?.data || {};
 

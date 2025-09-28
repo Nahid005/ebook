@@ -1,6 +1,6 @@
 const baseURL = import.meta.env.VITE_BASE_URL;
 
-//existing user checking
+//Existing user checking
 export async function checkRegisterUser(email) {
     try {
         const response = await fetch(`${baseURL}/api/checkregistereduser`, {
@@ -12,21 +12,19 @@ export async function checkRegisterUser(email) {
         })
 
         if(!response.ok) {
-            throw new Error(`Failed to fetch check user: ${response.statusText}`);
+            throw new Error(`Failed to fetch existing user checking: ${response.statusText}`);
         }
 
         const data = await response.json();
         return data;
     }catch(error) {
-        console.log("Check register user error", error.message);
+        console.log("Existing user checking", error.message);
         throw error;
     }
 }
 
+//User sign up
 export async function signUp(newUser) {
-
-    console.log(newUser)
-
     try {
         const response = await fetch(`${baseURL}/api/signup`, {
             method: "POST",
@@ -48,6 +46,7 @@ export async function signUp(newUser) {
     }
 }
 
+//OTP verification 
 export async function verifyOtp(otpObj) {
     try {
         const response = await fetch(`${baseURL}/api/otp_verification`, {
@@ -70,6 +69,7 @@ export async function verifyOtp(otpObj) {
     }
 }
 
+//Sign in user
 export async function signIn(userCredentials) {
     try {
         const response = await fetch(`${baseURL}/api/signin`, {
@@ -81,19 +81,21 @@ export async function signIn(userCredentials) {
         })
 
         if(!response.ok) {
-            throw new Error(`Failed to login user: ${response.statusText}`);
+            throw new Error(`Failed to fetch sign in user: ${response.statusText}`);
         }
 
         const data = await response.json();
         return data;
     }catch (error) {
-        console.log("Create new user error", error.message);
+        console.log("Sign in user error", error.message);
         throw error;
     }
 }
 
+//Sign out user
 export async function signOut(userCredentials, token) {
 
+    //Authentication token
     if (!token) {
         throw new Error("No token found in localStorage");
     }
@@ -109,13 +111,13 @@ export async function signOut(userCredentials, token) {
         })
 
         if(!response.ok) {
-            throw new Error(`Failed to signout user: ${response.statusText}`);
+            throw new Error(`Failed to fetch signout user: ${response.statusText}`);
         }
 
         const data = await response.json();
         return data;
     }catch (error) {
-        console.log("Signout user error", error.message);
+        console.log("Sign out user error", error.message);
         throw error;
     }
 }

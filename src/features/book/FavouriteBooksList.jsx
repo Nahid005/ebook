@@ -10,7 +10,7 @@ function FavouriteBooksList() {
     if(isError) return <Error message="Something went wrong" />
 
     return (
-        <div className="my-8">
+        <div className="m-2">
             <h4 className="font-bold text-xl text-neutral-600 mb-5">All Favourite Books</h4>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pb-10">
                 {

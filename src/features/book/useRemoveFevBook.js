@@ -7,7 +7,7 @@ export function useRemoveFevBook() {
     const queryClient = useQueryClient();
     const token = useSelector(state => state.user.token)
 
-    const {mutate: mutateRemoveFavBook, isError, isPending} = useMutation({
+    const {mutate: mutateRemoveFavBook, error, isError, isPending, reset} = useMutation({
         mutationFn: (favObj) => removeFavouriteBook(favObj, token),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['favouritebook']});
@@ -17,5 +17,5 @@ export function useRemoveFevBook() {
         }
     })
 
-    return {mutateRemoveFavBook, isError, isPending}
+    return {mutateRemoveFavBook, error, isError, isPending, reset}
 }

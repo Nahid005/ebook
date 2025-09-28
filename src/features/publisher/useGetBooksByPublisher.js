@@ -5,11 +5,11 @@ import { useParams } from "react-router-dom";
 export function useGetBooksByPublisher() {
     const {publisherId} = useParams();
 
-    const {data, isError, isLoading} = useQuery({
+    const {data, error, isError, isLoading, refetch} = useQuery({
         queryKey: ["publisherBooks", publisherId],
         queryFn: () => getBooksByPublisher(publisherId),
         select: (res) => res.data.bookDetails
     })
 
-    return {publisherByBooks: data ?? [], isError, isLoading}
+    return {publisherByBooks: data ?? [], error, isError, isLoading, refetch}
 }

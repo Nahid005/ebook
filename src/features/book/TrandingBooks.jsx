@@ -4,10 +4,10 @@ import BookItem from "./BookItem";
 import MiniLoading from "@/components/MiniLoading";
 
 function TrandingBooks() {
-    const {trandingBooks, isError, isLoading} = useGetTrandingBooks();
+    const {trandingBooks, error, isError, isLoading, refetch} = useGetTrandingBooks();
 
     if(isLoading) return <MiniLoading />
-    if(isError) return <Error message={"Tranding books not found"} />
+    if(isError) return <Error error={error} reset={refetch} />
 
     return (
         <div className="">

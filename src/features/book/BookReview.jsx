@@ -1,7 +1,7 @@
 import Rating from "./Rating";
 
 function BookReview({reviewItem}) {
-    const {date, description, rating, image = "google.com"} = reviewItem;
+    const {date, description, rating, image} = reviewItem;
 
     return (
         <div className="flex justify-between gap-4">

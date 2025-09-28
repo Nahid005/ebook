@@ -1,4 +1,4 @@
-const baseURL = import.meta.env.VITE_BASE_URL;
+import { baseURL } from "@/lib/halper";
 
 //Existing user checking
 export async function checkRegisterUser(email) {

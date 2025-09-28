@@ -11,10 +11,10 @@ import { baseURL } from "@/lib/halper";
 import Error from "./Error";
 
 function MainSlider() {
-  const {sliders, isError, isLoading} = useSliders();
+  const {sliders, error, isError, isLoading, refetch} = useSliders();
 
   if(isLoading) return <Loading />
-  if(isError) return <Error />
+  if(isError) return <Error error={error} reset={refetch}/>
 
   return (
     <Swiper

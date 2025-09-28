@@ -1,5 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signIn } from "@/services/authenticationApi";
@@ -11,7 +12,7 @@ export function useSignin() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const {mutate: signinUser, isError, isPending}  = useMutation({
+    const {mutate: signinUser, error, isError, isPending, reset}  = useMutation({
         mutationFn: (userCredentials) => signIn(userCredentials),
         onSuccess: (data) => {
             const {userDetails, token} = data?.data || {};
@@ -35,5 +36,5 @@ export function useSignin() {
         } 
     })
 
-    return {signinUser, isError, isPending}
+    return {signinUser, error, isError, isPending, reset}
 }

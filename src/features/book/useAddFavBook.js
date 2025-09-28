@@ -7,7 +7,7 @@ export function useAddFavBook() {
     const queryClient = useQueryClient();
     const token = useSelector(state => state.user.token)
 
-    const {mutate: mutateFavBook, isPending, isError} = useMutation({
+    const {mutate: mutateFavBook, error, isError, isPending, reset} = useMutation({
         mutationFn: (favObj) => addFavouriteBook(favObj, token),
         onSuccess: (data) => {
             queryClient.invalidateQueries({queryKey: ['favouritebook']})
@@ -18,5 +18,5 @@ export function useAddFavBook() {
         }
     })
 
-    return {mutateFavBook, isPending, isError}
+    return {mutateFavBook, error, isError, isPending, reset}
 }

@@ -4,10 +4,10 @@ import { useGetFavBooks } from "./useGetFavBooks";
 import Error from "@/components/Error";
 
 function FavouriteBooksList() {
-    const {getFavBook, isError, isLoading} = useGetFavBooks();
+    const {getFavBook, error, isError, isLoading, refetch} = useGetFavBooks();
 
     if(isLoading) return <Loading />
-    if(isError) return <Error message="Something went wrong" />
+    if(isError) return <Error error={error} reset={refetch} />
 
     return (
         <div className="m-2">

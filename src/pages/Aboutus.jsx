@@ -1,12 +1,13 @@
 import DOMPurify from "dompurify";
 import Loading from "@/components/Loading";
 import { usePages } from "@/hooks/usePages";
+import Error from "@/components/Error";
 
 function Aboutus() {
-    const {pages, isError, isLoading} = usePages()
+    const {pages, error, isError, isLoading, refetch} = usePages()
 
     if(isLoading) return <Loading />;
-    if(isError) return;
+    if(isError) return <Error error={error} reset={refetch} />;
 
     const aboutUs = DOMPurify.sanitize(pages.at(0)?.about_us || "");
 

@@ -1,12 +1,13 @@
 import DOMPurify from "dompurify";
 import Loading from "@/components/Loading";
 import { usePages } from "@/hooks/usePages";
+import Error from "@/components/Error";
 
 function Privacy() {
-  const { pages, isError, isPending } = usePages();
+  const { pages, error, isError, isLoading, refetch } = usePages();
 
-  if (isPending) return <Loading />;
-  if (isError) return null;
+  if (isLoading) return <Loading />;
+  if (isError) return <Error error={error} reset={refetch}/>;
 
   const privacy = DOMPurify.sanitize(pages.at(0)?.privacy_policy || "");
 

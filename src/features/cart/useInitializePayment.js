@@ -7,13 +7,11 @@ export function useInitializePayment() {
     const queryClient = useQueryClient();
     const token = useSelector(state => state.user.token)
 
-    const {mutate: initializePayment, isError, isPending} = useMutation({
+    const {mutate: initializePayment, error, isError, isPending, reset} = useMutation({
         mutationFn: (paymentInfo) => purchaseBooks(paymentInfo, token),
         onSuccess: (data) => {
-            
-            console.log(data)
-
             const {GatewayPageURL, success} = data?.data
+            
             if (success) {
                 window.location.href = GatewayPageURL;
             } else {
@@ -28,5 +26,5 @@ export function useInitializePayment() {
         }
     })
 
-    return {initializePayment, isError, isPending}
+    return {initializePayment, error, isError, isPending, reset}
 }

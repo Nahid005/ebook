@@ -6,11 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCartItem } from "../cart/cartSlice";
 import toast from "react-hot-toast";
 import { useRemoveFevBook } from "./useRemoveFevBook";
+import Error from "@/components/Error";
 
 function FavouriteBookItem({book}) {
-    const {mutateRemoveFavBook, isPending} = useRemoveFevBook();
+    const {mutateRemoveFavBook, error, isError, isPending, reset} = useRemoveFevBook();
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.user)
+
+    if(isError) return <Error error={error} reset={reset} />
 
     const {_id: id, name, image, price, averageRating, author} = book?.bookDetails;
 
@@ -26,7 +29,7 @@ function FavouriteBookItem({book}) {
         }
 
         dispatch(addCartItem(cartItem))
-        toast.success(`${name} The book has been carted.`)
+        toast.success(`${name} has been added to your cart.`);
     }
 
     function handleRemoveFavBook() {
@@ -48,7 +51,7 @@ function FavouriteBookItem({book}) {
                     className=" absolute top-2 right-2 cursor-pointer"
                     onClick={() => handleRemoveFavBook()}
                     disabled={isPending}
-                    >
+                >
                     <MdFavorite className="text-2xl text-orange-500" />
                 </button>
                 <div className="bg-neutral-600/50 text-center py-5 px-2 absolute w-full bottom-0 rounded-b-lg transition-all duration-300 translate-y-10 opacity-0 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 flex justify-center">

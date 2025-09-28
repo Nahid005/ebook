@@ -5,10 +5,10 @@ import Error from "@/components/Error";
 
 
 function AuthorsLists() {
-    const {authors, isLoading, isError} = useGetAuthors();
+    const {authors, error, isError, isLoading, refetch} = useGetAuthors();
 
     if(isLoading) return <Loading />
-    if(isError) return <Error message={"data not found"} />
+    if(isError) return <Error error={error} reset={refetch} />
 
     return (
         <div className="py-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">

@@ -4,10 +4,10 @@ import Error from "@/components/Error";
 import BookItem from "./BookItem";
 
 function BooksList() {
-    const {books, isLoading, isError} = useBooksList();
+    const {books, error, isError, isLoading, refetch} = useBooksList();
     
     if(isLoading) return <Loading />
-    if(isError) return <Error message="Books not found"/>
+    if(isError) return <Error error={error} reset={refetch}/>
 
     return (
         <div className="my-8">

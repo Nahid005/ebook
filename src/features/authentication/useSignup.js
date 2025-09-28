@@ -7,7 +7,7 @@ export function useSignup() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
-    const {mutate: createUser, isError, isPending}  = useMutation({
+    const {mutate: createUser, error, isError, isPending, reset}  = useMutation({
         mutationFn: (newUser) => signUp(newUser),
         onSuccess: (data) => {
             
@@ -22,5 +22,5 @@ export function useSignup() {
         } 
     })
 
-    return {createUser, isError, isPending}
+    return {createUser, error, isError, isPending, reset}
 }

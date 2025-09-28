@@ -3,6 +3,7 @@ import GenresSlider from "@/features/genres/GenresSlider";
 import PopularBooks from "@/features/book/PopularBooks";
 import TrandingBooks from "@/features/book/TrandingBooks";
 import AppPromotion from "@/components/AppPromotion";
+import NewBooks from "@/features/book/NewBooks";
 
 function Home() {
 
@@ -10,6 +11,7 @@ function Home() {
         <>
             <MainSlider />
             <GenresSlider />
+            <NewBooks />
             <PopularBooks />
             <TrandingBooks />
             <AppPromotion />

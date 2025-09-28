@@ -8,10 +8,10 @@ export function useTransectionStatus() {
     const query = new URLSearchParams(useLocation().search);
     const tran_id = query.get("tran_id");
 
-    const {data, isError, isLoading} = useQuery({
+    const {data, error, isError, isLoading, refetch} = useQuery({
         queryKey: ["transectionstatus"],
         queryFn: () => transectionStatus(tran_id, token)
     })
 
-    return {transectionStatus: data ?? [], isError, isLoading}
+    return {transectionStatus: data ?? [], error, isError, isLoading, refetch}
 }

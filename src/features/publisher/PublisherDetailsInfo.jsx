@@ -6,11 +6,40 @@ import { useGetBooksByPublisher } from "./useGetBooksByPublisher";
 import BookItem from "../book/BookItem";
 
 function PublisherDetailsInfo() {
-    const {publisherDetails, isError, isLoading} = useGetPublisherDetails();
-    const {publisherByBooks, isError: publisherByBookError, isLoading: publisherByBookLoading} = useGetBooksByPublisher();
+    const {
+        publisherDetails, 
+        error: publisherDetailsError, 
+        isError: isPublisherDetailsError, 
+        isLoading: isPublisherDetailsLoading, 
+        refetch: isPublisherDetailsRefetch
+    } = useGetPublisherDetails();
 
-    if(isLoading || publisherByBookLoading) return <Loading />
-    if(isError || publisherByBookError) return <Error message="Publisher not found" />
+    const {
+        publisherByBooks, 
+        error: publisherByBooksError, 
+        isError: isPublisherByBookError, 
+        isLoading: isPublisherByBookLoading, 
+        refetch: isPublisherByBookRefetch
+    } = useGetBooksByPublisher();
+
+    // Handle loading
+    if (isPublisherDetailsLoading || isPublisherByBookLoading) {
+        return <Loading />;
+    }
+
+    // Handle error
+    if (isPublisherDetailsError || isPublisherByBookError) {
+        return (
+            <Error
+            error={publisherDetailsError || publisherByBooksError}
+            reset={() => {
+                // You can refetch both, or decide which one to retry
+                isPublisherDetailsRefetch();
+                isPublisherByBookRefetch();
+            }}
+            />
+        );
+    }
 
     const publisheInfo = publisherDetails.at(0)
     return (

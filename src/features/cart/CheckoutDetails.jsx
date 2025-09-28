@@ -8,22 +8,25 @@ import { useSelector } from "react-redux";
 import { totalPrice } from "./cartSlice";
 import { currencyFormator } from "@/lib/halper";
 import { useInitializePayment } from "./useInitializePayment";
+import Error from "@/components/Error";
 
 function CheckoutDetails() {
-    const cartItems = useSelector(state => state.cart.cartItems)
-    const cartTotalPrice = useSelector(totalPrice)
-    const user = useSelector(state => state.user.user)
-    const {initializePayment, isPending} = useInitializePayment();
+    const cartItems = useSelector(state => state.cart.cartItems);
+    const cartTotalPrice = useSelector(totalPrice);
+    const user = useSelector(state => state.user.user);
+    const {initializePayment, error, isError, isPending, reset} = useInitializePayment();
     const bookIds = cartItems?.length > 0 && cartItems.map(book => book.id);
+
+    if(isError) return <Error error={error} reset={reset} />
 
     function handlePurchase() {
         const paymentInfo = {
             userId: user?.id, 
             books: bookIds, 
             paymentmode: "SSLCOMMERZ"
-        }
+        };
 
-        initializePayment(paymentInfo)
+        initializePayment(paymentInfo);
     }
 
     return (
@@ -32,7 +35,6 @@ function CheckoutDetails() {
             <h5 className="text-lg font-medium text-neutral-700 mb-2">Your Shops Items</h5>
 
             <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-3">
-
                 {
                     cartItems.length > 0 && cartItems.map(book => <CartItem key={book.id} book={book} />)
                 }
@@ -58,7 +60,6 @@ function CheckoutDetails() {
                         </div>
                         <HiCheck className="text-2xl text-green-600" />
                     </div>
-
                 </div>
 
                 <div className="flex flex-col gap-3">
@@ -77,7 +78,6 @@ function CheckoutDetails() {
                 </div>
             </div>
 
-
             <div className="flex gap-2 items-center">
                 <input className="text-neutral-600" type="checkbox" name="ebookConfirm" id="ebookConfirm" />
                 <label className="text-base font-medium text-neutral-600" htmlFor="ebookConfirm">I understand that i am purchasing ebooks, not physical books.</label>
@@ -88,10 +88,10 @@ function CheckoutDetails() {
             </div>
 
             <button
-            className="bg-green-600 font-bold text-base p-5 rounded hover:bg-green-700"
-                onClick={handlePurchase}
-                disabled={isPending || !cartItems?.length > 0}
-            >
+                className="bg-green-600 font-bold text-base p-5 rounded hover:bg-green-700"
+                    onClick={handlePurchase}
+                    disabled={isPending || !cartItems?.length > 0}
+                >
                 {isPending ? 'Processing...' : 'Pay Now'} {currencyFormator(cartTotalPrice)}
             </button>
         </div>

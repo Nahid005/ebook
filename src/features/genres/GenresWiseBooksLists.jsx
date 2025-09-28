@@ -4,10 +4,10 @@ import BookItem from "../book/BookItem";
 import Error from "@/components/Error";
 
 function GenresWiseBooksLists() {
-    const {genreWiseBooks, isLoading, isError} = useGetGenreWiseBooks();
+    const {genreWiseBooks, error, isLoading, isError, refetch} = useGetGenreWiseBooks();
 
     if(isLoading) return <Loading />
-    if(isError) return <Error message="something went wrong" />
+    if(isError) return <Error error={error} reset={refetch} />
 
     return (
         <div className="">

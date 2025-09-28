@@ -5,11 +5,11 @@ import { useParams } from "react-router-dom";
 export function useGetGenreWiseBooks() {
     const {genreId} = useParams();
 
-    const {data, isLoading, isError} = useQuery({
+    const {data, error, isLoading, isError, refetch} = useQuery({
        queryKey: ['genrawisebooks', genreId],
        queryFn: () => getBooksGenreWise(genreId),
        select: (res) => res.data.bookDetails
     })
 
-    return {genreWiseBooks: data ?? [], isLoading, isError}
+    return {genreWiseBooks: data ?? [], error, isLoading, isError, refetch}
 } 

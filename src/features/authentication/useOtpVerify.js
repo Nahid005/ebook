@@ -11,7 +11,7 @@ export function useOtpVerify() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const {mutate: otpVerify, isPending, isError} = useMutation({
+    const {mutate: otpVerify, error, isError, isPending, reset} = useMutation({
         mutationFn: (otpObj) => verifyOtp(otpObj),
         onSuccess: (data) => {
             console.log(data)
@@ -38,5 +38,5 @@ export function useOtpVerify() {
         }
     })
 
-    return {otpVerify, isPending, isError}
+    return {otpVerify, error, isError, isPending, reset}
 } 

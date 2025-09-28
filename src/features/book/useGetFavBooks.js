@@ -6,11 +6,11 @@ export function useGetFavBooks() {
     const user = useSelector(state => state.user.user);
     const token = useSelector(state => state.user.token)
 
-    const {data: getFavBook, isLoading, isError} = useQuery({
+    const {data: getFavBook, error, isError, isLoading, refetch} = useQuery({
         queryKey: ['favouritebook'],
         queryFn: () => getFavouriteBook(user?.id, token),
         select: (res) => res.data.favouriteBookDetails ?? []
     })
 
-    return {getFavBook, isLoading, isError}
+    return {getFavBook, error, isError, isLoading, refetch}
 }

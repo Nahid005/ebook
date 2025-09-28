@@ -5,10 +5,10 @@ import Error from "@/components/Error";
 import { useSelector } from "react-redux";
 
 function VerifyOtpForm() {
-    const {otpVerify, isError, isPending} = useOtpVerify();
+    const {otpVerify, error, isError, isPending, reset: isReset} = useOtpVerify();
     const email = useSelector(state => state.user.email)
 
-    if(isError) return <Error message="Something went wrong" />
+    if(isError) return <Error error={error} reset={isReset} />
 
     const {register, reset, handleSubmit, formState} = useForm();
     const {errors} = formState;

@@ -5,11 +5,11 @@ import { useParams } from "react-router-dom";
 export function useGetAuthorDetails() {
     const {authorId} = useParams();
 
-    const {data, isLoading, isError} = useQuery({
+    const {data, error, isError, isLoading, refetch} = useQuery({
         queryKey: ['authordetails', authorId],
         queryFn: () => getAuthorDetails(authorId),
         select: (res) => res.data.authorDetails
     })
 
-    return {authorDetails: data ?? [], isLoading, isError}
+    return {authorDetails: data ?? [], error, isError, isLoading, refetch}
 }

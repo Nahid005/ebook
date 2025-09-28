@@ -3,11 +3,13 @@ import { RiDownload2Fill, RiLogoutBoxRLine, RiSettings3Line, RiUserStarLine } fr
 import { MdFavorite } from "react-icons/md";
 import { useSignout } from "../authentication/useSignout";
 import Error from "@/components/Error";
+import Loading from "@/components/Loading";
 
 function Sidebar() {
-    const {signoutUser, isError, isPending} = useSignout();
+    const {signoutUser, error, isError, isPending, reset} = useSignout();
 
-    if(isError) return <Error message="something went wrong" />
+    if(isPending) return <Loading />
+    if(isError) return <Error error={error} reset={reset} />
 
     function handleSignOut() {
         signoutUser();

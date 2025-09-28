@@ -11,19 +11,44 @@ import { useDispatch } from "react-redux";
 import { signupUsers } from "../profile/userSlice";
 import { storage } from "@/lib/storage";
 import Logo from "@/components/Logo";
+import SocialLogin from "./SocialLogin";
 
 function SignupForm() {
     const dispatch = useDispatch();
+    
+    const {
+        verifyUserEmail, 
+        error: chekRegError,
+        isError: isChekRegError, 
+        isPending: isCheckRegLoading,
+        reset: chekRegErrorReset
+    } = useCheckRegisterUser();
 
-    const {verifyUserEmail, isError: isChekRegError, isPending: isCheckRegLoading} = useCheckRegisterUser();
-    const {createUser, isError: isCreateUserError, isLoading: isCreateUserLoading} = useSignup();
+    const {
+        createUser, 
+        error: createUserError,
+        isError: isCreateUserError, 
+        isLoading: isCreateUserLoading,
+        reset: createUserReset
+    } = useSignup();
 
     const {register, reset, handleSubmit, formState, getValues} = useForm();
     const {errors} = formState;
     const {passwordTextToggle, isShow} = usePasswordTypeToggled();
 
-    if(isCreateUserLoading) return <Loading />
-    if(isCreateUserError) return <Error message="Something went wrong" />
+    if(isCreateUserLoading || isCheckRegLoading) return <Loading />
+    if (isChekRegError || isCreateUserError) {
+        return (
+            <Error
+            error={chekRegError || createUserError}
+            reset={() => {
+                // You can refetch both, or decide which one to retry
+                chekRegErrorReset();
+                createUserReset();
+            }}
+            />
+        );
+    }
     
     function onSubmit(data) {
         const {username, firstname, lastname, email, password} = data;
@@ -172,8 +197,8 @@ function SignupForm() {
 
             <p className="text-sm font-normal text-neutral-600 my-4">If you have an account please <Link className="font-medium underline" to="/signin">Sign In</Link></p>
 
-            {/* <hr />
-            <SocialLogin /> */}
+            <hr />
+            <SocialLogin />
         </div>
     )
 }

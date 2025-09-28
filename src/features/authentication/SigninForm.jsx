@@ -5,12 +5,17 @@ import PasswordTypeChange from "./PasswordTypeChange";
 import { useForm } from "react-hook-form";
 import { useSignin } from "./useSignin";
 import Logo from "@/components/Logo";
+import Error from "@/components/Error";
+import SocialLogin from "./SocialLogin";
 
 function SigninForm() {
+    const {signinUser, error, isError, isPending, reset: isReset} = useSignin();
+
     const {register, reset, handleSubmit, formState} = useForm();
     const {errors} = formState;
     const {passwordTextToggle, isShow} = usePasswordTypeToggled();
-    const {signinUser, isPending} = useSignin();
+    
+    if(isError) return <Error error={error} reset={isReset} />
 
     function onSubmit(data) {
         const {email, password} = data;
@@ -82,8 +87,8 @@ function SigninForm() {
 
             <p className="text-sm font-normal text-neutral-600 my-4">If you don't have an account plese <Link className="font-medium underline" to="/signup">Signup</Link></p>
 
-            {/* <hr />
-            <SocialLogin /> */}
+            <hr />
+            <SocialLogin />
         </div>
     )
 }

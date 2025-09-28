@@ -22,6 +22,28 @@ export async function getBooks() {
     }
 }
 
+//Get new books
+export async function getNewBooks() {
+    try {
+        const response = await fetch(`${baseURL}/api/getnewbooks`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            }
+        })
+
+        if(!response.ok) {
+            throw new Error(`Failed to fetch new books: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }catch(error) {
+        console.log("Get new books error", error.message);
+        throw error;
+    }
+}
+
 //Get popular books
 export async function getPopularBooks() {
     try {
@@ -86,6 +108,29 @@ export async function getBookDetails(id) {
         return data;
     }catch(error) {
         console.log("Get book details error", error.message);
+        throw error;
+    }
+}
+
+//Get related books
+export async function getRelatedBooks(id) {
+    try {
+        const response = await fetch(`${baseURL}/api/getrelatedbooks`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify({bookId: id})
+        })
+
+        if(!response.ok) {
+            throw new Error(`Failed to fetch related books: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }catch(error) {
+        console.log("Get related books error", error.message);
         throw error;
     }
 }
@@ -179,3 +224,4 @@ export async function removeFavouriteBook(favObj, token) {
         throw error;
     }
 }
+

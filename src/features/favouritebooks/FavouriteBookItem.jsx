@@ -1,12 +1,12 @@
 import { baseURL, currencyFormator } from "@/lib/halper";
 import { MdFavorite, MdOutlineShoppingCart } from "react-icons/md";
-import Rating from "./Rating";
+import Rating from "../book/Rating";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addCartItem } from "../cart/cartSlice";
 import toast from "react-hot-toast";
-import { useRemoveFevBook } from "./useRemoveFevBook";
 import Error from "@/components/Error";
+import { useRemoveFevBook } from "./useRemoveFevBook";
 
 function FavouriteBookItem({book}) {
     const {mutateRemoveFavBook, error, isError, isPending, reset} = useRemoveFevBook();
@@ -21,7 +21,7 @@ function FavouriteBookItem({book}) {
         const cartItem = {
             id: id,
             bookName: name,
-            image: image,
+            image: image, 
             author: author,
             quentity: 1,
             unitPrice: price,

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import NavItems from "./NavItems";
 import { useSelector } from "react-redux";
 import Logo from "./Logo";
-import { useGetFavBooks } from "@/features/book/useGetFavBooks";
+import { useGetFavBooks } from "@/features/favouritebooks/useGetFavBooks";
 
 const menus = [
     {

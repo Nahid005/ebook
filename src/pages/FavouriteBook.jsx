@@ -1,4 +1,4 @@
-import FavouriteBooksList from "@/features/book/FavouriteBooksList";
+import FavouriteBooksList from "@/features/favouritebooks/FavouriteBooksList";
 
 function FavouriteBook() {
     return (

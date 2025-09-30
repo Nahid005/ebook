@@ -7,6 +7,8 @@ import 'leaflet/dist/leaflet.css';
 import PaymentSuccess from "./pages/PaymentSuccess"
 import PaymentFail from "./pages/PaymentFail"
 import PaymentCancel from "./pages/PaymentCancel"
+import PurchasedBooks from "./pages/PurchasedBooks"
+import PurchasedBookDetails from "./pages/PurchasedBookDetails"
 
 
 const AppLayout = lazy(() => import("./components/AppLayout")) 
@@ -72,7 +74,9 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        element: <ProfileLayout />,
+        element: <PrivateRoute>
+            <ProfileLayout />
+          </PrivateRoute>,
         children: [
           {
             path: '/profile',
@@ -80,9 +84,15 @@ const router = createBrowserRouter([
           },
           {
             path: "/favouritebooks",
-            element: <PrivateRoute>
-              <FavouriteBook />
-            </PrivateRoute>
+            element: <FavouriteBook />
+          },
+          {
+            path: "/purchedbooks",
+            element: <PurchasedBooks />
+          },
+          {
+            path: "/purchedbooks/:bookId",
+            element: <PurchasedBookDetails />
           },
           {
             path: '/setting',

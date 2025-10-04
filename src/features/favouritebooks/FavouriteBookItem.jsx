@@ -12,10 +12,12 @@ function FavouriteBookItem({book}) {
     const {mutateRemoveFavBook, error, isError, isPending, reset} = useRemoveFevBook();
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.user)
+    const cartItems = useSelector(state => state.cart.cartItems);
 
     if(isError) return <Error error={error} reset={reset} />
-
     const {_id: id, name, image, price, averageRating, author} = book?.bookDetails;
+
+    const isAlreadyCart = cartItems?.find(book => book.id === id);
 
     function handleCartItem() {
         const cartItem = {
@@ -55,22 +57,51 @@ function FavouriteBookItem({book}) {
                     <MdFavorite className="text-2xl text-orange-500" />
                 </button>
                 <div className="bg-neutral-600/50 text-center py-5 px-2 absolute w-full bottom-0 rounded-b-lg transition-all duration-300 translate-y-10 opacity-0 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 flex justify-center">
-                    <button 
-                        className="cursor-pointer bg-green-500 rounded py-3 px-4 font-bold text-md hover:bg-green-600 flex items-center gap-1 justify-center"
-                        onClick={handleCartItem}
-                    ><MdOutlineShoppingCart /> <span>Add to cart</span></button>
+                    {
+                        price > 0 ? (
+                            isAlreadyCart ? (
+                                <Link 
+                                className="cursor-pointer bg-green-500 rounded py-3 px-4 font-bold text-md hover:bg-green-600 flex items-center gap-1 justify-center"
+                                to={`/product/${id}`}
+                                >
+                                View Details
+                                </Link>
+                            ) : book?.purchased ? (
+                                <button 
+                                className="cursor-pointer bg-red-500 rounded py-3 px-4 font-bold text-md hover:bg-red-600 flex items-center gap-1 justify-center"
+                                disabled
+                                >
+                                <MdOutlineShoppingCart /> <span>Purchased</span>
+                                </button>
+                            ) : (
+                                <button 
+                                className="cursor-pointer bg-green-500 rounded py-3 px-4 font-bold text-md hover:bg-green-600 flex items-center gap-1 justify-center"
+                                onClick={handleCartItem}
+                                >
+                                <MdOutlineShoppingCart /> <span>Add to cart</span>
+                                </button>
+                            )
+                        ): (
+                            <Link 
+                                className="cursor-pointer bg-green-500 rounded py-3 px-4 font-bold text-md hover:bg-green-600 flex items-center gap-1 justify-center"
+                                to={`/product/${id}`}
+                                >
+                                View Details
+                            </Link>
+                        )
+                    }
                 </div>
             </div>
             <Link to={`/product/${id}`}>
                 <div className="flex flex-col">
                     <h5 className="font-bold text-base text-neutral-700">{name}</h5>
                     <p className="font-medium text-sm text-neutral-700">{author.name}</p>
-                    <div className="flex flex-col md:flex-row mt-2 gap-1">
+                    <div className="flex flex-col md:flex-row mt-2 gap-2">
                         <div className="flex items-center gap-1">
                             <ul className="flex">
                                 <Rating rating={averageRating} />
                             </ul>
-                            <p className="text-sm text-neutral-500 font-medium"><span>(108)</span></p>
+                            {/* <p className="text-sm text-neutral-500 font-medium"><span>(108)</span></p> */}
                         </div>
                         <div className="flex gap-1">
                             <h4 className="text-sm font-bold text-neutral-600">{currencyFormator(price)}</h4>

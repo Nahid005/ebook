@@ -10,7 +10,7 @@ export function useTransectionStatus() {
 
     const {data, error, isError, isLoading, refetch} = useQuery({
         queryKey: ["transectionstatus"],
-        queryFn: () => transectionStatus(tran_id, token)
+        queryFn: () => transectionStatus(tran_id, token),
     })
 
     return {transectionStatus: data ?? [], error, isError, isLoading, refetch}

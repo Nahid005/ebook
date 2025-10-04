@@ -36,7 +36,7 @@ function SignupForm() {
     const {errors} = formState;
     const {passwordTextToggle, isShow} = usePasswordTypeToggled();
 
-    if(isCreateUserLoading || isCheckRegLoading) return <Loading />
+    if(isCreateUserLoading) return <Loading />
     if (isChekRegError || isCreateUserError) {
         return (
             <Error

@@ -2,7 +2,6 @@ import Loading from "@/components/Loading";
 import { usePurchasedBook } from "./usePurchasedBook";
 import Error from "@/components/Error";
 import PurchasedBook from "./PurchasedBook";
-import Notfound from "@/pages/Notfound";
 
 function PurchasedBookList() {
     const {purchasedBooks, error, isError, isLoading, refetch} = usePurchasedBook();
@@ -17,18 +16,17 @@ function PurchasedBookList() {
                 <table className="min-w-full border border-gray-300">
                     <thead className="bg-gray-200">
                         <tr>
-                            <th className="py-2 px-4 border">Name</th>
-                            <th className="py-2 px-4 border">Price</th>
+                            <th className="py-2 px-4 border">Image</th>
+                            <th className="py-2 px-4 border">Book Name</th>
+                            <th className="py-2 px-4 border">Author Name</th>
+                            <th className="py-2 px-4 border">Publisher Name</th>
+                            <th className="py-2 px-4 border">Purchase Price</th>
                             <th className="py-2 px-4 border">Action</th>
                         </tr>
                     </thead>
+
                     {
-                        purchasedBooks?.length > 0 ? (
-                            purchasedBooks.map(book => <PurchasedBook key={book._id} book={book} />
-                        )
-                        ): (
-                            <Notfound /> 
-                        )
+                        purchasedBooks?.map(book => <PurchasedBook key={book._id} book={book} />)
                     }
                 </table>
             </div>

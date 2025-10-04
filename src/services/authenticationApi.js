@@ -25,6 +25,7 @@ export async function checkRegisterUser(email) {
 
 //User sign up
 export async function signUp(newUser) {
+    console.log(baseURL)
     try {
         const response = await fetch(`${baseURL}/api/signup`, {
             method: "POST",
@@ -92,6 +93,29 @@ export async function signIn(userCredentials) {
     }
 }
 
+//Social sign in
+export async function socialSignin(userCredentials) {
+    try {
+        const response = await fetch(`${baseURL}/api/social_login`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(userCredentials)
+        })
+
+        if(!response.ok) {
+            throw new Error(`Failed to fetch Social sign in user: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }catch (error) {
+        console.log("Social sign in user error", error.message);
+        throw error;
+    }
+}
+
 //Sign out user
 export async function signOut(userCredentials, token) {
 
@@ -118,6 +142,35 @@ export async function signOut(userCredentials, token) {
         return data;
     }catch (error) {
         console.log("Sign out user error", error.message);
+        throw error;
+    }
+}
+
+//Profile update 
+export async function updateProfile(token, updateInfo) {
+
+    //Authentication token
+    if (!token) {
+        throw new Error("No token found in localStorage");
+    }
+
+    try {
+        const response = await fetch(`${baseURL}/api/usereditprofile`, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(updateInfo)
+        })
+
+        if(!response.ok) {
+            throw new Error(`Failed to fetch update profile: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }catch (error) {
+        console.log("Update profile error", error.message);
         throw error;
     }
 }

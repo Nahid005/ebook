@@ -7,7 +7,7 @@ import {
 
 import BookGallery from "@/features/book/BookGallery";
 import Rating from "@/features/book/Rating";
-import { currencyFormator } from "@/lib/halper";
+import { baseURL, currencyFormator } from "@/lib/halper";
 import { Button } from "@/components/ui/button";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { HiOutlineShare } from "react-icons/hi";
@@ -21,11 +21,15 @@ import { useState } from "react";
 import { FaRegFilePdf } from "react-icons/fa";
 import RelatedBooks from "../relatedbooks/RelatedBooks";
 import Error from "@/components/Error";
+import { useDispatch, useSelector } from "react-redux";
+import { addCartItem } from "../cart/cartSlice";
+import toast from "react-hot-toast";
 
 function BookDetailsInfo() {
     const { bookDetails, error, isError, isLoading, refetch } = useBookDetails();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const dispatch = useDispatch();
+    const cartItems = useSelector(state => state.cart.cartItems);
+    
     if (isLoading) return <Loading />;
     if (isError) return <Error error={error} reset={refetch} />
 
@@ -47,7 +51,29 @@ function BookDetailsInfo() {
         price
     } = bookDetails?.[0] || {};
 
+    const isAlreadyCart = cartItems?.find(book => book.id === _id);
     const bookDescription = DOMPurify.sanitize(description || "");
+
+    function handleCartItem() {
+        if (isAlreadyCart) {
+            return toast.error(`This book "${name}" has already been added to the cart`, {
+                id: 'already-in-cart' // prevents multiple duplicate toasts
+            });
+        }
+
+        const cartItem = {
+            id: _id,
+            bookName: name,
+            image: image,
+            author: author,
+            quentity: 1,
+            unitPrice: price,
+            totalPrice: price * 1
+        }
+
+        dispatch(addCartItem(cartItem))
+        toast.success(`${name} The book has been carted.`)
+    }
 
     return (
         <div className="">
@@ -88,66 +114,39 @@ function BookDetailsInfo() {
                         </div>
                     </div>
 
-                    {
-                        access_type === "free" ? (
-                            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                                <h2 className="text-2xl font-bold text-neutral-600">Read this book preview!</h2>
-                                {pdf && (
-                                    <PdfPreview previewPdf={pdf} />
-                                )}
-
-                                <button
-                                className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                                onClick={() => setIsModalOpen(false)}
-                                >
-                                Close
-                                </button>
-
-                            </Modal>
-                        ): (
-                            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                                <h2 className="text-2xl font-bold text-neutral-600">Read this book preview!</h2>
-                                {preview_pdf && (
-                                    <PdfPreview previewPdf={preview_pdf} />
-                                )}
-
-                                <button
-                                className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                                onClick={() => setIsModalOpen(false)}
-                                >
-                                Close
-                                </button>
-
-                            </Modal>
-                        )
-                    }
-
                     <div className="flex justify-between items-center gap-8 py-8">
                         <h2 className="font-bold text-2xl text-neutral-700">{currencyFormator(price)}</h2>
                         <div className="flex justify-end gap-2">
                             <Button className="cursor-pointer bg-neutral-600 rounded py-5 px-4 font-bold text-md hover:bg-neutral-700">
                                 <HiOutlineShare /> <span>Share</span>
                             </Button>
-                            <button 
-                                className="bg-neutral-600 flex items-center gap-1 text-white font-medium text-center py-1 px-4 rounded cursor-pointer"
-                                onClick={() => setIsModalOpen(true)}
-                                >
-                                <FaRegFilePdf />
-                                <span>Preview</span>
-                            </button>
+                            {
+                                preview_pdf && <a  
+                                    className="bg-neutral-600 flex items-center gap-1 text-white font-medium text-center py-1 px-4 rounded cursor-pointer"
+                                    href={`${baseURL}/assets/bookPdf/${preview_pdf}`} 
+                                    target="_blank"
+                                    download>
+                                    Preview PDF
+                                </a>
+                                
+                            }
                             {
                                 access_type === "paid" && pdf ? (
-                                    <Button className="cursor-pointer bg-green-500 rounded py-5 px-4 font-bold text-md hover:bg-green-600">
+                                    <Button className="cursor-pointer bg-green-500 rounded py-5 px-4 font-bold text-md hover:bg-green-600"
+                                        onClick={handleCartItem}
+                                    >
                                         <MdOutlineShoppingCart /> <span>Add to cart</span>
                                     </Button>
                                 ): (
-                                    <button 
-                                className="bg-neutral-600 flex items-center gap-1 text-white font-medium text-center py-1 px-4 rounded cursor-pointer"
-                                    onClick={() => setIsModalOpen(true)}
-                                    >
+
+                                <a  
+                                    className="bg-neutral-600 flex items-center gap-1 text-white font-medium text-center py-1 px-4 rounded cursor-pointer"
+                                    href={`${baseURL}/assets/bookImages/${pdf}`} 
+                                    target="_blank"
+                                    download>
                                     <FaRegFilePdf />
-                                    <span>Read File</span>
-                                </button>
+                                    Download
+                                </a>
                                 )
                             }
                         </div>

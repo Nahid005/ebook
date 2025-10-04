@@ -4,8 +4,11 @@ import Error from "@/components/Error";
 import PublisherInfo from "./PublisherInfo";
 import { useGetBooksByPublisher } from "./useGetBooksByPublisher";
 import BookItem from "../book/BookItem";
+import { usePurchasedBook } from "../purchasedbooks/usePurchasedBook";
 
 function PublisherDetailsInfo() {
+    const {purchasedBooks} = usePurchasedBook();
+
     const {
         publisherDetails, 
         error: publisherDetailsError, 
@@ -41,7 +44,14 @@ function PublisherDetailsInfo() {
         );
     }
 
+    const purchasedIds = purchasedBooks.map(book => book.bookDetails._id);
+    const result = publisherByBooks.map(book => ({
+    ...book,
+    purchased: purchasedIds.includes(book._id)
+    }));
+
     const publisheInfo = publisherDetails.at(0)
+    
     return (
         <>
             <PublisherInfo publisheInfo={publisheInfo} />
@@ -50,7 +60,7 @@ function PublisherDetailsInfo() {
                 <h4 className="font-bold text-xl text-neutral-600 mb-5">All Books By {publisheInfo?.name}</h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pb-10">
                     {
-                        publisherByBooks?.length > 0 && publisherByBooks?.map(book => <BookItem key={book._id} book={book} />)
+                        result?.length > 0 && result?.map(book => <BookItem key={book._id} book={book} />)
                     }
                 </div>
             </div>

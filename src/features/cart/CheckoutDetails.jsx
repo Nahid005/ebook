@@ -1,9 +1,7 @@
 import { HiCheck, HiOutlineDeviceMobile } from "react-icons/hi";
 
-import { Button } from "@/components/ui/button";
 import CartItem from "./CartItem";
-import { Link } from "react-router-dom";
-import { Input } from "@/components/ui/input";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { totalPrice } from "./cartSlice";
 import { currencyFormator } from "@/lib/halper";
@@ -16,10 +14,17 @@ function CheckoutDetails() {
     const user = useSelector(state => state.user.user);
     const {initializePayment, error, isError, isPending, reset} = useInitializePayment();
     const bookIds = cartItems?.length > 0 && cartItems.map(book => book.id);
+    const token = useSelector(state => state.user.token)
+    const navigate = useNavigate();
 
     if(isError) return <Error error={error} reset={reset} />
 
     function handlePurchase() {
+
+        if(!token) {
+            return navigate("/signin")
+        }
+
         const paymentInfo = {
             userId: user?.id, 
             books: bookIds, 
@@ -42,11 +47,11 @@ function CheckoutDetails() {
 
             <div className="grid md:grid-cols-2 gap-2 py-10">
                 <div className="">
-                    <h4 className="font-bold text-lg text-neutral-500 mb-4">Apply Cupon</h4>
+                    {/* <h4 className="font-bold text-lg text-neutral-500 mb-4">Apply Cupon</h4>
                     <div className="flex">
                         <Input className="max-w-50 rounded" placeholder="Apply cupon" />
                         <Button className="rounded">Apply</Button>
-                    </div>
+                    </div> */}
 
                     <h4 className="font-bold text-lg text-neutral-500 mb-4">Payment Method</h4>
 
@@ -63,10 +68,10 @@ function CheckoutDetails() {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <div className="flex justify-between gap-2 border-b border-b-neutral-200 p-4">
+                    {/* <div className="flex justify-between gap-2 border-b border-b-neutral-200 p-4">
                         <p className="text-lg font-medium text-neutral-600">Discount</p>
                         <p className="text-lg font-medium text-neutral-600"></p>
-                    </div>
+                    </div> */}
                     <div className="flex justify-between gap-2 border-b border-b-neutral-200 p-4">
                         <p className="text-lg font-medium text-neutral-600">Subtotal</p>
                         <p className="text-lg font-medium text-neutral-600">{currencyFormator(cartTotalPrice)}</p>

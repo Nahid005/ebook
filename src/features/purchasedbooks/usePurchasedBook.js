@@ -8,7 +8,7 @@ export function usePurchasedBook() {
     const user = useSelector(state => state.user.user);
 
     const {data, error, isError, isLoading, refetch} = useQuery({
-        queryKey: ['purchasedbooks'],
+        queryKey: ['purchasebook'],
         queryFn: () => userPurchasedBooks(user.id, token),
         select: (res) => res.data.purchaseDetails
     })

@@ -80,7 +80,7 @@ function Footer() {
 
                     <ul className="flex justify-start gap-3">
                         <li className="bg-orange-200 p-2 rounded hover:text-neutral-700">
-                            <Link><RiFacebookFill className="text-neutral-600 hover:text-neutral-700" /></Link>
+                            <Link to={"https://www.facebook.com/boiarobd"}><RiFacebookFill className="text-neutral-600 hover:text-neutral-700" /></Link>
                         </li>
                         <li className="bg-orange-200 p-2 rounded hover:text-neutral-700">
                             <Link><RiInstagramLine className="text-neutral-600 hover:text-neutral-700" /></Link>

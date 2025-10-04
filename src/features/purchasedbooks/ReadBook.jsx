@@ -1,6 +1,7 @@
 import Loading from "@/components/Loading";
 import { usePurchasedBookDetails } from "./usePurchasedBook";
 import Error from "@/components/Error";
+import PdfPreview from "../book/PdfPreview";
 
 function ReadBook() {
     const {purchasedBookDetails, error, isError, isLoading, refetch} = usePurchasedBookDetails();
@@ -8,8 +9,12 @@ function ReadBook() {
     if(isLoading) return <Loading />
     if(isError) return <Error error={error} reset={refetch} />
 
+    const {pdf} = purchasedBookDetails?.at(0);
+
+    console.log(pdf)
+
     return (
-        <h1>This book is </h1>
+        <PdfPreview fileUrl={pdf} />
     )
 }
 

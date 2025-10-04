@@ -1,26 +1,31 @@
 import { useForm } from "react-hook-form";
-import FormValidationError from "@/components/FormValidationError";
 import Loading from "@/components/Loading";
 import Error from "@/components/Error";
 import { useSelector } from "react-redux";
+import { useProfileUpdate } from "./useProfileUpdate";
 
 function ProfileUpdateForm() {
+    const {profileUpdate, error, isError, isPending, reset: profileReset} = useProfileUpdate();
 
-    const {register, reset, handleSubmit, formState, getValues} = useForm();
+    const {register, reset, handleSubmit, formState} = useForm();
     const {errors} = formState;
-    const user = useSelector(state => state.user.user);
-    const {firstname, lastname, username, email} = user;
-    
+    const {id, firstname, lastname, username, email} = useSelector(state => state.user.user);
+
+    if(isPending) return <Loading />
+    if(isError) return <Error error={error} reset={profileReset} />
+
     function onSubmit(data) {
         const {username, firstname, lastname, email} = data;
-        const newUser = {
-            firstname,
-            lastname, 
-            username,
-            email
+        const updateInfo = {
+            id: id,
+            firstname: firstname,
+            lastname: lastname,
+            country_code: "",
+            phone: "",
+            image: "",
         }
         
-        createUser(newUser, {
+        profileUpdate(updateInfo, {
             onSuccess: () => {
                 reset();
             }
@@ -46,11 +51,8 @@ function ProfileUpdateForm() {
                         id="firstname"
                         defaultValue={firstname}
                         placeholder="Enter First Name"
-                        {...register("firstname", {
-                            required: "Firstname is required"
-                        })}
+                        {...register("firstname")}
                     />
-                    <FormValidationError error={errors?.firstname} />
                 </div>
                 <div className="flex flex-col w-full gap-2">
                     <label className="text-neutral-600" htmlFor="lastname">Last Name</label>
@@ -61,11 +63,8 @@ function ProfileUpdateForm() {
                         id="lastname"
                         defaultValue={lastname}
                         placeholder="Enter Last Name"
-                        {...register("lastname", {
-                            required: "Lastname is required"
-                        })}
+                        {...register("lastname")}
                     />
-                    <FormValidationError error={errors?.lastname} />
                 </div>
                 <div className="flex flex-col w-full gap-2">
                     <label className="text-neutral-600" htmlFor="username">Username</label>
@@ -76,12 +75,10 @@ function ProfileUpdateForm() {
                         name="username" 
                         id="username"
                         defaultValue={username}
+                        readOnly
                         placeholder="User Name"
-                        {...register("username", {
-                            required: "Username is required"
-                        })}
+                        {...register("username")}
                     />
-                    <FormValidationError error={errors?.username} />
                 </div>
                 <div className="flex flex-col w-full gap-2">
                     <label className="text-neutral-600" htmlFor="email">Email</label>
@@ -93,11 +90,8 @@ function ProfileUpdateForm() {
                         defaultValue={email}
                         readOnly
                         placeholder="Enter your email"
-                        {...register("email", {
-                            required: "Email is required"
-                        })}
+                        {...register("email")}
                     />
-                    <FormValidationError error={errors?.email} />
                 </div>
                 
                 <div className="col-span-2 text-right">

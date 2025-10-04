@@ -50,6 +50,10 @@ export const storage = {
         const cartItems = localStorage.getItem(CART_ITEMS);
         return cartItems ? JSON.parse(cartItems) : null;
     },
+
+    clearCartItems() {
+        return localStorage.removeItem(CART_ITEMS);
+    },
     
     clearAll() {
         localStorage.clear();

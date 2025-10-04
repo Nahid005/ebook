@@ -4,8 +4,11 @@ import BookItem from "../book/BookItem";
 import AuthorInfo from "./AuthorInfo";
 import Error from "@/components/Error";
 import MiniLoading from "@/components/MiniLoading";
+import { usePurchasedBook } from "../purchasedbooks/usePurchasedBook";
 
 function AuthorDetailsInfo() {
+    const {purchasedBooks} = usePurchasedBook()
+
     const {
         authorWiseBooks,
         error: authorWiseBooksError,
@@ -41,6 +44,12 @@ function AuthorDetailsInfo() {
         );
     }
 
+    const purchasedIds = purchasedBooks.map(book => book.bookDetails._id);
+    const result = authorWiseBooks.map(book => ({
+    ...book,
+    purchased: purchasedIds.includes(book._id)
+    }));
+
     const authorInfo = authorDetails?.at(0);
 
     return (
@@ -51,7 +60,7 @@ function AuthorDetailsInfo() {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pb-10">
                 {
-                    authorWiseBooks?.length > 0 && authorWiseBooks?.map(book => <BookItem key={book._id} book={book} />)
+                    result?.length > 0 && result?.map(book => <BookItem key={book._id} book={book} />)
                 }
             </div>
         </div>

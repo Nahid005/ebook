@@ -24,11 +24,15 @@ import Error from "@/components/Error";
 import { useDispatch, useSelector } from "react-redux";
 import { addCartItem } from "../cart/cartSlice";
 import toast from "react-hot-toast";
+import { useLocation } from "react-router-dom";
 
 function BookDetailsInfo() {
     const { bookDetails, error, isError, isLoading, refetch } = useBookDetails();
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.cartItems);
+
+    const location = useLocation();
+    const {purchased} = location.state || {};
     
     if (isLoading) return <Loading />;
     if (isError) return <Error error={error} reset={refetch} />
@@ -50,6 +54,8 @@ function BookDetailsInfo() {
         publishDate = "12-12-12",
         price
     } = bookDetails?.[0] || {};
+
+    
 
     const isAlreadyCart = cartItems?.find(book => book.id === _id);
     const bookDescription = DOMPurify.sanitize(description || "");
@@ -117,9 +123,9 @@ function BookDetailsInfo() {
                     <div className="flex justify-between items-center gap-8 py-8">
                         <h2 className="font-bold text-2xl text-neutral-700">{currencyFormator(price)}</h2>
                         <div className="flex justify-end gap-2">
-                            <Button className="cursor-pointer bg-neutral-600 rounded py-5 px-4 font-bold text-md hover:bg-neutral-700">
+                            {/* <Button className="cursor-pointer bg-neutral-600 rounded py-5 px-4 font-bold text-md hover:bg-neutral-700">
                                 <HiOutlineShare /> <span>Share</span>
-                            </Button>
+                            </Button> */}
                             {
                                 preview_pdf && <a  
                                     className="bg-neutral-600 flex items-center gap-1 text-white font-medium text-center py-1 px-4 rounded cursor-pointer"
@@ -131,6 +137,14 @@ function BookDetailsInfo() {
                                 
                             }
                             {
+                                purchased ? (
+                                    <button 
+                                className="cursor-pointer bg-red-500 rounded py-3 px-4 font-bold text-md hover:bg-red-600 flex items-center gap-1 justify-center"
+                                disabled
+                                >
+                                <MdOutlineShoppingCart /> <span>Purchased</span>
+                                </button>
+                                ):
                                 access_type === "paid" && pdf ? (
                                     <Button className="cursor-pointer bg-green-500 rounded py-5 px-4 font-bold text-md hover:bg-green-600"
                                         onClick={handleCartItem}

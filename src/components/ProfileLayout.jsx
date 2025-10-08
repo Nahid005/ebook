@@ -8,7 +8,7 @@ function ProfileLayout() {
             <aside className="bg-orange-100 p-5 rounded-md">
                 <Sidebar />
             </aside>
-            <div className="min-h-[500px]">
+            <div className="">
                 <Outlet />
             </div>
         </div>

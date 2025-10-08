@@ -56,7 +56,7 @@ function BookItem({book}) {
     return (
         <div className="flex flex-col gap-2 group">
             <div className="relative overflow-hidden">
-                <Link to={`/product/${id}`}>
+                <Link to={`/product/${id}`} state={{ purchased }}>
                     <img className="rounded-lg transition-transform duration-300 group-hover:scale-105" src={`${baseURL}/assets/bookImages/${image}`} alt={name} />
                 </Link>
                 <button 
@@ -73,6 +73,7 @@ function BookItem({book}) {
                                 <Link 
                                 className="cursor-pointer bg-green-500 rounded py-3 px-4 font-bold text-md hover:bg-green-600 flex items-center gap-1 justify-center"
                                 to={`/product/${id}`}
+                                state={{ purchased }}
                                 >
                                 View Details
                                 </Link>
@@ -95,6 +96,7 @@ function BookItem({book}) {
                             <Link 
                             className="cursor-pointer bg-green-500 rounded py-3 px-4 font-bold text-md hover:bg-green-600 flex items-center gap-1 justify-center"
                             to={`/product/${id}`}
+                            state={{ purchased }}
                             >
                             View Details
                             </Link>
@@ -103,7 +105,7 @@ function BookItem({book}) {
                     }
                 </div>
             </div>
-            <Link to={`/product/${id}`}>
+            <Link to={`/product/${id}`} state={{ purchased }}>
                 <div className="flex flex-col">
                     <h5 className="font-bold text-base text-neutral-700">{name}</h5>
                     <p className="font-medium text-sm text-neutral-700">{author.name}</p>

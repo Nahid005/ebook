@@ -11,8 +11,6 @@ function ReadBook() {
 
     const {pdf} = purchasedBookDetails?.at(0);
 
-    console.log(pdf)
-
     return (
         <PdfPreview fileUrl={pdf} />
     )

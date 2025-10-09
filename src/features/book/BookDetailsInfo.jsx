@@ -120,9 +120,9 @@ function BookDetailsInfo() {
                         </div>
                     </div>
 
-                    <div className="flex justify-between items-center gap-8 py-8">
+                    <div className="lg:flex justify-between items-center gap-8 py-8">
                         <h2 className="font-bold text-2xl text-neutral-700">{currencyFormator(price)}</h2>
-                        <div className="flex justify-end gap-2">
+                        <div className="flex lg:justify-end mt-2 lg:mt-0 gap-2">
                             {/* <Button className="cursor-pointer bg-neutral-600 rounded py-5 px-4 font-bold text-md hover:bg-neutral-700">
                                 <HiOutlineShare /> <span>Share</span>
                             </Button> */}

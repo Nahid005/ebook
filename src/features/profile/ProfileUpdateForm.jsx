@@ -35,10 +35,10 @@ function ProfileUpdateForm() {
 
 
     return (
-        <div className="w-full bg-neutral-100 p-8 shadow rounded-md">
+        <div className="w-full bg-neutral-100 p-8 shadow rounded-md md:m-0 my-4">
             <h4 className="font-bold text-neutral-600 text-xl w-full text-center mb-8 uppercase">Profile Update</h4>
             <form 
-                className="grid gap-4 grid-cols-1 md:grid-cols-2  justify-start items-start"
+                className="md:grid gap-4 grid-cols-1 md:grid-cols-2  justify-start items-start"
                 onSubmit={handleSubmit(onSubmit)}
             >
                 

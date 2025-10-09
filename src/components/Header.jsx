@@ -69,7 +69,7 @@ function Header({setIsSearch, isSearch}) {
     return (
         <div className={` w-full h-[8ch] backdrop-blur-sm md:static top-0 z-50 ${isScrolled ? 'fixed bg-sky-50/30 border-b border-neutral-200': 'bg-orange-100'} flex justify-center text-center`}>
             
-            <div className={` w-full h-[8ch] backdrop-blur-sm flex items-center justify-between px-4 md:px-0 fixed top-0 transition-all ease-in-out duration-300 z-50 max-w-[1300px] mx-auto`}>
+            <div className={` w-full h-[8ch] backdrop-blur-sm flex items-center justify-between px-4 xl:px-0 fixed top-0 transition-all ease-in-out duration-300 z-50 max-w-[1300px] mx-auto`}>
 
                 {/* Logo section */}
                 <div className="flex items-center gap-2 md:pr-16 pr-0">

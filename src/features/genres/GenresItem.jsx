@@ -5,8 +5,8 @@ function GenresItem({genre}) {
     const {_id: id, name, image} = genre;
 
     return (
-        <Link to={`/genres/${id}`}>
-            <div className="flex gap-2 justify-start items-center bg-orange-100 py-3 px-4 rounded shadow">
+        <Link to={`/genres/${id}`} className="w-full">
+            <div className="flex gap-2 justify-start items-center bg-orange-100 py-3 px-4 rounded shadow min-h-[100px]">
                 <img className="w-10 h-10 md:w-20 md:h-20 rounded-full" src={`${baseURL}/assets/userImages/${image}`} alt={name} />
                 <div className="flex flex-col gap-2">
                     <h4 className="font-bold text-neutral-600 text-sm md:text-md">{name}</h4>

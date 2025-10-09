@@ -7,7 +7,7 @@ function AuthorsList({author}) {
     
     return (
         <Link to={`/authors/${id}`}>
-            <div className="flex gap-2 justify-start items-center bg-orange-100 py-3 px-4 rounded shadow">
+            <div className="flex gap-2 justify-start items-center bg-orange-100 py-3 px-2 rounded shadow">
                 <img className="w-15 h-15 md:w-20 md:h-20 rounded-full" src={`${baseURL}/assets/userImages/${image}`} alt={name} />
                 <div className="flex flex-col gap-1">
                     <h4 className="font-bold text-neutral-600 text-sm md:text-md">{name}</h4>

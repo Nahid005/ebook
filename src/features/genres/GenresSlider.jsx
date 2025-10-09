@@ -21,7 +21,7 @@ function GenresSlider() {
         spaceBetween={5}
         slidesPerView={2}
         navigation
-        autoplay={{ delay: 2500, disableOnInteraction: false }}
+        // autoplay={{ delay: 2500, disableOnInteraction: false }}
         style={{ margin: "40px 0" }}
         breakpoints={{
           // When window width is >= 640px

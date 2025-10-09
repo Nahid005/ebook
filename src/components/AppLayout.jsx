@@ -15,10 +15,10 @@ function AppLayout() {
 
     return (
         <div className="flex flex-col grow min-h-screen">
-            <header>
+            <header className="z-99">
                 <Header isSearch={isSearch} setIsSearch={setIsSearch} />
             </header>
-            <main className="h-full w-full px-4 md:px-0 max-w-[1300px] mx-auto grow">
+            <main className="h-full w-full px-4 xl:px-0 max-w-[1300px] mx-auto grow">
                 <Outlet />
             </main>
             {isSearch && <BookSearchModal onClose={() => setIsSearch(false)} />}
